@@ -4,24 +4,24 @@
     <item
         android:id="@+id/tests"
         android:icon="@drawable/ic_test"
-        android:title="Тесты" />
+        android:title="@string/tests" />
     <item
         android:id="@+id/audio"
         android:icon="@drawable/ic_music"
-        android:title="Аудио" />
+        android:title="@string/audio" />
 
     <item
         android:id="@+id/library"
         android:icon="@drawable/ic_library"
-        android:title="Библиотека" />
+        android:title="@string/library" />
 
     <item
         android:id="@+id/shop"
         android:icon="@drawable/ic_shop"
-        android:title="Магазин" />
+        android:title="@string/shop" />
 
     <item
         android:id="@+id/readers"
         android:icon="@drawable/ic_readers"
-        android:title="Чтецы" />
+        android:title="@string/readers" />
 </menu>
