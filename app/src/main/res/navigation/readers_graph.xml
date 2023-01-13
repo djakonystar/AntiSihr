@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/readers_screen">
+
+
+    <fragment
+        android:id="@+id/readers_screen"
+        android:label="ReadersScreen"
+        tools:layout="@layout/screen_readers" />
+
+
+</navigation>

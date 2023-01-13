@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tests"
+        android:icon="@drawable/ic_test"
+        android:title="Тесты" />
+    <item
+        android:id="@+id/audio"
+        android:icon="@drawable/ic_music"
+        android:title="Аудио" />
+
+    <item
+        android:id="@+id/library"
+        android:icon="@drawable/ic_library"
+        android:title="Библиотека" />
+
+    <item
+        android:id="@+id/shop"
+        android:icon="@drawable/ic_shop"
+        android:title="Магазин" />
+
+    <item
+        android:id="@+id/readers"
+        android:icon="@drawable/ic_readers"
+        android:title="Чтецы" />
+</menu>
