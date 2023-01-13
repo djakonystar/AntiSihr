@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splash_screen">
+    app:startDestination="@id/home_screen">
 
 
     <fragment
-        android:id="@+id/splash_screen"
-        android:label="ServiceScreen"
+        android:id="@+id/home_screen"
+        android:name="dev.djakonystar.antisihr.ui.test.HomeScreen"
+        android:label="HomeScreen"
         tools:layout="@layout/screen_home">
 
     </fragment>
-
-
-
 
 
 </navigation>
