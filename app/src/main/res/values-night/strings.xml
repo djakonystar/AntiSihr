@@ -11,4 +11,8 @@
     <string name="library">Библиотека</string>
     <string name="shop">Магазин</string>
     <string name="readers">Чтецы</string>
+    <string name="close">закрыть</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="next">Далее</string>
 </resources>

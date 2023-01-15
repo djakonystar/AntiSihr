@@ -29,11 +29,10 @@ class NetworkModule {
 
     @[Provides Singleton]
     fun providesRetrofitInstance(client: OkHttpClient): Retrofit =
-        Retrofit.Builder().baseUrl("https://real.intuza.uz/")
+        Retrofit.Builder().baseUrl("antisihr.ru")
             .addConverterFactory(GsonConverterFactory.create()).client(client).build()
 
 
     @[Provides Singleton]
     fun getApiProvides(retrofit: Retrofit): AntiSihrApi = retrofit.create(AntiSihrApi::class.java)
-
 }
