@@ -9,25 +9,19 @@
     <fragment
         android:id="@+id/library_screen"
         android:label="LibraryScreen"
+        android:name="dev.djakonystar.antisihr.ui.library.LibraryScreen"
         tools:layout="@layout/screen_library">
 
         <action
             android:id="@+id/action_library_screen_to_inner_library_screen"
             app:destination="@id/inner_library_screen" />
-        <action
-            android:id="@+id/action_library_screen_to_library_search_screen"
-            app:destination="@id/library_search_screen" />
     </fragment>
 
     <fragment
         android:id="@+id/inner_library_screen"
         android:label="InnerLibraryScreen"
+        android:name="dev.djakonystar.antisihr.ui.library.InnerLibraryScreen"
         tools:layout="@layout/screen_inner_library" />
-
-    <fragment
-        android:id="@+id/library_search_screen"
-        android:label="LibrarySearchScreen"
-        tools:layout="@layout/screen_library_search" />
 
 
 </navigation>

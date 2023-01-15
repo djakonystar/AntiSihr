@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_search"
+        android:id="@+id/tv_audio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="@font/nunito_extrabold"
-        android:text="Аудио"
+        android:text="@string/audio"
         android:textColor="#260101"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
+        android:visibility="visible"
+        android:elevation="4dp"
         android:background="@drawable/bg_circle"
         android:padding="10dp"
         android:src="@drawable/ic_favourites"
@@ -35,13 +37,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
+        android:visibility="visible"
         android:background="@drawable/bg_circle"
+        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_search"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_search"
+        app:layout_constraintBottom_toBottomOf="@id/tv_audio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_search" />
+        app:layout_constraintTop_toTopOf="@id/tv_audio" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_audio" />
+
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:el_expanded="false"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/tv_audio"
+        app:layout_constraintTop_toBottomOf="@id/tv_audio">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_audio"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="12dp"
+            android:drawableStart="@drawable/ic_search"
+            android:text="@string/type_smth" />
+
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_body"
@@ -52,10 +91,11 @@
         android:text="Наилушим из лечения является то,\nчто вы сами читаете себе."
         android:textColor="#80260101"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/tv_search"
-        app:layout_constraintTop_toBottomOf="@id/tv_search" />
+        app:layout_constraintStart_toStartOf="@id/tv_audio"
+        app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_audios"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
