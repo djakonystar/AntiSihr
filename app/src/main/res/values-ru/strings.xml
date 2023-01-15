@@ -17,4 +17,9 @@
     <string name="next">Далее</string>
     <string name="go_to_treatment">Пройти лечение</string>
     <string name="type_smth">Введите текст</string>
+    <string name="address">Наш адрес:\n%s</string>
+    <string name="name_anti">Anti</string>
+    <string name="name_sihr">Sihr</string>
+    <string name="send">Отправить</string>
+    <string name="save">Сохранить</string>
 </resources>

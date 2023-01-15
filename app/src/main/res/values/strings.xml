@@ -4,7 +4,7 @@
     <string name="about_app">О приложении</string>
     <string name="privay_policy">Политика конфеденциальности</string>
     <string name="feedback">Обратная связь</string>
-    <string name="language">Язык</string>
+    <string name="language">Выбор языка</string>
     <string name="share_app">Поделиться приложением</string>
     <string name="tests">Тесты</string>
     <string name="audio">Аудио</string>
@@ -17,4 +17,10 @@
     <string name="next">Далее</string>
     <string name="go_to_treatment">Пройти лечение</string>
     <string name="type_smth">Введите текст</string>
+    <string name="address">Наш адрес:\n%s</string>
+    <string name="text_phone">Телефон:\n<u>%s</u></string>
+    <string name="name_anti">Anti</string>
+    <string name="name_sihr">Sihr</string>
+    <string name="send">Отправить</string>
+    <string name="save">Сохранить</string>
 </resources>

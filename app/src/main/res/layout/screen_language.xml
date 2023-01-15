@@ -5,15 +5,173 @@
     android:background="@color/background_color"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 1291"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_ttf"
+        android:text="@string/language"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ic_back" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold_ttf"
+        android:text="@string/save"
+        android:textColor="#2787F5"
+        android:textSize="16sp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ic_back" />
+
+    <RadioGroup
+        android:id="@+id/rg_lang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="21dp"
+        android:layout_marginTop="20dp"
+        android:divider="?attr/dividerHorizontal"
+        android:dividerPadding="20dp"
+        android:showDividers="middle"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <RadioButton
+            android:id="@+id/rb_arabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Abaric"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="English"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_chinese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chinese"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_korean"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Korean"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_spanish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spanish"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_italian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Italian"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_german"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="German"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_russian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Russian"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_turkish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turkish"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_french"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="French"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_swedish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Swedish"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_janaese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Japanese"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

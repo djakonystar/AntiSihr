@@ -1,19 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/background_color"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 31"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_ttf"
+        android:text="@string/feedback"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ic_back" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_name"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="40dp"
+        android:hint="Ваше ФИО:"
+        app:hintTextColor="#959595"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:text="Jaksibay Khakimov" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_phone"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:hint="Ваш номер телефона:"
+        app:hintTextColor="#959595"
+        app:layout_constraintTop_toBottomOf="@id/til_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:text="+7 (***) ***-**-**" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_topic"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:hint="Название вашего вопроса:"
+        app:hintTextColor="#959595"
+        app:layout_constraintTop_toBottomOf="@id/til_phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_topic"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:text="Благорадность" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_text"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:hint="Текст вашего сообщения"
+        app:hintTextColor="#959595"
+        app:layout_constraintTop_toBottomOf="@id/til_topic">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_text"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:maxLines="10"
+            android:paddingStart="20dp"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_send"
+        style="@style/myButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="55dp"
+        android:layout_marginBottom="17dp"
+        android:text="@string/send"
+        app:layout_constraintBottom_toTopOf="@id/tv_hint" />
+
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:fontFamily="@font/nunito_ttf"
+        android:textAlignment="center"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="Все введенные вами данные\nстрого конфиденциальны" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
