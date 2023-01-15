@@ -19,19 +19,13 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/tv_body"
+        style="@style/myEditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/bg_rect_15"
-        android:backgroundTint="#4DD3D3D3"
         android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="12dp"
-        android:fontFamily="@font/nunito"
-        android:paddingStart="12dp"
         android:text="@string/type_smth"
-        android:textColor="#80260101"
-        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/tv_search"
         app:layout_constraintTop_toBottomOf="@id/tv_search" />
 

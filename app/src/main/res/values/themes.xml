@@ -27,4 +27,14 @@
         <item name="android:width">44dp</item>
         <item name="android:height">44dp</item>
     </style>
+
+    <style name="myEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_rect_15</item>
+        <item name="android:backgroundTint">@color/et_background</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:fontFamily">@font/nunito_ttf</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:textColor">@color/et_text_color</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
+    </style>
 </resources>

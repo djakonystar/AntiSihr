@@ -13,4 +13,6 @@
     <color name="blue">#0137F8</color>
     <color name="grey">#C6C6C6</color>
     <color name="main_color">#7950DF</color>
+    <color name="et_background">#4DD3D3D3</color>
+    <color name="et_text_color">#80260101</color>
 </resources>
