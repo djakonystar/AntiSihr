@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
     <item
         android:id="@+id/about"
@@ -8,7 +10,8 @@
     <item
         android:id="@+id/privacy_policy"
         android:icon="@drawable/ic_globe"
-        android:title="@string/privay_policy" />
+        android:title="@string/privay_policy"
+        android:titleCondensed="@string/privay_policy"/>
 
     <item
         android:id="@+id/feedback"

@@ -5,38 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:layout_height="match_parent">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_container_main"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/audio_graph" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
+            app:navGraph="@navigation/test_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_bar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="90dp"
             android:background="@drawable/bg_rect_top_corner_20"
-            app:itemIconSize="20dp"
+            android:backgroundTint="@color/black"
+            app:itemIconSize="22dp"
+            app:itemActiveIndicatorStyle="@style/myActiveIndicatorColor"
+            app:itemIconTint="@color/bottom_nav_icon_tint"
+            app:itemTextColor="@color/bottom_nav_text_color"
             app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_nav_bar" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginEnd="64dp"
         app:menu="@menu/nav_drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
