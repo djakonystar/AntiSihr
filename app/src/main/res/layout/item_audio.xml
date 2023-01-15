@@ -6,57 +6,54 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="16dp"
-    android:background="@drawable/bg_rect_20"
-    android:backgroundTint="@color/white">
+    android:background="@drawable/bg_rect_top_corner_10_bottom_11"
+    android:backgroundTint="@color/background_color">
 
 
-    <TextView
-        android:id="@+id/tv_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:fontFamily="@font/nunito_semibold"
-        android:textColor="@color/main_text_color"
-        android:textSize="20sp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ic_image"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginVertical="12dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/nunito_bold"
         android:textColor="@color/main_text_color"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/tv_number"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Тест на сглаз" />
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_body"
+        app:layout_constraintStart_toEndOf="@id/ic_image"
+        app:layout_constraintTop_toTopOf="@id/ic_image"
+        tools:text="Рукъя от джиннов" />
 
     <TextView
         android:id="@+id/tv_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="20dp"
         android:fontFamily="@font/nunito"
         android:textColor="@color/second_text_color"
         android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="Позволит выявить признаки" />
+        tools:text="Барахоев Иса" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_forward"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_number"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_number" />
+        app:layout_constraintTop_toTopOf="@id/ic_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

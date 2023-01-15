@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 2"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="12dp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="Аудио"
+        android:textColor="#260101"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:padding="10dp"
+        android:src="@drawable/ic_favourites"
+        app:layout_constraintBottom_toBottomOf="@id/ic_search"
+        app:layout_constraintEnd_toStartOf="@id/ic_search"
+        app:layout_constraintTop_toTopOf="@id/ic_search" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:padding="10dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/tv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_search" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito"
+        android:text="Наилушим из лечения является то,\nчто вы сами читаете себе."
+        android:textColor="#80260101"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/tv_search"
+        app:layout_constraintTop_toBottomOf="@id/tv_search" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_body"
+        tools:listitem="@layout/item_audio" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

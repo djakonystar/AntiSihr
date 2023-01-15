@@ -18,7 +18,7 @@
             android:layout_height="0dp"
             android:layout_weight="9"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/test_graph" />
+            app:navGraph="@navigation/audio_graph" />
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

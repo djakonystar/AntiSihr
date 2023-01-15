@@ -15,4 +15,6 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="next">Далее</string>
+    <string name="go_to_treatment">Пройти лечение</string>
+    <string name="type_smth">Введите текст</string>
 </resources>
