@@ -17,4 +17,5 @@
     <string name="next">Далее</string>
     <string name="go_to_treatment">Пройти лечение</string>
     <string name="type_smth">Введите текст</string>
+    <string name="to_saved">В избранное</string>
 </resources>

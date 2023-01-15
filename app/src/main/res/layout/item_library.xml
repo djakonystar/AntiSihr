@@ -6,17 +6,17 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="16dp"
-    android:background="@drawable/bg_rect_top_corner_10_bottom_11"
+    android:background="@drawable/bg_rect_15"
     android:backgroundTint="@color/background_color">
 
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ic_image"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_marginVertical="16dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginVertical="24dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/main_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,38 +26,41 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:fontFamily="@font/nunito_bold"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/nunito_extrabold_ttf"
         android:textColor="@color/main_text_color"
-        android:textSize="17sp"
+        android:textSize="21sp"
         app:layout_constraintBottom_toTopOf="@id/tv_body"
         app:layout_constraintStart_toEndOf="@id/ic_image"
         app:layout_constraintTop_toTopOf="@id/ic_image"
-        tools:text="Рукъя от джиннов" />
+        tools:text="Вопрос/Ответ" />
+
+
 
     <TextView
         android:id="@+id/tv_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito"
-        android:textColor="@color/second_text_color"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="28dp"
+        android:fontFamily="@font/nunito_ttf"
+        android:textColor="#999999"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@id/ic_play"
-        android:layout_marginEnd="32dp"
-        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/ic_image"
+        app:layout_constraintEnd_toStartOf="@id/ic_forward"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="Барахоев Иса" />
+        tools:text="Здесь собранна информация,   которую необходимо знать тому кто хочет лечить людей (Чтецу) " />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_play"
+        android:id="@+id/ic_forward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_play"
+        android:src="@drawable/ic_arrow_forward"
+        android:tint="#33000000"
         app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="12dp"
         app:layout_constraintTop_toTopOf="@id/ic_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
