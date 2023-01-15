@@ -9,25 +9,19 @@
     <fragment
         android:id="@+id/audio_screen"
         android:label="AudioScreen"
-        tools:layout="@layout/screen_audio">
+        android:name="dev.djakonystar.antisihr.ui.audio.AudioScreen"
+        tools:layout="@layout/screen_audio"
+        >
 
         <action
             android:id="@+id/action_audio_screen_to_audio_info_screen"
             app:destination="@id/audio_info_screen" />
-        <action
-            android:id="@+id/action_audio_screen_to_audio_search_screen"
-            app:destination="@id/audio_search_screen" />
     </fragment>
 
     <fragment
         android:id="@+id/audio_info_screen"
         android:label="AudioInfoScreen"
         tools:layout="@layout/screen_audio_player"/>
-
-    <fragment
-        android:id="@+id/audio_search_screen"
-        android:label="AudioSearchScreen"
-        tools:layout="@layout/screen_audio_search"/>
 
 
 

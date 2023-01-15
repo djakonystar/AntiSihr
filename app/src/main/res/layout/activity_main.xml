@@ -17,7 +17,7 @@
             app:defaultNavHost="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
-            app:navGraph="@navigation/test_graph" />
+            app:navGraph="@navigation/library_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_bar"
