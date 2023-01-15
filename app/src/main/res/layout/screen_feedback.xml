@@ -37,6 +37,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="40dp"
         android:hint="Ваше ФИО:"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
@@ -63,6 +65,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
         android:hint="Ваш номер телефона:"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
         app:layout_constraintTop_toBottomOf="@id/til_name">
 
@@ -89,6 +93,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
         android:hint="Название вашего вопроса:"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
         app:layout_constraintTop_toBottomOf="@id/til_phone">
 
@@ -115,6 +121,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
         android:hint="Текст вашего сообщения"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
         app:layout_constraintTop_toBottomOf="@id/til_topic">
 
