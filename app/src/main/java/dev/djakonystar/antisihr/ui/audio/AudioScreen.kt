@@ -2,16 +2,13 @@ package dev.djakonystar.antisihr.ui.audio
 
 import android.os.Bundle
 import android.view.View
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioModel
-import dev.djakonystar.antisihr.data.models.TestData
 import dev.djakonystar.antisihr.databinding.ScreenAudioBinding
-import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
 import dev.djakonystar.antisihr.ui.adapters.AudioAdapter
 import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.show

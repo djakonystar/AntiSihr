@@ -29,7 +29,7 @@ class NetworkModule {
 
     @[Provides Singleton]
     fun providesRetrofitInstance(client: OkHttpClient): Retrofit =
-        Retrofit.Builder().baseUrl("antisihr.ru")
+        Retrofit.Builder().baseUrl("https://anti-sihr-server.ru/")
             .addConverterFactory(GsonConverterFactory.create()).client(client).build()
 
 

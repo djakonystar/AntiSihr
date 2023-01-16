@@ -1,6 +1,6 @@
 package dev.djakonystar.antisihr.data.models
 
-data class TestData(
+data class ListOfTestsResultData(
     val id: Int,
     val name: String
 )

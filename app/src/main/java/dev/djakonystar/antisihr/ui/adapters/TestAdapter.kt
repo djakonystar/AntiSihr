@@ -5,16 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.djakonystar.antisihr.data.models.AudioModel
-import dev.djakonystar.antisihr.data.models.TestData
-import dev.djakonystar.antisihr.databinding.ItemAudioBinding
+import dev.djakonystar.antisihr.data.models.ListOfTestsResultData
 import dev.djakonystar.antisihr.databinding.ItemTestBinding
 
-class TestAdapter : ListAdapter<TestData, TestAdapter.ViewHolder>(MyDiffUtil) {
+class TestAdapter : ListAdapter<ListOfTestsResultData, TestAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((Int) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (String) -> Unit) {
+    fun setOnItemClickListener(block: (Int) -> Unit) {
         onItemClickListener = block
     }
 
@@ -44,18 +42,18 @@ class TestAdapter : ListAdapter<TestData, TestAdapter.ViewHolder>(MyDiffUtil) {
 
         init {
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).name)
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).id)
             }
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<TestData>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<ListOfTestsResultData>() {
         override fun areItemsTheSame(
-            oldItem: TestData, newItem: TestData
+            oldItem: ListOfTestsResultData, newItem: ListOfTestsResultData
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: TestData, newItem: TestData
+            oldItem: ListOfTestsResultData, newItem: ListOfTestsResultData
         ): Boolean = oldItem.name == newItem.name && oldItem.id == newItem.id
     }
 }
