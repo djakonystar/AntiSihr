@@ -22,6 +22,10 @@
         <item name="cornerSize">10%</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize8Percent" parent="">
+        <item name="cornerSize">8%</item>
+    </style>
+
     <style name="myActiveIndicatorColor" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/main_color</item>
         <item name="android:width">44dp</item>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:background="@drawable/bg_rect_100"
+    android:backgroundTint="@color/main_color">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold_ttf"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        tools:text="Назрань"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+</LinearLayout>

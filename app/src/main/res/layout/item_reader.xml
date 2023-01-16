@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/bg_rect_20"
+    android:backgroundTint="#F8F8F9">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ic_photo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintDimensionRatio="1.5:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize8Percent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_bold_ttf"
+        android:text="Барахоев Иса"
+        android:textColor="@color/black"
+        android:textSize="21sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ic_photo" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold_ttf"
+        android:text="Назрань"
+        android:textColor="#99000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/tv_author"
+        app:layout_constraintTop_toBottomOf="@id/tv_author" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_ttf"
+        android:text="Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана."
+        android:textColor="#99000000"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_city_name" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_more"
+        style="@style/myButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="14dp"
+        android:text="Подробнее"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
