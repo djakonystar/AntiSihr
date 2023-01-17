@@ -23,5 +23,6 @@
     <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="to_saved">В избранное</string>
+    <string name="favorites">Избранное</string>
     <string name="city_name">Название города</string>
 </resources>

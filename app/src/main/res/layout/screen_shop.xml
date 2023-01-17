@@ -2,18 +2,118 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/background_color"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 19"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="12dp"
+        android:fontFamily="@font/nunito_extrabold_ttf"
+        android:text="@string/shop"
+        android:textColor="#1F1F2D"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:visibility="visible"
+        android:src="@drawable/ic_favourites"
+        app:layout_constraintBottom_toBottomOf="@id/ic_search"
+        app:layout_constraintEnd_toStartOf="@id/ic_search"
+        app:layout_constraintTop_toTopOf="@id/ic_search" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:visibility="visible"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:el_expanded="false"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_search"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="12dp"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="@string/type_smth" />
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        app:tabMode="scrollable"
+        app:tabIndicatorAnimationMode="fade"
+        app:tabIndicatorFullWidth="false"
+        app:tabTextAppearance="@style/tabTextAppearanceActive"
+        app:layout_constraintTop_toBottomOf="@id/expandable_layout">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/testTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AntiSihr" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/testTab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AntiSihr2" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        android:padding="10dp"
+        tools:listitem="@layout/item_shop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
