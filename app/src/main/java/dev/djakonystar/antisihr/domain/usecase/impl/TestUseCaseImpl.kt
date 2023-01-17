@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.domain.usecase.impl
 
 import dev.djakonystar.antisihr.data.models.ResultData
 import dev.djakonystar.antisihr.data.models.TestData
+import dev.djakonystar.antisihr.data.models.TestResultData
 import dev.djakonystar.antisihr.domain.repository.TestRepository
 import dev.djakonystar.antisihr.domain.usecase.TestUseCase
 import kotlinx.coroutines.flow.*
@@ -23,4 +24,7 @@ class TestUseCaseImpl @Inject constructor(
     }
 
     override suspend fun getTest(id: Int) = repo.getTest(id)
+    override suspend fun getResultForTest(
+        id: Int, positive: Int
+    ) = repo.getResultForTest(id, positive)
 }

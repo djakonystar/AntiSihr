@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.about
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -20,6 +21,18 @@ import ru.ldralighieri.corbind.view.clicks
 class AboutScreen : Fragment(R.layout.screen_about) {
     private val binding: ScreenAboutBinding by viewBinding(ScreenAboutBinding::bind)
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    lifecycleScope.launchWhenResumed {
+                        visibilityOfBottomNavigationView.emit(true)
+                    }
+                }
+            })
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()

@@ -17,6 +17,7 @@ import dev.djakonystar.antisihr.presentation.test.HomeScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.impl.HomeScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.TestAdapter
 import dev.djakonystar.antisihr.utils.showSnackBar
+import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,11 +36,16 @@ class TestScreen : Fragment(R.layout.screen_home) {
         initListeners()
         initObservers()
 
+        lifecycleScope.launchWhenCreated {
+            visibilityOfLoadingAnimationView.emit(true)
+        }
+
     }
 
     private fun initObservers() {
         viewModel.getListOfTestsSuccessFlow.onEach {
             adapter.submitList(it)
+            visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
@@ -57,8 +63,8 @@ class TestScreen : Fragment(R.layout.screen_home) {
     }
 
     private fun initListeners() {
-        adapter.setOnItemClickListener {
-            findNavController().navigate(TestScreenDirections.actionHomeScreenToTestFragment(it))
+        adapter.setOnItemClickListener { id, name->
+            findNavController().navigate(TestScreenDirections.actionHomeScreenToTestFragment(id,name))
         }
 
         binding.menuBtn.clicks().debounce(200).onEach {

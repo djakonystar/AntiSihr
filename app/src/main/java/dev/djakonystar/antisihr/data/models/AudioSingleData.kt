@@ -1,7 +1,7 @@
 package dev.djakonystar.antisihr.data.models
 
-data class TestResultData(
+data class AudioSingleData(
     val error: Boolean,
     val message: String,
-    val result: List<TestInnerResultData>
+    val result: List<AudioSingleResultData>
 )

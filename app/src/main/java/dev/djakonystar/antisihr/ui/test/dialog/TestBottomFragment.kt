@@ -1,6 +1,7 @@
 package dev.djakonystar.antisihr.ui.test.dialog
 
 import android.app.Dialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,10 @@ import dev.djakonystar.antisihr.data.models.TestQuestionData
 import dev.djakonystar.antisihr.databinding.BottomTestBinding
 import dev.djakonystar.antisihr.presentation.test.TestScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.impl.TestScreenViewModelImpl
+import dev.djakonystar.antisihr.utils.hide
+import dev.djakonystar.antisihr.utils.show
 import dev.djakonystar.antisihr.utils.toast
+import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -33,7 +37,6 @@ class TestBottomFragment : BottomSheetDialogFragment() {
     private var currentPosition = -1
     private lateinit var list: List<TestQuestionData>
     private var countOfYes = 0
-    private var countOfNo = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -54,6 +57,21 @@ class TestBottomFragment : BottomSheetDialogFragment() {
             list = it.result.questions
             setQuestion()
             binding.maxNumber.text = "/${list.size}"
+            binding.tvTitleTest.text = args.name
+        }.launchIn(lifecycleScope)
+
+        viewModel.getResultForTestsSuccessFlow.onEach {
+            binding.linearTestButtons.hide()
+            binding.tvQuestion.hide()
+            binding.tvResult.show()
+            binding.linearResultButtons.show()
+            binding.tvTitleTest.text = "Резултат ${args.name.lowercase()}"
+            binding.tvResult.text = it.result.first().name
+            binding.loadingAnimation.hide()
+
+            if (!it.result.first().disease) {
+                binding.treatmentCourse.hide()
+            }
         }.launchIn(lifecycleScope)
     }
 
@@ -64,16 +82,18 @@ class TestBottomFragment : BottomSheetDialogFragment() {
         }.launchIn(lifecycleScope)
 
         binding.btnNo.clicks().debounce(200).onEach {
-            countOfNo--
             setQuestion()
         }.launchIn(lifecycleScope)
 
         binding.btnNext.clicks().debounce(200).onEach {
-            countOfNo--
             setQuestion()
         }.launchIn(lifecycleScope)
 
         binding.tvCloseTest.clicks().debounce(200).onEach {
+            dialog?.dismiss()
+        }.launchIn(lifecycleScope)
+
+        binding.btnClose.clicks().debounce(200).onEach {
             dialog?.dismiss()
         }.launchIn(lifecycleScope)
     }
@@ -82,12 +102,22 @@ class TestBottomFragment : BottomSheetDialogFragment() {
     private fun setQuestion() {
         currentPosition++
         if (currentPosition <= list.size - 1) {
-            binding.progressStep.progress =
-                (((currentPosition + 1) / list.size.toDouble()) * 100).toInt()
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                binding.progressStep.setProgress(
+                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt(),
+                    true
+                )
+            } else {
+                binding.progressStep.progress =
+                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt()
+            }
             binding.currentNumber.text = "${currentPosition + 1}"
             binding.tvQuestion.text = list[currentPosition].name
         } else {
-            toast("IT IS FINISH")
+            lifecycleScope.launchWhenResumed {
+                binding.loadingAnimation.show()
+                viewModel.getResultForTests(args.id, countOfYes)
+            }
         }
     }
 

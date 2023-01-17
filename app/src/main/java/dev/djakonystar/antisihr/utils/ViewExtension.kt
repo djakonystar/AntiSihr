@@ -1,7 +1,9 @@
 package dev.djakonystar.antisihr.utils
 
+import android.content.Context
 import android.view.View
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import dev.djakonystar.antisihr.app.App
 
@@ -24,4 +26,8 @@ fun toast(msg: String) {
 
 fun showSnackBar(view: View, msg: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(view, msg, length).show()
+}
+
+fun ImageView.setImageWithGlide(context: Context, url: String) {
+    Glide.with(context).load(url).into(this)
 }

@@ -27,8 +27,8 @@
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
         android:padding="10dp"
-        android:visibility="visible"
         android:src="@drawable/ic_favourites"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
         app:layout_constraintEnd_toStartOf="@id/ic_search"
         app:layout_constraintTop_toTopOf="@id/ic_search" />
@@ -41,8 +41,8 @@
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
         android:padding="10dp"
-        android:visibility="visible"
         android:src="@drawable/ic_search"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/tv_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_search" />
@@ -88,11 +88,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_ttf"
+        android:text="Здесь собранная информация"
         android:textColor="#80260101"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/tv_search"
-        app:layout_constraintTop_toBottomOf="@id/expandable_layout"
-        android:text="Здесь собранная информация" />
+        app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_library"
@@ -100,6 +100,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_body"

@@ -16,10 +16,7 @@ import dev.djakonystar.antisihr.ui.feedback.FeedbackScreen
 import dev.djakonystar.antisihr.ui.language.LanguageScreen
 import dev.djakonystar.antisihr.ui.library.LibraryScreen
 import dev.djakonystar.antisihr.ui.test.TestScreen
-import dev.djakonystar.antisihr.utils.hide
-import dev.djakonystar.antisihr.utils.show
-import dev.djakonystar.antisihr.utils.toast
-import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
+import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -44,12 +41,31 @@ class MainActivity : AppCompatActivity() {
         visibilityOfBottomNavigationView.onEach {
             if (it) {
                 binding.bottomNavigationBar.show()
-                val navInflater = navController.navInflater
-                val navGraph = navInflater.inflate(R.navigation.test_graph)
-                navController.graph = navGraph
             } else {
                 binding.bottomNavigationBar.hide()
             }
+        }.launchIn(lifecycleScope)
+
+        visibilityOfLoadingAnimationView.onEach {
+            if (it) {
+                binding.loadingAnimation.show()
+            } else {
+                binding.loadingAnimation.hide()
+            }
+        }.launchIn(lifecycleScope)
+
+        visibilityAudioPlayer.onEach {
+            if (it) {
+                binding.layoutMusicPlayer.show()
+            } else {
+                binding.layoutMusicPlayer.hide()
+            }
+        }.launchIn(lifecycleScope)
+
+        bottomAudioPlayer.onEach {
+            binding.tvName.text = it.name
+            binding.tvAuthor.text = it.author
+            binding.icImage.setImageWithGlide(this, it.image)
         }.launchIn(lifecycleScope)
     }
 
@@ -109,7 +125,6 @@ class MainActivity : AppCompatActivity() {
                     selectedMenuId = R.id.drawerLayout
                 }
                 R.id.privacy_policy -> {
-                    binding.bottomNavigationBar.hide()
                     toast("OPEN PRIVACY POLICY SOON....")
                 }
                 R.id.feedback -> {
@@ -127,7 +142,6 @@ class MainActivity : AppCompatActivity() {
                     selectedMenuId = R.id.drawerLayout
                 }
                 R.id.share -> {
-                    binding.bottomNavigationBar.hide()
                     toast("SHARE CLICKED AND OPENED SHAIR DIALOG")
                 }
             }

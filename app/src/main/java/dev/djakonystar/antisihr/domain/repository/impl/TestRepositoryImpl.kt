@@ -28,9 +28,16 @@ class TestRepositoryImpl @Inject constructor(
         emit(ResultData.Error(it))
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getResultForTest() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getResultForTest(id: Int, positive: Int) = flow {
+        val request = antiSihrApi.getResultForTest(id, positive)
+        if (request.isSuccessful) {
+            emit(ResultData.Success(request.body()!!))
+        } else {
+            emit(ResultData.Message(request.message()))
+        }
+    }.catch {
+        emit(ResultData.Error(it))
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun getTest(id: Int) = flow {
         val request = antiSihrApi.getTest(id)

@@ -8,10 +8,9 @@
 
     <fragment
         android:id="@+id/audio_screen"
-        android:label="AudioScreen"
         android:name="dev.djakonystar.antisihr.ui.audio.AudioScreen"
-        tools:layout="@layout/screen_audio"
-        >
+        android:label="AudioScreen"
+        tools:layout="@layout/screen_audio">
 
         <action
             android:id="@+id/action_audio_screen_to_audio_info_screen"
@@ -21,9 +20,31 @@
     <fragment
         android:id="@+id/audio_info_screen"
         android:label="AudioInfoScreen"
-        tools:layout="@layout/screen_audio_player"/>
+        android:name="dev.djakonystar.antisihr.ui.audio.AudioPlayerScreen"
+        tools:layout="@layout/screen_audio_player">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
 
 
+        <argument
+            android:name="name"
+            app:argType="string" />
 
+
+        <argument
+            android:name="author"
+            app:argType="string" />
+
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+
+        <argument
+            android:name="image"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

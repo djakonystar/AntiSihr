@@ -10,9 +10,9 @@ import dev.djakonystar.antisihr.databinding.ItemTestBinding
 
 class TestAdapter : ListAdapter<ListOfTestsResultData, TestAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((Int) -> Unit)? = null
+    private var onItemClickListener: ((Int,String) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (Int) -> Unit) {
+    fun setOnItemClickListener(block: (Int,String) -> Unit) {
         onItemClickListener = block
     }
 
@@ -42,7 +42,7 @@ class TestAdapter : ListAdapter<ListOfTestsResultData, TestAdapter.ViewHolder>(M
 
         init {
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).id)
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).id,getItem(absoluteAdapterPosition).name)
             }
         }
     }

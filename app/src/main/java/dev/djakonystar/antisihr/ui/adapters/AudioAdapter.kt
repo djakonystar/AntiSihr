@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.data.models.AudioModel
+import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ItemAudioBinding
+import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class AudioAdapter : ListAdapter<AudioModel, AudioAdapter.ViewHolder>(MyDiffUtil) {
+class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((AudioResultData) -> Unit)? = null
+    private var onPlayClickListener: ((AudioResultData) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (String) -> Unit) {
+    fun setOnItemClickListener(block: (AudioResultData) -> Unit) {
+        onItemClickListener = block
+    }
+
+    fun setOnPlayClickListener(block: (AudioResultData) -> Unit) {
         onItemClickListener = block
     }
 
@@ -37,23 +44,27 @@ class AudioAdapter : ListAdapter<AudioModel, AudioAdapter.ViewHolder>(MyDiffUtil
             binding.apply {
                 tvTitle.text = d.name
                 tvBody.text = d.author
+                icImage.setImageWithGlide(binding.root.context,d.image)
             }
         }
 
         init {
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).name)
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
+            }
+            binding.icPlay.setOnClickListener {
+                onPlayClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<AudioModel>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<AudioResultData>() {
         override fun areItemsTheSame(
-            oldItem: AudioModel, newItem: AudioModel
+            oldItem: AudioResultData, newItem: AudioResultData
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: AudioModel, newItem: AudioModel
+            oldItem: AudioResultData, newItem: AudioResultData
         ): Boolean = oldItem.name == newItem.name && oldItem.author == newItem.author
     }
 }

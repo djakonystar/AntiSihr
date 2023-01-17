@@ -35,18 +35,17 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     private fun initListeners() {
         _adapter = LibraryAdapter()
         binding.rcLibrary.adapter = adapter
+        binding.expandableLayout.duration =500
 
 
         binding.icSearch.clicks().debounce(200).onEach {
             binding.icMenu.hide()
             binding.icSearch.hide()
             binding.icClose.show()
-            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
         binding.icClose.clicks().debounce(200).onEach {
-            binding.tvBody.show()
             binding.icClose.hide()
             binding.icMenu.show()
             binding.icSearch.show()

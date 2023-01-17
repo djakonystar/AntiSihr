@@ -16,6 +16,7 @@
         android:layout_height="54dp"
         android:layout_marginVertical="16dp"
         android:layout_marginStart="16dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:fontFamily="@font/nunito_bold_ttf"
@@ -32,6 +33,9 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@id/tv_body"
         app:layout_constraintStart_toEndOf="@id/ic_image"
+        app:layout_constraintEnd_toStartOf="@id/ic_play"
+        android:layout_marginEnd="24dp"
+        android:singleLine="true"
         app:layout_constraintTop_toTopOf="@id/ic_image"
         tools:text="Рукъя от джиннов" />
 
@@ -54,7 +58,9 @@
         android:id="@+id/ic_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:layout_marginEnd="20dp"
+        android:padding="12dp"
         android:src="@drawable/ic_play"
         app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintEnd_toEndOf="parent"

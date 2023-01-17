@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
@@ -20,10 +21,10 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold_ttf"
         android:text="Рукъя от всего"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:fontFamily="@font/nunito_bold"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_menu"
+        android:id="@+id/ic_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -45,8 +46,9 @@
         android:id="@+id/ic_audio_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="64dp"
+        android:layout_marginHorizontal="48dp"
         android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/tv_audio_name"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
@@ -57,7 +59,7 @@
         android:id="@+id/tv_audio_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_bold"
+        android:fontFamily="@font/nunito_bold_ttf"
         android:text="Чтение Корана от сихра"
         android:textColor="@color/main_text_color"
         android:textSize="20sp"
@@ -71,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:fontFamily="@font/nunito"
+        android:fontFamily="@font/nunito_ttf"
         android:text="Мухьаммад Даутукаев"
         android:textColor="#80000000"
         android:textSize="17sp"
@@ -79,12 +81,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_audio_name" />
 
-    <ProgressBar
+    <SeekBar
         android:id="@+id/music_controller"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="48dp"
+        android:layout_marginHorizontal="32dp"
+        android:progress="10"
+        android:progressTint="@color/main_color"
+        android:thumbTint="@color/main_color"
         app:layout_constraintBottom_toTopOf="@id/btn_play"
         app:layout_constraintTop_toBottomOf="@id/tv_audio_author" />
 
@@ -92,17 +97,21 @@
         android:id="@+id/current_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1:25"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/nunito_medium"
         app:layout_constraintStart_toStartOf="@id/music_controller"
-        app:layout_constraintTop_toBottomOf="@id/music_controller" />
+        app:layout_constraintTop_toBottomOf="@id/music_controller"
+        tools:text="1:25" />
 
     <TextView
         android:id="@+id/end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3:25"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/nunito_medium"
         app:layout_constraintEnd_toEndOf="@id/music_controller"
-        app:layout_constraintTop_toBottomOf="@id/music_controller" />
+        app:layout_constraintTop_toBottomOf="@id/music_controller"
+        tools:text="3:25" />
 
 
     <LinearLayout
@@ -114,14 +123,24 @@
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/music_controller">
 
         <ImageView
+            android:id="@+id/ic_play"
+            android:layout_marginStart="24dp"
             android:layout_width="wrap_content"
+            android:visibility="visible"
             android:layout_height="wrap_content"
-            android:layout_marginStart="23dp"
             android:src="@drawable/ic_play_big" />
+
+        <ImageView
+            android:id="@+id/ic_pause"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pause" />
     </LinearLayout>
 
 
