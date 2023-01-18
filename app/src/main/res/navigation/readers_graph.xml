@@ -9,6 +9,7 @@
     <fragment
         android:id="@+id/readers_screen"
         android:label="ReadersScreen"
+        android:name="dev.djakonystar.antisihr.ui.readers.ReadersScreen"
         tools:layout="@layout/screen_readers" />
 
 

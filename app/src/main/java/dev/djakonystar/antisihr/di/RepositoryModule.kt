@@ -5,8 +5,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.djakonystar.antisihr.domain.repository.AudioRepository
+import dev.djakonystar.antisihr.domain.repository.ReadersRepository
 import dev.djakonystar.antisihr.domain.repository.TestRepository
 import dev.djakonystar.antisihr.domain.repository.impl.AudioRepositoryImpl
+import dev.djakonystar.antisihr.domain.repository.impl.ReadersRepositoryImpl
 import dev.djakonystar.antisihr.domain.repository.impl.TestRepositoryImpl
 
 @Module
@@ -19,5 +21,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindAudioRepository(impl: AudioRepositoryImpl): AudioRepository
+
+    @Binds
+    fun bindReadersRepository(impl: ReadersRepositoryImpl): ReadersRepository
 
 }
