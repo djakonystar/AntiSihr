@@ -3,8 +3,6 @@ package dev.djakonystar.antisihr.ui.shop
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.core.content.ContextCompat
