@@ -25,4 +25,8 @@
     <string name="to_saved">В избранное</string>
     <string name="favorites">Избранное</string>
     <string name="city_name">Название города</string>
+    <string name="buy">Купить</string>
+    <string name="shop_name">Магазин:</string>
+    <string name="capacity">Объем:</string>
+    <string name="description">Описание:</string>
 </resources>
