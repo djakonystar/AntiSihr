@@ -24,8 +24,5 @@ interface AntiSihrApi {
     @GET("/audio")
     suspend fun getListOfAudios(): Response<ListOfAudiosData>
 
-    @GET("/audio/{id}")
-    suspend fun getAudioById(@Path("id") id:Int): Response<AudioSingleData>
-
 
 }

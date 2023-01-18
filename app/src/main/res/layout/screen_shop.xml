@@ -63,7 +63,7 @@
         android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
         android:visibility="visible"
         app:el_expanded="false"
         app:layout_constraintStart_toStartOf="@id/tv_title"
@@ -86,22 +86,9 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
         app:tabMode="scrollable"
-        app:tabIndicatorAnimationMode="fade"
         app:tabIndicatorFullWidth="false"
         app:tabTextAppearance="@style/tabTextAppearanceActive"
         app:layout_constraintTop_toBottomOf="@id/expandable_layout">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/testTab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AntiSihr" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/testTab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AntiSihr2" />
 
     </com.google.android.material.tabs.TabLayout>
 
