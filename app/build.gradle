@@ -111,4 +111,9 @@ dependencies {
      * */
     implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 
+    /**
+     * Custom dots indicator
+     * */
+    implementation "com.tbuonomo:dotsindicator:4.3"
+
 }
