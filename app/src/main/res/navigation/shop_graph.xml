@@ -9,6 +9,7 @@
     <fragment
         android:id="@+id/shop_screen"
         android:label="ShopScreen"
+        android:name="dev.djakonystar.antisihr.ui.shop.ShopScreen"
         tools:layout="@layout/screen_shop">
 
         <action

@@ -105,7 +105,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.shop -> {
-                    toast("SHOP")
+                    if (selectedMenuId != R.id.shop) {
+                        val graph = navInflater.inflate(R.navigation.shop_graph)
+                        navController.graph = graph
+                        selectedMenuId = R.id.shop
+                    }
                 }
                 R.id.readers -> {
                     toast("READERS")
