@@ -3,6 +3,7 @@ package dev.djakonystar.antisihr.ui.readers
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,7 +23,6 @@ import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class ReadersScreen : Fragment(R.layout.screen_readers) {
@@ -50,9 +50,21 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
         _adapter = ReadersAdapter()
         binding.apply {
             rcReaders.adapter = adapter
+
+            etSearch.doAfterTextChanged {
+                chipGroupCity.clearCheck()
+                if (etSearch.text.toString().isEmpty()) {
+                    adapter.submitList(allReaders)
+                } else {
+                    val newList = adapter.currentList.filter { r ->
+                        r.city.name.contains(etSearch.text.toString())
+                    }
+                    adapter.submitList(newList)
+                }
+            }
         }
 
-        adapter.setOnDetailButtonClickListener {
+        adapter.setOnItemClickListener {
             findNavController().navigate(
                 ReadersScreenDirections.actionReadersScreenToReaderDetailDialog(
                     it.id

@@ -1,5 +1,7 @@
 package dev.djakonystar.antisihr.ui.adapters
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -33,6 +35,11 @@ class SocialMediaAdapter :
         fun bind() {
             val d = getItem(absoluteAdapterPosition)
             binding.root.setImageWithGlide(binding.root.context, d.type.image)
+
+            binding.root.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(d.url))
+                binding.root.context.startActivity(intent)
+            }
         }
     }
 

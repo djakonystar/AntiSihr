@@ -12,10 +12,10 @@ import dev.djakonystar.antisihr.utils.setImageWithGlide
 
 class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>(MyDiffUtil) {
 
-    private var onDetailButtonClickListener: ((ReaderData) -> Unit)? = null
+    private var onItemClickListener: ((ReaderData) -> Unit)? = null
 
-    fun setOnDetailButtonClickListener(block: (ReaderData) -> Unit) {
-        this.onDetailButtonClickListener = block
+    fun setOnItemClickListener(block: (ReaderData) -> Unit) {
+        this.onItemClickListener = block
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadersViewHolder {
@@ -46,7 +46,11 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
 
         init {
             binding.btnMore.setOnClickListener {
-                onDetailButtonClickListener?.invoke(getItem(absoluteAdapterPosition))
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
+            }
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
         }
     }

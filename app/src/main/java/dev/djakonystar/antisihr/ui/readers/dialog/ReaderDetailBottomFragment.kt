@@ -68,17 +68,17 @@ class ReaderDetailBottomFragment : BottomSheetDialogFragment() {
                 tvAuthor.text = "${reader.surname} ${reader.name}"
                 tvCityName.text = reader.city.name
                 adapter.submitList(reader.socialNetworks)
-                tvAddress.text = reader.address
+                tvAddress.text = reader.address ?: ""
                 tvPhone.text = reader.phone.toPhoneNumber
                 tvDescription.text = reader.description
 
                 ivPhone.clicks().debounce(200).onEach {
                     val phone = reader.phone.toPhoneNumber.filter { c -> c == '+' || c.isDigit() }
-                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
-                    startActivity(intent)
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(phone)))
+                    requireActivity().startActivity(intent)
                 }.launchIn(lifecycleScope)
             }
-        }
+        }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
             toast(it)

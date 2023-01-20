@@ -51,6 +51,6 @@ class ReadersScreenViewModelImpl @Inject constructor(
                     errorFlow.emit(it.error)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 }
