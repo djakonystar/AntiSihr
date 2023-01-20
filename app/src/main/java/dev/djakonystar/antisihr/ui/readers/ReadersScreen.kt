@@ -102,8 +102,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             binding.apply {
                 val inflater = LayoutInflater.from(requireContext())
 
-                val newChip =
-                    inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
+                val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
                 newChip.text = city.name
 
                 chipGroupCity.addView(newChip)
