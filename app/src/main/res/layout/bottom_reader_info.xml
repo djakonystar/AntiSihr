@@ -72,65 +72,18 @@
             tools:text="г. Назрань" />
 
 
-        <LinearLayout
-            android:id="@+id/linear_social_media"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_social_media"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/tv_city_name">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:src="@drawable/ic_whatsapp" />
-
-            </FrameLayout>
-
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:src="@drawable/ic_telegram" />
-
-            </FrameLayout>
-
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/ic_background_instagram"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_inner_instagram" />
-            </FrameLayout>
-        </LinearLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_city_name"
+            tools:listitem="@layout/item_social_media" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_address_title"
@@ -143,7 +96,7 @@
             android:textColor="#959595"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_social_media" />
+            app:layout_constraintTop_toBottomOf="@id/rv_social_media" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -190,11 +143,20 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/nunito_medium"
-            android:text="+7 (***) ***-**-**"
             android:textColor="#018AF8"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_phone_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_phone_title"
+            tools:text="+7 (***) ***-**-**" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_phone"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <View
             android:id="@+id/divider_second"

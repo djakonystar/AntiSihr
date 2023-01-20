@@ -43,6 +43,12 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
                 tvDescription.text = d.description
             }
         }
+
+        init {
+            binding.btnMore.setOnClickListener {
+                onDetailButtonClickListener?.invoke(getItem(absoluteAdapterPosition))
+            }
+        }
     }
 
     private object MyDiffUtil : DiffUtil.ItemCallback<ReaderData>() {

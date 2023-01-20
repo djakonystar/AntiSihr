@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlin.random.Random
 
 @AndroidEntryPoint
-class ReadersScreen: Fragment(R.layout.screen_readers) {
+class ReadersScreen : Fragment(R.layout.screen_readers) {
     private val binding by viewBinding(ScreenReadersBinding::bind)
     private val viewModel: ReadersScreenViewModel by viewModels<ReadersScreenViewModelImpl>()
     private val selectedCities = mutableListOf<String>()
@@ -49,6 +50,14 @@ class ReadersScreen: Fragment(R.layout.screen_readers) {
         _adapter = ReadersAdapter()
         binding.apply {
             rcReaders.adapter = adapter
+        }
+
+        adapter.setOnDetailButtonClickListener {
+            findNavController().navigate(
+                ReadersScreenDirections.actionReadersScreenToReaderDetailDialog(
+                    it.id
+                )
+            )
         }
     }
 

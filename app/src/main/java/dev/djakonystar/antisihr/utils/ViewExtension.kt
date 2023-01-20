@@ -31,3 +31,19 @@ fun showSnackBar(view: View, msg: String, length: Int = Snackbar.LENGTH_SHORT) {
 fun ImageView.setImageWithGlide(context: Context, url: String) {
     Glide.with(context).load(url).into(this)
 }
+
+val String.toPhoneNumber: String
+    get() {
+        val arr = this.toCharArray()
+        var phone = "+7 ("
+        arr.forEachIndexed { index, c ->
+            if (index != 0) phone += c
+            if (index == 3) {
+                phone += ") "
+            }
+            if (index == 6 || index == 8) {
+                phone += "-"
+            }
+        }
+        return phone
+    }
