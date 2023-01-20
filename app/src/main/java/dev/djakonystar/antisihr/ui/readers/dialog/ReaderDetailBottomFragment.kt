@@ -78,14 +78,14 @@ class ReaderDetailBottomFragment : BottomSheetDialogFragment() {
                     startActivity(intent)
                 }.launchIn(lifecycleScope)
             }
-        }
+        }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
             toast(it)
-        }
+        }.launchIn(lifecycleScope)
 
         viewModel.errorFlow.onEach {
             it.localizedMessage?.let { message -> toast(message) }
-        }
+        }.launchIn(lifecycleScope)
     }
 }
