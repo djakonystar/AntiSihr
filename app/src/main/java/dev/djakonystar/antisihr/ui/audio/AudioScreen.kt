@@ -46,6 +46,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenResumed {
             visibilityOfLoadingAnimationView.emit(true)
+            showBottomNavigationView.emit(Unit)
             viewModel.getListOfTests()
         }
 

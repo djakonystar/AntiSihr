@@ -61,6 +61,11 @@ class MainActivity : AppCompatActivity() {
                 binding.loadingAnimation.hide()
             }
         }.launchIn(lifecycleScope)
+
+
+        showBottomNavigationView.onEach {
+            binding.bottomNavigationBar.show()
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {

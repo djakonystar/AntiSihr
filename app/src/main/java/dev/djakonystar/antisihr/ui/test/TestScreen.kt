@@ -16,6 +16,7 @@ import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
 import dev.djakonystar.antisihr.presentation.test.HomeScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.impl.HomeScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.TestAdapter
+import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import dev.djakonystar.antisihr.utils.showSnackBar
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
@@ -38,6 +39,7 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
         lifecycleScope.launchWhenCreated {
             visibilityOfLoadingAnimationView.emit(true)
+            showBottomNavigationView.emit(Unit)
         }
 
     }

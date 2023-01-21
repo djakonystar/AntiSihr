@@ -19,6 +19,7 @@ import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ScreenShopBinding
 import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.show
+import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -40,7 +41,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        lifecycleScope.launchWhenResumed {
+            showBottomNavigationView.emit(Unit)
+        }
         initListeners()
         initObservers()
     }

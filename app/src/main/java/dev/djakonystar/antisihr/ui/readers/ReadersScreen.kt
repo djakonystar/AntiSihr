@@ -20,6 +20,7 @@ import dev.djakonystar.antisihr.databinding.ScreenReadersBinding
 import dev.djakonystar.antisihr.presentation.readers.ReadersScreenViewModel
 import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.ReadersAdapter
+import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import dev.djakonystar.antisihr.utils.toast
 import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
@@ -50,6 +51,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
         lifecycleScope.launchWhenResumed {
             visibilityOfLoadingAnimationView.emit(true)
+            showBottomNavigationView.emit(Unit)
             viewModel.getReaders()
         }
 
