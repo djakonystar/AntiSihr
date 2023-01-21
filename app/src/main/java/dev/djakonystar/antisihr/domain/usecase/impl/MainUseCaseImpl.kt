@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.domain.usecase.impl
 
 import dev.djakonystar.antisihr.data.models.GenericResponse
 import dev.djakonystar.antisihr.data.models.ResultData
+import dev.djakonystar.antisihr.data.models.drawerlayout.AboutAppData
 import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
 import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.data.remote.AntiSihrApi
@@ -21,4 +22,5 @@ class MainUseCaseImpl @Inject constructor(
 ) : MainUseCase {
     override suspend fun addFeedback(feedbackData: AddFeedbackData) = repo.addFeedback(feedbackData)
     override suspend fun getListOfLanguages() = repo.getListOfLanguages()
+    override suspend fun getInfoAboutApp()= repo.getInfoAboutApp()
 }

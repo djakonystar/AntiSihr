@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.djakonystar.antisihr.data.models.GenericResponse
 import dev.djakonystar.antisihr.data.models.ResultData
+import dev.djakonystar.antisihr.data.models.drawerlayout.AboutAppData
 import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
 import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.domain.usecase.MainUseCase
@@ -46,6 +47,24 @@ class MainViewModelImpl @Inject constructor(
             when (it) {
                 is ResultData.Success -> {
                     getLanguagesSuccessFlow.emit(it.data)
+                }
+                is ResultData.Message -> {
+                    messageFlow.emit(it.message)
+                }
+                is ResultData.Error -> {
+                    errorFlow.emit(it.error)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    override val infoAboutAppFlow = MutableSharedFlow<GenericResponse<List<AboutAppData>>>()
+
+    override suspend fun getInfoAboutApp() {
+        useCase.getInfoAboutApp().onEach {
+            when (it) {
+                is ResultData.Success -> {
+                    infoAboutAppFlow.emit(it.data)
                 }
                 is ResultData.Message -> {
                     messageFlow.emit(it.message)

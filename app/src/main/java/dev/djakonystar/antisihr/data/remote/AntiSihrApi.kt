@@ -1,6 +1,7 @@
 package dev.djakonystar.antisihr.data.remote
 
 import dev.djakonystar.antisihr.data.models.*
+import dev.djakonystar.antisihr.data.models.drawerlayout.AboutAppData
 import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
 import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.data.models.library.ArticleResultData
@@ -61,5 +62,8 @@ interface AntiSihrApi {
 
     @GET("/languages")
     suspend fun getLanguages(): Response<GenericResponse<List<LanguageData>>>
+
+    @GET("/about")
+    suspend fun getInfoAboutApp(): Response<GenericResponse<List<AboutAppData>>>
 
 }

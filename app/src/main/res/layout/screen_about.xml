@@ -112,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_ttf"
-        android:text="© AnriShir, 2022\nВсе права защищены"
+        android:text="© AntiShir, 2022\nВсе права защищены"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

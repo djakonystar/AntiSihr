@@ -49,3 +49,9 @@ fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
+fun String.toPhoneType(): String {
+    val regex = """(\d)(\d{3})(\d{3})(\d{2})(\d{2})""".toRegex()
+    val output = regex.replace(this, "+$1 $2 $3-$4-$5" )
+    return output
+}

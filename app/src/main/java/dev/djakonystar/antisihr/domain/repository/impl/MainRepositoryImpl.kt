@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.domain.repository.impl
 
 import dev.djakonystar.antisihr.data.models.GenericResponse
 import dev.djakonystar.antisihr.data.models.ResultData
+import dev.djakonystar.antisihr.data.models.drawerlayout.AboutAppData
 import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
 import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.data.remote.AntiSihrApi
@@ -31,6 +32,17 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getListOfLanguages() = flow {
         val response = api.getLanguages()
+        if (response.isSuccessful) {
+            emit(ResultData.Success(response.body()!!))
+        } else {
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch {
+        emit(ResultData.Error(it))
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getInfoAboutApp()= flow {
+        val response = api.getInfoAboutApp()
         if (response.isSuccessful) {
             emit(ResultData.Success(response.body()!!))
         } else {
