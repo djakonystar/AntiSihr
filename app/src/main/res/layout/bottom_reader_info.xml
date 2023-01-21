@@ -1,243 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/tv_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_close" />
+
+    <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_semibold_ttf"
+        android:text="@string/close"
+        android:textColor="#774FDC"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <View
-            android:layout_width="50dp"
-            android:layout_height="3dp"
-            android:background="@color/grey"
-            app:layout_constraintBottom_toBottomOf="@id/tv_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_close" />
-
-        <TextView
-            android:id="@+id/tv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/nunito_semibold_ttf"
-            android:text="@string/close"
-            android:textColor="#774FDC"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+        app:layout_constraintTop_toBottomOf="@id/tv_close">
 
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ic_photo"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@id/tv_close"
-            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize8Percent" />
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ic_photo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize8Percent" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/nunito_bold_ttf"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ic_photo"
-            tools:text="Барахоев Иса" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/nunito_bold_ttf"
-            android:textColor="#66000000"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_author"
-            tools:text="г. Назрань" />
-
-
-        <LinearLayout
-            android:id="@+id/linear_social_media"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/tv_city_name">
-
-            <FrameLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:src="@drawable/ic_whatsapp" />
-
-            </FrameLayout>
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/nunito_bold_ttf"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_photo"
+                tools:text="Барахоев Иса" />
 
 
-            <FrameLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_city_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:src="@drawable/ic_telegram" />
-
-            </FrameLayout>
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/nunito_bold_ttf"
+                android:textColor="#66000000"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_author"
+                tools:text="г. Назрань" />
 
 
-            <FrameLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_social_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_city_name"
+                tools:listitem="@layout/item_social_media" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_address_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/white"
-                android:elevation="1dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/ic_background_instagram"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_inner_instagram" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_address_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/nunito_ttf"
-            android:text="Адрес:"
-            android:textColor="#959595"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_social_media" />
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/nunito_ttf"
+                android:text="Адрес:"
+                android:textColor="#959595"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_social_media" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="РИ, г. Сунжа, ул. Первая, д. 23"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_address_title" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/nunito_medium"
+                tools:text="РИ, г. Сунжа, ул. Первая, д. 23"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_title" />
 
-        <View
-            android:id="@+id/divider_first"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="#E4E4E4"
-            app:layout_constraintEnd_toEndOf="@id/ic_photo"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/tv_address" />
+            <View
+                android:id="@+id/divider_first"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="#E4E4E4"
+                app:layout_constraintEnd_toEndOf="@id/ic_photo"
+                app:layout_constraintStart_toStartOf="@id/ic_photo"
+                app:layout_constraintTop_toBottomOf="@id/tv_address" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_phone_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/nunito_ttf"
-            android:text="Номер телефона:"
-            android:textColor="#959595"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_first" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="+7 (***) ***-**-**"
-            android:textColor="#018AF8"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_phone_title" />
-
-        <View
-            android:id="@+id/divider_second"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="#E4E4E4"
-            app:layout_constraintEnd_toEndOf="@id/ic_photo"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/tv_phone" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_description_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/nunito_bold_ttf"
-            android:text="Описание:"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/divider_second" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_phone_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/nunito_ttf"
+                android:text="Номер телефона:"
+                android:textColor="#959595"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_first" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/nunito_medium"
-            android:text="Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/nunito_medium"
+                android:textColor="#018AF8"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_phone_title"
+                tools:text="+7 (***) ***-**-**" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:src="@drawable/ic_phone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_phone"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/divider_second"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="#E4E4E4"
+                app:layout_constraintEnd_toEndOf="@id/ic_photo"
+                app:layout_constraintStart_toStartOf="@id/ic_photo"
+                app:layout_constraintTop_toBottomOf="@id/tv_phone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/nunito_bold_ttf"
+                android:text="Описание:"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="@id/ic_photo"
+                app:layout_constraintTop_toBottomOf="@id/divider_second" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="72dp"
+                android:fontFamily="@font/nunito_medium"
+                tools:text="Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.
 
 Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.  "
-            android:textColor="#99000000"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ic_photo"
-            app:layout_constraintStart_toStartOf="@id/ic_photo"
-            app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
+                android:textColor="#99000000"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/ic_photo"
+                app:layout_constraintStart_toStartOf="@id/ic_photo"
+                app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.core.widget.NestedScrollView>

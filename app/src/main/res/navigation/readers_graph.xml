@@ -8,8 +8,23 @@
 
     <fragment
         android:id="@+id/readers_screen"
+        android:name="dev.djakonystar.antisihr.ui.readers.ReadersScreen"
         android:label="ReadersScreen"
-        tools:layout="@layout/screen_readers" />
+        tools:layout="@layout/screen_readers">
+        <action
+            android:id="@+id/action_readers_screen_to_reader_detail_dialog"
+            app:destination="@id/reader_detail_dialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/reader_detail_dialog"
+        android:name="dev.djakonystar.antisihr.ui.readers.dialog.ReaderDetailBottomFragment"
+        android:label="ReaderDetailBottomFragment"
+        tools:layout="@layout/bottom_reader_info">
+        <argument
+            android:name="readerId"
+            app:argType="integer" />
+    </dialog>
 
 
 </navigation>

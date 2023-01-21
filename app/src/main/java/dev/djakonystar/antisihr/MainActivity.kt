@@ -112,7 +112,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.readers -> {
-                    toast("READERS")
+                    if (selectedMenuId != R.id.readers) {
+                        val graph = navInflater.inflate(R.navigation.readers_graph)
+                        navController.graph = graph
+                        selectedMenuId = R.id.readers
+                    }
                 }
             }
             true
