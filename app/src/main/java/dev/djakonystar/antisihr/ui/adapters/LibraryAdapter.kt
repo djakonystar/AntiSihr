@@ -5,16 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.djakonystar.antisihr.data.models.AudioModel
-import dev.djakonystar.antisihr.data.models.LibraryModel
-import dev.djakonystar.antisihr.databinding.ItemAudioBinding
+import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
+import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class LibraryAdapter : ListAdapter<LibraryModel, LibraryAdapter.ViewHolder>(MyDiffUtil) {
+class LibraryAdapter : ListAdapter<LibraryResultData, LibraryAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((LibraryResultData) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (String) -> Unit) {
+    fun setOnItemClickListener(block: (LibraryResultData) -> Unit) {
         onItemClickListener = block
     }
 
@@ -37,25 +36,26 @@ class LibraryAdapter : ListAdapter<LibraryModel, LibraryAdapter.ViewHolder>(MyDi
         fun bind() {
             val d = getItem(absoluteAdapterPosition)
             binding.apply {
+                icImage.setImageWithGlide(binding.root.context, d.image)
                 tvTitle.text = d.name
-                tvBody.text = d.body
+                tvBody.text = d.description
             }
         }
 
         init {
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).name)
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<LibraryModel>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<LibraryResultData>() {
         override fun areItemsTheSame(
-            oldItem: LibraryModel, newItem: LibraryModel
+            oldItem: LibraryResultData, newItem: LibraryResultData
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: LibraryModel, newItem: LibraryModel
-        ): Boolean = oldItem.name == newItem.name && oldItem.body == newItem.body
+            oldItem: LibraryResultData, newItem: LibraryResultData
+        ): Boolean = oldItem.name == newItem.name && oldItem.id == newItem.id
     }
 }

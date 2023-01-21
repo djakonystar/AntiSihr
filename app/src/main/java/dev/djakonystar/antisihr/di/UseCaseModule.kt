@@ -6,9 +6,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.djakonystar.antisihr.domain.repository.impl.AudioRepositoryImpl
 import dev.djakonystar.antisihr.domain.usecase.AudioUseCase
+import dev.djakonystar.antisihr.domain.usecase.LibraryUseCase
 import dev.djakonystar.antisihr.domain.usecase.ReadersUseCase
 import dev.djakonystar.antisihr.domain.usecase.TestUseCase
 import dev.djakonystar.antisihr.domain.usecase.impl.AudioUseCaseImpl
+import dev.djakonystar.antisihr.domain.usecase.impl.LibraryUseCaseImpl
 import dev.djakonystar.antisihr.domain.usecase.impl.ReadersUseCaseImpl
 import dev.djakonystar.antisihr.domain.usecase.impl.TestUseCaseImpl
 
@@ -25,4 +27,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindReadersUseCase(impl: ReadersUseCaseImpl): ReadersUseCase
+
+    @Binds
+    fun bindLibraryUseCase(impl: LibraryUseCaseImpl): LibraryUseCase
 }

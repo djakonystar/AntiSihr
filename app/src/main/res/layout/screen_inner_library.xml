@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_library"
@@ -14,7 +14,7 @@
         android:fontFamily="@font/nunito_extrabold_ttf"
         android:text="Лекарь"
         android:textColor="#260101"
-        android:textSize="23sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
         android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
         android:visibility="visible"
         app:el_expanded="false"
         app:layout_constraintStart_toStartOf="@id/tv_library"
@@ -86,17 +86,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/nunito_ttf"
-        tools:text="Сбоник собранный для Лекарей
-рассказывающих обо свем нужном"
-        android:textColor="#80260101"
         android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toStartOf="@id/ic_menu"
+        android:fontFamily="@font/nunito_ttf"
+        android:textColor="#80260101"
         android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@id/ic_menu"
         app:layout_constraintStart_toStartOf="@id/tv_library"
-        app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
+        app:layout_constraintTop_toBottomOf="@id/expandable_layout"
+        tools:text="Сбоник собранный для Лекарей
+рассказывающих обо свем нужном" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_articles"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"

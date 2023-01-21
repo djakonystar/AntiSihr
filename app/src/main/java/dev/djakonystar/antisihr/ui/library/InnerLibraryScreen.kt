@@ -3,12 +3,16 @@ package dev.djakonystar.antisihr.ui.library
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.InnerLibraryModel
-import dev.djakonystar.antisihr.databinding.ScreenLibraryBinding
+import dev.djakonystar.antisihr.databinding.ScreenInnerLibraryBinding
+import dev.djakonystar.antisihr.presentation.library.InnerLibraryScreenViewModel
+import dev.djakonystar.antisihr.presentation.library.impl.InnerLibraryScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.InnerLibraryAdapter
 import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.show
@@ -19,24 +23,37 @@ import ru.ldralighieri.corbind.view.clicks
 
 
 @AndroidEntryPoint
-class InnerLibraryScreen : Fragment(R.layout.screen_library) {
-    private val binding: ScreenLibraryBinding by viewBinding(ScreenLibraryBinding::bind)
-
+class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
+    private val binding: ScreenInnerLibraryBinding by viewBinding(ScreenInnerLibraryBinding::bind)
+    private val viewModel: InnerLibraryScreenViewModel by viewModels<InnerLibraryScreenViewModelImpl>()
     private var _adapter: InnerLibraryAdapter? = null
+    private val args: InnerLibraryScreenArgs by navArgs()
     private val adapter: InnerLibraryAdapter get() = _adapter!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initListeners()
+        initObservers()
+        lifecycleScope.launchWhenCreated {
+            viewModel.getListOfArticles(args.id)
+        }
 
 
     }
 
+    private fun initObservers() {
+        viewModel.getListOfArticlesFlow.onEach {
+            adapter.submitList(it.result)
+        }.launchIn(lifecycleScope)
+    }
+
     private fun initListeners() {
         _adapter = InnerLibraryAdapter()
-        binding.rcLibrary.adapter = adapter
+        binding.rcArticles.adapter = adapter
+        binding.tvLibrary.text = args.name
 
 
         binding.icSearch.clicks().debounce(200).onEach {
+            binding.tvLibrary.text = getString(R.string.search)
             binding.icMenu.hide()
             binding.icSearch.hide()
             binding.icClose.show()
@@ -45,6 +62,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_library) {
         }.launchIn(lifecycleScope)
 
         binding.icClose.clicks().debounce(200).onEach {
+            binding.tvLibrary.text = args.name
             binding.tvBody.show()
             binding.icClose.hide()
             binding.icMenu.show()
@@ -52,27 +70,18 @@ class InnerLibraryScreen : Fragment(R.layout.screen_library) {
             binding.expandableLayout.collapse()
         }.launchIn(lifecycleScope)
 
+        binding.icMenu.clicks().debounce(200).onEach {
+            findNavController().navigateUp()
+        }.launchIn(lifecycleScope)
 
-        val list = listOf<InnerLibraryModel>(
-            InnerLibraryModel(
-                "Пациент",
-                "Важная информация для тебя. Азкары, информация про намаз,  его важность и не только."
-            ),
-            InnerLibraryModel(
-                "Вопрос/Ответ",
-                "Что такое сглаз? Какие бывают джинны? Когда и из чего были сотворены ...?"
-            ),
-            InnerLibraryModel(
-                "Азкары",
-                "Здесь собраны много азкаров, которые необходимо читать каждый день и перед сном!"
-            ),
-            InnerLibraryModel(
-                "Лекарь",
-                "Здесь собранна информация,   которую необходимо знать тому кто хочет лечить людей (Чтецу) "
-            ),
-
+        adapter.setOnItemClickListener {
+            findNavController().navigate(
+                InnerLibraryScreenDirections.actionInnerLibraryScreenToBottomArticleDialog(
+                    it.id
+                )
             )
-        adapter.submitList(list)
+
+        }
     }
 
     override fun onDestroy() {

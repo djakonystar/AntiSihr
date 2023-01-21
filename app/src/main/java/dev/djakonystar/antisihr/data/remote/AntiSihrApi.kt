@@ -1,6 +1,9 @@
 package dev.djakonystar.antisihr.data.remote
 
 import dev.djakonystar.antisihr.data.models.*
+import dev.djakonystar.antisihr.data.models.library.ArticleResultData
+import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
+import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.data.models.reader.ReaderDetailData
 import retrofit2.Response
@@ -39,5 +42,14 @@ interface AntiSihrApi {
     suspend fun getReaderById(
         @Path("id") id: Int
     ): Response<GenericResponse<List<ReaderDetailData>>>
+
+    @GET("/library")
+    suspend fun getListOfSectionsLibrary(): Response<GenericResponse<List<LibraryResultData>>>
+
+    @GET("/articles/list/{id}")
+    suspend fun getArticlesForLibrary(@Path("id") id: Int): Response<GenericResponse<List<InnerLibraryResultData>>>
+
+    @GET("/articles/{id}")
+    suspend fun getArticle(@Path("id") id: Int): Response<GenericResponse<List<ArticleResultData>>>
 
 }

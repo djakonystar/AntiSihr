@@ -8,8 +8,8 @@
 
     <fragment
         android:id="@+id/library_screen"
-        android:label="LibraryScreen"
         android:name="dev.djakonystar.antisihr.ui.library.LibraryScreen"
+        android:label="LibraryScreen"
         tools:layout="@layout/screen_library">
 
         <action
@@ -19,9 +19,36 @@
 
     <fragment
         android:id="@+id/inner_library_screen"
-        android:label="InnerLibraryScreen"
         android:name="dev.djakonystar.antisihr.ui.library.InnerLibraryScreen"
-        tools:layout="@layout/screen_inner_library" />
+        android:label="InnerLibraryScreen"
+        tools:layout="@layout/screen_inner_library">
+        <action
+            android:id="@+id/action_inner_library_screen_to_bottom_article_dialog"
+            app:destination="@id/bottom_article_dialog" />
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+        <argument
+            android:name="name"
+            app:argType="string" />
+
+        <argument
+            android:name="description"
+            app:argType="string" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/bottom_article_dialog"
+        android:name="dev.djakonystar.antisihr.ui.library.dialog.ArticleDetailBottomFragment"
+        android:label="ArticleBottomSheetDialog"
+        tools:layout="@layout/bottom_article_info">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </dialog>
 
 
 </navigation>

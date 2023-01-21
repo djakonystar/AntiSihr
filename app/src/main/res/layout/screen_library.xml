@@ -14,7 +14,7 @@
         android:fontFamily="@font/nunito_extrabold_ttf"
         android:text="@string/library"
         android:textColor="#260101"
-        android:textSize="23sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,7 @@
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
         android:padding="10dp"
-        android:src="@drawable/ic_favourites"
+        android:src="@drawable/ic_menu"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
         app:layout_constraintEnd_toStartOf="@id/ic_search"
@@ -65,7 +65,7 @@
         android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
         android:visibility="visible"
         app:el_expanded="false"
         app:layout_constraintStart_toStartOf="@id/tv_search"

@@ -8,16 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.data.models.AudioModel
 import dev.djakonystar.antisihr.data.models.InnerLibraryModel
 import dev.djakonystar.antisihr.data.models.LibraryModel
+import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
 import dev.djakonystar.antisihr.databinding.ItemAudioBinding
 import dev.djakonystar.antisihr.databinding.ItemInnerLibraryBinding
 import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 
 class InnerLibraryAdapter :
-    ListAdapter<InnerLibraryModel, InnerLibraryAdapter.ViewHolder>(MyDiffUtil) {
+    ListAdapter<InnerLibraryResultData, InnerLibraryAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((InnerLibraryResultData) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (String) -> Unit) {
+    fun setOnItemClickListener(block: (InnerLibraryResultData) -> Unit) {
         onItemClickListener = block
     }
 
@@ -41,24 +42,24 @@ class InnerLibraryAdapter :
             val d = getItem(absoluteAdapterPosition)
             binding.apply {
                 tvTitle.text = d.title
-                tvBody.text = d.body
+                tvBody.text = d.lead
             }
         }
 
         init {
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition).title)
+                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<InnerLibraryModel>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<InnerLibraryResultData>() {
         override fun areItemsTheSame(
-            oldItem: InnerLibraryModel, newItem: InnerLibraryModel
+            oldItem: InnerLibraryResultData, newItem: InnerLibraryResultData
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: InnerLibraryModel, newItem: InnerLibraryModel
-        ): Boolean = oldItem.title == newItem.title && oldItem.body == newItem.body
+            oldItem: InnerLibraryResultData, newItem: InnerLibraryResultData
+        ): Boolean = oldItem.title == newItem.title && oldItem.id== newItem.id
     }
 }
