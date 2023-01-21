@@ -49,10 +49,12 @@ class TestScreen : Fragment(R.layout.screen_home) {
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
+            visibilityOfLoadingAnimationView.emit(false)
             showSnackBar(requireView(), it)
         }.launchIn(lifecycleScope)
 
         viewModel.errorFlow.onEach {
+            visibilityOfLoadingAnimationView.emit(false)
             Log.d("TTTT", "HOMESCREEN ERROR MESSAGE: ${it.message}")
         }.launchIn(lifecycleScope)
     }

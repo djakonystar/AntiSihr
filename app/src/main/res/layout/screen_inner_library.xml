@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_library">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_audio"
+            android:id="@+id/et_search"
             style="@style/myEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="54dp"
@@ -96,14 +96,23 @@
         tools:text="Сбоник собранный для Лекарей
 рассказывающих обо свем нужном" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_articles"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_body"
-        tools:listitem="@layout/item_inner_library" />
+        app:layout_constraintTop_toBottomOf="@id/tv_body">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_articles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_inner_library" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

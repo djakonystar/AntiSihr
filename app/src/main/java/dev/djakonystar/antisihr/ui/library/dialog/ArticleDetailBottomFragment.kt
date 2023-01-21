@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.room.entity.ArticlesBookmarked
 import dev.djakonystar.antisihr.databinding.BottomArticleInfoBinding
 import dev.djakonystar.antisihr.databinding.BottomReaderInfoBinding
 import dev.djakonystar.antisihr.presentation.library.InnerLibraryScreenViewModel
@@ -39,6 +40,9 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
     private val viewModel: InnerLibraryScreenViewModel by viewModels<InnerLibraryScreenViewModelImpl>()
     private val args: ArticleDetailBottomFragmentArgs by navArgs()
     private val binding: BottomArticleInfoBinding by viewBinding(BottomArticleInfoBinding::bind)
+    private var isBookmarked: Boolean = false
+    private var lead: String? = null
+    private var title: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,6 +53,7 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenResumed {
             viewModel.getArticle(args.id)
+            isBookmarked = args.isBookmarked
         }
 
         initListeners()
@@ -59,14 +64,40 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
         binding.tvClose.clicks().debounce(200).onEach {
             dismiss()
         }.launchIn(lifecycleScope)
+
+        binding.icFavourites.clicks().debounce(200).onEach {
+            isBookmarked = !isBookmarked
+            if (isBookmarked) {
+                viewModel.addArticleToBookmarkeds(
+                    ArticlesBookmarked(
+                        args.id, lead ?: "", title ?: ""
+                    )
+                )
+                binding.icFavourites.setImageResource(R.drawable.ic_saved_filled)
+            } else {
+                viewModel.deleteArticleFromBookmarkeds(
+                    ArticlesBookmarked(
+                        args.id, lead ?: "", title ?: ""
+                    )
+                )
+                binding.icFavourites.setImageResource(R.drawable.ic_saved)
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun initObservers() {
         viewModel.getArticleSuccessFlow.onEach {
             val article = it.result!!.first()
+            lead = article.lead
+            title = article.title
             binding.tvTitle.text = article.title
             binding.tvBody.text = article.lead
             binding.tvBodySecond.text = article.description
+            if (args.isBookmarked){
+                binding.icFavourites.setImageResource(R.drawable.ic_saved_filled)
+            }else{
+                binding.icFavourites.setImageResource(R.drawable.ic_saved)
+            }
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {

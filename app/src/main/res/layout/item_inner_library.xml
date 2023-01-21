@@ -51,10 +51,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_bookmarked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_saved_filled"
+        android:src="@drawable/ic_saved"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/card"
         android:layout_marginTop="-8dp"

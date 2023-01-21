@@ -20,14 +20,14 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_menu"
+        android:id="@+id/ic_favourites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
         android:padding="10dp"
-        android:src="@drawable/ic_menu"
+        android:src="@drawable/ic_favourites"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
         app:layout_constraintEnd_toStartOf="@id/ic_search"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_search">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_audio"
+            android:id="@+id/et_search"
             style="@style/myEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="54dp"

@@ -2,12 +2,14 @@ package dev.djakonystar.antisihr.ui.audio
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioModel
 import dev.djakonystar.antisihr.databinding.ScreenAudioBinding
@@ -29,6 +31,17 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
     private var _adapter: AudioAdapter? = null
     private val adapter: AudioAdapter get() = _adapter!!
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
+                }
+            })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenResumed {

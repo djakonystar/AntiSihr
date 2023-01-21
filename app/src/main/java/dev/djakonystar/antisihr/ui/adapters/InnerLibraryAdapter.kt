@@ -5,21 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.djakonystar.antisihr.data.models.AudioModel
-import dev.djakonystar.antisihr.data.models.InnerLibraryModel
-import dev.djakonystar.antisihr.data.models.LibraryModel
+import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.models.library.InnerLibraryBookmarkData
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
-import dev.djakonystar.antisihr.databinding.ItemAudioBinding
 import dev.djakonystar.antisihr.databinding.ItemInnerLibraryBinding
-import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 
 class InnerLibraryAdapter :
-    ListAdapter<InnerLibraryResultData, InnerLibraryAdapter.ViewHolder>(MyDiffUtil) {
+    ListAdapter<InnerLibraryBookmarkData, InnerLibraryAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((InnerLibraryResultData) -> Unit)? = null
+    private var onItemClickListener: ((InnerLibraryBookmarkData) -> Unit)? = null
+    private var onBookmarkClickListener: ((InnerLibraryBookmarkData) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (InnerLibraryResultData) -> Unit) {
+
+    fun setOnItemClickListener(block: (InnerLibraryBookmarkData) -> Unit) {
         onItemClickListener = block
+    }
+
+    fun setOnBookmarkClickListener(block: (InnerLibraryBookmarkData) -> Unit) {
+        onBookmarkClickListener = block
     }
 
 
@@ -43,6 +46,11 @@ class InnerLibraryAdapter :
             binding.apply {
                 tvTitle.text = d.title
                 tvBody.text = d.lead
+                if (d.isBookmarked) {
+                    icBookmarked.setImageResource(R.drawable.ic_saved_filled)
+                } else {
+                    icBookmarked.setImageResource(R.drawable.ic_saved)
+                }
             }
         }
 
@@ -50,16 +58,27 @@ class InnerLibraryAdapter :
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
+
+            binding.icBookmarked.setOnClickListener {
+                getItem(absoluteAdapterPosition).isBookmarked =
+                    !getItem(absoluteAdapterPosition).isBookmarked
+                if (getItem(absoluteAdapterPosition).isBookmarked) {
+                    binding.icBookmarked.setImageResource(R.drawable.ic_saved_filled)
+                } else {
+                    binding.icBookmarked.setImageResource(R.drawable.ic_saved)
+                }
+                onBookmarkClickListener?.invoke(getItem(absoluteAdapterPosition))
+            }
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<InnerLibraryResultData>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<InnerLibraryBookmarkData>() {
         override fun areItemsTheSame(
-            oldItem: InnerLibraryResultData, newItem: InnerLibraryResultData
+            oldItem: InnerLibraryBookmarkData, newItem: InnerLibraryBookmarkData
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: InnerLibraryResultData, newItem: InnerLibraryResultData
-        ): Boolean = oldItem.title == newItem.title && oldItem.id== newItem.id
+            oldItem: InnerLibraryBookmarkData, newItem: InnerLibraryBookmarkData
+        ): Boolean = oldItem.title == newItem.title && oldItem.id == newItem.id
     }
 }

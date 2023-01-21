@@ -30,4 +30,6 @@
     <string name="capacity">Объем:</string>
     <string name="description">Описание:</string>
     <string name="search">Поиск</string>
+    <string name="bookmarked">Избранные</string>
+    <string name="only_bookmarkeds">Тут отображаются только избранные статьи</string>
 </resources>

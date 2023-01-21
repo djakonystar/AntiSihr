@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.Tab
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ScreenShopBinding
 import dev.djakonystar.antisihr.utils.hide
@@ -26,6 +28,17 @@ import kotlin.random.Random
 @AndroidEntryPoint
 class ShopScreen : Fragment(R.layout.screen_shop) {
     private val binding by viewBinding(ScreenShopBinding::bind)
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
+                }
+            })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

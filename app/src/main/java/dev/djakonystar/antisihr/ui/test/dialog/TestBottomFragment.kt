@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.TestQuestionData
 import dev.djakonystar.antisihr.databinding.BottomTestBinding
@@ -96,6 +97,10 @@ class TestBottomFragment : BottomSheetDialogFragment() {
         binding.btnClose.clicks().debounce(200).onEach {
             dialog?.dismiss()
         }.launchIn(lifecycleScope)
+
+        binding.treatmentCourse.clicks().debounce(200).onEach {
+            (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(false)
+        }.launchIn(lifecycleScope)
     }
 
 
@@ -104,8 +109,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
         if (currentPosition <= list.size - 1) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                 binding.progressStep.setProgress(
-                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt(),
-                    true
+                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt(), true
                 )
             } else {
                 binding.progressStep.progress =

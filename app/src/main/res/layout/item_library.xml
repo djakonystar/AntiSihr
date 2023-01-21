@@ -17,6 +17,7 @@
         android:layout_marginVertical="24dp"
         android:layout_marginStart="16dp"
         android:background="@color/main_color"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,6 @@
         app:layout_constraintStart_toEndOf="@id/ic_image"
         app:layout_constraintTop_toTopOf="@id/ic_image"
         tools:text="Вопрос/Ответ" />
-
 
 
     <TextView
@@ -56,11 +56,11 @@
         android:id="@+id/ic_forward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_arrow_forward"
         android:tint="#33000000"
         app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="12dp"
         app:layout_constraintTop_toTopOf="@id/ic_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

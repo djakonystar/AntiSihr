@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import dev.djakonystar.antisihr.data.local.LocalStorage
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.ui.about.AboutScreen
 import dev.djakonystar.antisihr.ui.audio.AudioScreen
@@ -19,10 +20,13 @@ import dev.djakonystar.antisihr.ui.test.TestScreen
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var localStorage: LocalStorage
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private var selectedMenuId = R.id.tests
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAppLocale(localStorage.language.ifEmpty { "ru" }, this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -154,6 +159,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+    }
+
+
+    fun changeBottomNavigationSelectedItem(isTestScreen: Boolean) {
+        if (isTestScreen) {
+            selectedMenuId = R.id.tests
+            binding.bottomNavigationBar.selectedItemId = R.id.tests
+            val graph = navController.navInflater.inflate(R.navigation.test_graph)
+            navController.graph = graph
+        } else {
+            selectedMenuId = R.id.library
+            binding.bottomNavigationBar.selectedItemId = R.id.library
+            val graph = navController.navInflater.inflate(R.navigation.library_graph)
+            navController.graph = graph
         }
     }
 }
