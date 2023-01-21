@@ -20,7 +20,7 @@ class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDif
     }
 
     fun setOnPlayClickListener(block: (AudioResultData) -> Unit) {
-        onItemClickListener = block
+        onPlayClickListener = block
     }
 
 
@@ -52,6 +52,7 @@ class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDif
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
             }
+
             binding.icPlay.setOnClickListener {
                 onPlayClickListener?.invoke(getItem(absoluteAdapterPosition))
             }

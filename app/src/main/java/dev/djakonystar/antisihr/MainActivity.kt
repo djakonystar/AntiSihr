@@ -1,5 +1,7 @@
 package dev.djakonystar.antisihr
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.GravityCompat
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         visibilityOfBottomNavigationView.onEach {
             if (it) {
                 binding.bottomNavigationBar.show()
+                changeBottomNavigationSelectedItem(true)
             } else {
                 binding.bottomNavigationBar.hide()
             }
@@ -57,20 +60,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.loadingAnimation.hide()
             }
-        }.launchIn(lifecycleScope)
-
-        visibilityAudioPlayer.onEach {
-            if (it) {
-                binding.layoutMusicPlayer.show()
-            } else {
-                binding.layoutMusicPlayer.hide()
-            }
-        }.launchIn(lifecycleScope)
-
-        bottomAudioPlayer.onEach {
-            binding.tvName.text = it.name
-            binding.tvAuthor.text = it.author
-            binding.icImage.setImageWithGlide(this, it.image)
         }.launchIn(lifecycleScope)
     }
 
@@ -138,7 +127,8 @@ class MainActivity : AppCompatActivity() {
                     selectedMenuId = R.id.drawerLayout
                 }
                 R.id.privacy_policy -> {
-                    toast("OPEN PRIVACY POLICY SOON....")
+                    val uri = Uri.parse("https://anti-sihr-server.ru/agreement")
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
                 }
                 R.id.feedback -> {
                     binding.bottomNavigationBar.hide()
@@ -155,7 +145,13 @@ class MainActivity : AppCompatActivity() {
                     selectedMenuId = R.id.drawerLayout
                 }
                 R.id.share -> {
-                    toast("SHARE CLICKED AND OPENED SHAIR DIALOG")
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "text/plain"
+                    val text = """
+             https://play.google.com/store/apps/details?id=${this.packageName}
+             """.trimIndent()
+                    intent.putExtra(Intent.EXTRA_TEXT, text)
+                    startActivity(Intent.createChooser(intent, "Share:"))
                 }
             }
             true

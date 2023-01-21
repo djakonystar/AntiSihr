@@ -29,7 +29,6 @@ import kotlin.random.Random
 class ShopScreen : Fragment(R.layout.screen_shop) {
     private val binding by viewBinding(ScreenShopBinding::bind)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this,
@@ -48,7 +47,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
     private fun initListeners() {
         binding.apply {
-            expandableLayout.duration = 500
+            expandableLayout.duration = 300
 
             icSearch.clicks().debounce(200).onEach {
                 icFavorites.hide()

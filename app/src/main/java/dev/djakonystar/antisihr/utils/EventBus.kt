@@ -6,4 +6,3 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 val visibilityOfBottomNavigationView = MutableSharedFlow<Boolean>()
 val visibilityOfLoadingAnimationView = MutableSharedFlow<Boolean>()
 val visibilityAudioPlayer = MutableSharedFlow<Boolean>()
-val bottomAudioPlayer = MutableSharedFlow<AudioResultData>()

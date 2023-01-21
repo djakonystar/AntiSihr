@@ -45,7 +45,6 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenResumed {
-            visibilityOfBottomNavigationView.emit(true)
             visibilityOfLoadingAnimationView.emit(true)
             viewModel.getListOfTests()
         }
@@ -85,8 +84,10 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
         adapter.setOnPlayClickListener {
             lifecycleScope.launchWhenResumed {
-                bottomAudioPlayer.emit(it)
-                visibilityAudioPlayer.emit(true)
+                binding.icImage.setImageWithGlide(requireContext(), it.image)
+                binding.tvName.text = it.name
+                binding.tvAuthor.text = it.author
+                binding.layoutMusicPlayer.show()
             }
         }
 

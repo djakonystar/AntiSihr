@@ -1,13 +1,17 @@
 package dev.djakonystar.antisihr.data.remote
 
 import dev.djakonystar.antisihr.data.models.*
+import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
+import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.data.models.library.ArticleResultData
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.data.models.reader.ReaderDetailData
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -51,5 +55,11 @@ interface AntiSihrApi {
 
     @GET("/articles/{id}")
     suspend fun getArticle(@Path("id") id: Int): Response<GenericResponse<List<ArticleResultData>>>
+
+    @POST("/feedback")
+    suspend fun addFeedback(@Body body: AddFeedbackData): Response<GenericResponse<String>>
+
+    @GET("/languages")
+    suspend fun getLanguages(): Response<GenericResponse<List<LanguageData>>>
 
 }

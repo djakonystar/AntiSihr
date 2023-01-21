@@ -18,6 +18,6 @@ class LocalStorage @Inject constructor(
             App.instance.getSharedPreferences("LocaleStorage", Context.MODE_PRIVATE)
     }
 
-    val language by StringPreference(pref,"ru")
+    var language by StringPreference(pref,"ru")
 
 }
