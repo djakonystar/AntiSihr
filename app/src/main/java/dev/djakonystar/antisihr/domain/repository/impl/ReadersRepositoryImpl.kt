@@ -3,10 +3,12 @@ package dev.djakonystar.antisihr.domain.repository.impl
 import dev.djakonystar.antisihr.data.models.ResultData
 import dev.djakonystar.antisihr.data.remote.AntiSihrApi
 import dev.djakonystar.antisihr.domain.repository.ReadersRepository
+import dev.djakonystar.antisihr.utils.errorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
