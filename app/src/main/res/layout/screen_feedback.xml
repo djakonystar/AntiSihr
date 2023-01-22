@@ -68,6 +68,8 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
+        app:prefixText="+7"
+        app:prefixTextColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/til_name">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -77,11 +79,13 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLines="1"
+            android:maxLength="15"
+            android:digits="1234567890()- "
             android:paddingStart="20dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="17sp"
-            tools:text="+7 (***) ***-**-**" />
+            tools:text="(***) ***-**-**" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
