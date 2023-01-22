@@ -8,9 +8,11 @@ import dev.djakonystar.antisihr.data.models.ResultData
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.domain.usecase.LibraryUseCase
 import dev.djakonystar.antisihr.presentation.library.LibraryScreenViewModel
+import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -37,6 +39,13 @@ class LibraryScreenViewModelImpl @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    init {
+        viewModelScope.launch {
+            getListOfSectionsLibrary()
+            visibilityOfLoadingAnimationView.emit(true)
+        }
     }
 
 

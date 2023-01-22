@@ -36,8 +36,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
@@ -48,25 +47,19 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initListeners()
         initObservers()
-        lifecycleScope.launchWhenCreated {
-            viewModel.getListOfSectionsLibrary()
-            visibilityOfLoadingAnimationView.emit(true)
-        }
-
-
     }
 
     private fun initObservers() {
         viewModel.getListOfSectionsLibraryFlow.onEach {
-            adapter.submitList(it.result)
             allLibrary.clear()
             allLibrary.addAll(it.result!!)
+            adapter.librarySections = allLibrary
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
             visibilityOfLoadingAnimationView.emit(false)
-            showSnackBar(requireView(),it)
+            showSnackBar(requireView(), it)
         }.launchIn(lifecycleScope)
 
         viewModel.errorFlow.onEach {
@@ -83,14 +76,14 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         binding.etSearch.doAfterTextChanged {
             if (binding.etSearch.text.toString().isEmpty()) {
                 hideKeyboard()
-                adapter.submitList(allLibrary)
+                adapter.librarySections = allLibrary
             } else {
                 val newList = allLibrary.filter { r ->
                     r.description.contains(
                         binding.etSearch.text.toString(), ignoreCase = true
                     ) || r.name.contains(binding.etSearch.text.toString(), ignoreCase = true)
                 }
-                adapter.submitList(newList)
+                adapter.librarySections = newList
             }
         }
 
