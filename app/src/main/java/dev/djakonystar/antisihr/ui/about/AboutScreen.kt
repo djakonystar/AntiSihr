@@ -1,6 +1,14 @@
 package dev.djakonystar.antisihr.ui.about
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -14,6 +22,7 @@ import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
 import dev.djakonystar.antisihr.presentation.drawer.MainViewModel
 import dev.djakonystar.antisihr.presentation.drawer.impl.MainViewModelImpl
 import dev.djakonystar.antisihr.utils.setImageWithGlide
+import dev.djakonystar.antisihr.utils.toPhoneNumber
 import dev.djakonystar.antisihr.utils.toPhoneType
 import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import kotlinx.coroutines.flow.debounce
@@ -62,7 +71,29 @@ class AboutScreen : Fragment(R.layout.screen_about) {
             binding.ivLogo.setImageWithGlide(requireContext(), info.image)
             binding.tvAbout.text = info.description
             binding.tvAddress.text = getString(R.string.address, info.address)
-            binding.tvPhone.text = getString(R.string.text_phone, info.phone.toPhoneType())
+            val phone = getString(R.string.text_phone, info.phone.toPhoneNumber)
+            val spanned = SpannableString(phone)
+            val start = spanned.indexOf('\n')
+            spanned.setSpan(
+                ForegroundColorSpan(Color.parseColor("#0048FF")),
+                start,
+                phone.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spanned.setSpan(
+                UnderlineSpan(),
+                start,
+                phone.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.tvPhone.text = spanned
+            binding.tvPhone.clicks().debounce(200).onEach {
+                val intent = Intent(
+                    Intent.ACTION_DIAL,
+                    Uri.parse("tel:" + Uri.encode(info.phone.toPhoneNumber))
+                )
+                startActivity(intent)
+            }.launchIn(lifecycleScope)
         }.launchIn(lifecycleScope)
     }
 

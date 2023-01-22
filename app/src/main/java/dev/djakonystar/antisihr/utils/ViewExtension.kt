@@ -1,6 +1,7 @@
 package dev.djakonystar.antisihr.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -47,3 +48,7 @@ val String.toPhoneNumber: String
         }
         return phone
     }
+
+val Int.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
