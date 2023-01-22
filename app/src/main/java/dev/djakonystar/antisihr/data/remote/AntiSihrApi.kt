@@ -10,11 +10,7 @@ import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.data.models.reader.ReaderDetailData
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AntiSihrApi {
 
@@ -57,6 +53,8 @@ interface AntiSihrApi {
     @GET("/articles/{id}")
     suspend fun getArticle(@Path("id") id: Int): Response<GenericResponse<List<ArticleResultData>>>
 
+
+    @Headers("Content-Type:application/json")
     @POST("/feedback")
     suspend fun addFeedback(@Body body: AddFeedbackData): Response<GenericResponse<String>>
 

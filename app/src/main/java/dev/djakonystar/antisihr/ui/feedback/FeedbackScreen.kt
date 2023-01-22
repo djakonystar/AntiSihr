@@ -1,8 +1,11 @@
 package dev.djakonystar.antisihr.ui.feedback
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,8 +33,7 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     lifecycleScope.launchWhenResumed {
@@ -49,11 +51,18 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
 
     private fun initObservers() {
         viewModel.sendFeedbackDataSuccesFlow.onEach {
-            showSnackBar(requireView(), it.result.toString())
-            binding.etName.setText("")
-            binding.etPhone.setText("")
-            binding.etTopic.setText("")
-            binding.etText.setText("")
+            val alertDialog = AlertDialog.Builder(requireContext())
+            alertDialog.setMessage(it.result.toString())
+            alertDialog.setPositiveButton(getString(R.string.close)) { _: DialogInterface, _: Int ->
+                binding.etName.setText("")
+                binding.etPhone.setText("")
+                binding.etTopic.setText("")
+                binding.etText.setText("")
+                lifecycleScope.launchWhenResumed {
+                    visibilityOfBottomNavigationView.emit(true)
+                }
+            }
+            alertDialog.show()
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
@@ -80,15 +89,29 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
                     binding.tilName.error = "Please enter your name"
                 }
                 if (FeedbackValidator(data).isNotValidPhone()) {
-                    binding.tilName.error = "Please enter your phone"
+                    binding.tilPhone.error = "Please enter your phone"
                 }
                 if (FeedbackValidator(data).isNotValidTitle()) {
-                    binding.tilName.error = "Please enter title"
+                    binding.tilTopic.error = "Please enter title"
                 }
                 if (FeedbackValidator(data).isNotValidDescription()) {
-                    binding.tilName.error = "Please enter description"
+                    binding.tilText.error = "Please enter description"
                 }
             }
         }.launchIn(lifecycleScope)
+
+
+        binding.etName.doAfterTextChanged {
+            binding.tilName.isErrorEnabled = false
+        }
+        binding.etPhone.doAfterTextChanged {
+            binding.tilPhone.isErrorEnabled = false
+        }
+        binding.etTopic.doAfterTextChanged {
+            binding.tilTopic.isErrorEnabled = false
+        }
+        binding.etText.doAfterTextChanged {
+            binding.tilText.isErrorEnabled = false
+        }
     }
 }

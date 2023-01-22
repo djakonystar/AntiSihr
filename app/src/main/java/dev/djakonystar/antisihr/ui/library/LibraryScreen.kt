@@ -129,9 +129,9 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             )
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _adapter = null
-    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _adapter = null
+//    }
 }

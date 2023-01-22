@@ -56,6 +56,7 @@ class LibraryAdapter : ListAdapter<LibraryResultData, LibraryAdapter.ViewHolder>
 
         override fun areContentsTheSame(
             oldItem: LibraryResultData, newItem: LibraryResultData
-        ): Boolean = oldItem.name == newItem.name && oldItem.id == newItem.id
+        ): Boolean =
+            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.description == newItem.description && oldItem.image == newItem.image
     }
 }

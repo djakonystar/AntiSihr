@@ -95,7 +95,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
         }.launchIn(lifecycleScope)
 
         binding.icMenu.clicks().debounce(200).onEach {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
 
         adapter.setOnItemClickListener {
