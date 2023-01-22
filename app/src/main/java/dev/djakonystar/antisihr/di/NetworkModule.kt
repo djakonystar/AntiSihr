@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.djakonystar.antisihr.BuildConfig
 import dev.djakonystar.antisihr.data.remote.AntiSihrApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +30,7 @@ class NetworkModule {
 
     @[Provides Singleton]
     fun providesRetrofitInstance(client: OkHttpClient): Retrofit =
-        Retrofit.Builder().baseUrl("https://anti-sihr-server.ru/")
+        Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(client).build()
 
 
