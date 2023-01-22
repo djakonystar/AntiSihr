@@ -73,26 +73,37 @@ class LanguageScreen : Fragment(R.layout.screen_language) {
             }
             visibilityOfBottomNavigationView.emit(true)
         }.launchIn(lifecycleScope)
+
+        binding.rgLang.setOnCheckedChangeListener { _, i ->
+            selectedPosition = i - 1
+        }
     }
 
     private fun initObservers() {
         viewModel.getLanguagesSuccessFlow.onEach {
+            repeat(binding.rgLang.childCount) { i ->
+                binding.rgLang.removeViewAt(i)
+            }
             languages.clear()
             languages.addAll(it.result!!)
-            languages.forEach { lang ->
-                binding.rgLang.addView(newRadioButton(lang.name))
+            languages.forEachIndexed { index, lang ->
+                binding.rgLang.addView(newRadioButton(lang, index))
             }
+            binding.rgLang.check(selectedPosition + 1)
         }.launchIn(lifecycleScope)
     }
 
-    private fun newRadioButton(text: String): RadioButton {
+    private fun newRadioButton(language: LanguageData, i: Int): RadioButton {
         val radioButton = RadioButton(requireContext())
         radioButton.layoutParams =
             LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         radioButton.buttonTintList = ColorStateList.valueOf(Color.parseColor("#2787F5"))
         radioButton.setPadding(16.dp, 16.dp, 16.dp, 16.dp)
         radioButton.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
-        radioButton.text = text
+        radioButton.text = language.name
+        if (language.prefix == localStorage.language) {
+            selectedPosition = i
+        }
         return radioButton
     }
 }
