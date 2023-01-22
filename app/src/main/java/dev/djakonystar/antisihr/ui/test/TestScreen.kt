@@ -57,7 +57,6 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
         viewModel.errorFlow.onEach {
             visibilityOfLoadingAnimationView.emit(false)
-            Log.d("TTTT", "HOMESCREEN ERROR MESSAGE: ${it.message}")
         }.launchIn(lifecycleScope)
     }
 

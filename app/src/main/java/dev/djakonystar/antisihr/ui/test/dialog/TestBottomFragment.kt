@@ -136,6 +136,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.skipCollapsed = true
             }
         }
         return dialog

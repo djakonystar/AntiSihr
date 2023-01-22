@@ -22,6 +22,7 @@ import dev.djakonystar.antisihr.ui.language.LanguageScreen
 import dev.djakonystar.antisihr.ui.library.LibraryScreen
 import dev.djakonystar.antisihr.ui.test.TestScreen
 import dev.djakonystar.antisihr.utils.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             if (it) {
                 binding.loadingAnimation.show()
             } else {
+                delay(500)
                 binding.loadingAnimation.hide()
             }
         }.launchIn(lifecycleScope)
