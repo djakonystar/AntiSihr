@@ -8,34 +8,36 @@
 
     <fragment
         android:id="@+id/shop_screen"
-        android:label="ShopScreen"
         android:name="dev.djakonystar.antisihr.ui.shop.ShopScreen"
+        android:label="ShopScreen"
         tools:layout="@layout/screen_shop">
 
-        <action
-            android:id="@+id/action_shop_screen_to_good_search_screen"
-            app:destination="@id/good_search_screen" />
         <action
             android:id="@+id/action_shop_screen_to_good_info_screen"
             app:destination="@id/good_info_screen" />
     </fragment>
 
 
+    <dialog
+        android:id="@+id/products_bookmarked_bottom_sheet"
+        android:name="dev.djakonystar.antisihr.ui.shop.dialog.ProductsBookmarkedBottomSheet"
+        android:label="ProductsBookmarkedBottomSheet"
+        tools:layout="@layout/bottom_shop_favourites" />
+
     <fragment
         android:id="@+id/good_info_screen"
+        android:name="dev.djakonystar.antisihr.ui.shop.GoodInfoScreen"
         android:label="GoodInfoScreen"
-        tools:layout="@layout/screen_good_info"/>
+        tools:layout="@layout/screen_good_info">
 
-    <fragment
-        android:id="@+id/good_search_screen"
-        android:label="GoodSearchScreen"
-        tools:layout="@layout/screen_good_search"/>
+        <argument
+            android:name="id"
+            app:argType="integer" />
 
-
-
-
-
-
+        <argument
+            android:name="isFavourite"
+            app:argType="boolean" />
+    </fragment>
 
 
 </navigation>

@@ -24,8 +24,9 @@ interface RepositoryModule {
     @Binds
     fun bindLibraryRepository(impl: LibraryRepositoryImpl): LibraryRepository
 
-
     @Binds
     fun bindMainRepository(impl: MainRepositoryImpl): MainRepository
 
+    @Binds
+    fun bindShopRepository(impl: ShopRepositoryImpl): ShopRepository
 }

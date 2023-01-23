@@ -86,7 +86,9 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
         app:tabMode="scrollable"
+        android:animateLayoutChanges="true"
         app:tabIndicatorFullWidth="false"
+        android:layout_marginTop="12dp"
         app:tabTextAppearance="@style/tabTextAppearanceActive"
         app:layout_constraintTop_toBottomOf="@id/expandable_layout">
 

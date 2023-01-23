@@ -9,6 +9,8 @@ import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.data.models.reader.ReaderDetailData
+import dev.djakonystar.antisihr.data.models.shop.SellerData
+import dev.djakonystar.antisihr.data.models.shop.ShopItemData
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -63,5 +65,18 @@ interface AntiSihrApi {
 
     @GET("/about")
     suspend fun getInfoAboutApp(): Response<GenericResponse<List<AboutAppData>>>
+
+    @GET("/products")
+    suspend fun getAllProducts(): Response<GenericResponse<List<ShopItemData>>>
+
+    @GET("/products/seller/{id}")
+    suspend fun getAllProductsForSeller(@Path("id") sellerId: Int): Response<GenericResponse<List<ShopItemData>>>
+
+    @GET("/products/{id}")
+    suspend fun getProductInfo(@Path("id") goodId: Int): Response<GenericResponse<List<ShopItemData>>>
+
+
+    @GET("/sellers")
+    suspend fun getAllSellers(): Response<GenericResponse<List<SellerData>>>
 
 }

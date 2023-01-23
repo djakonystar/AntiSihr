@@ -27,4 +27,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindMainUseCase(impl: MainUseCaseImpl): MainUseCase
+
+    @Binds
+    fun bindShopUseCase(impl: ShopUseCaseImpl): ShopUseCase
 }
