@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
+import uz.texnopos.elektrolife.core.MaskWatcher
 
 
 @AndroidEntryPoint
@@ -71,6 +72,8 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
     }
 
     private fun initListeners() {
+        binding.etPhone.addTextChangedListener(MaskWatcher.phoneNumber())
+
         binding.icBack.clicks().debounce(200).onEach {
             visibilityOfBottomNavigationView.emit(true)
         }.launchIn(lifecycleScope)
@@ -78,7 +81,7 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
         binding.btnSend.clicks().debounce(200).onEach {
             val data = AddFeedbackData(
                 binding.etName.text.toString(),
-                binding.etPhone.text.toString(),
+                "+7${binding.etPhone.text.toString().filter { it.isDigit() }}",
                 binding.etTopic.text.toString(),
                 binding.etText.text.toString()
             )
