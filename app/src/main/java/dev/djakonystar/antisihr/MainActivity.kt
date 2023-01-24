@@ -183,4 +183,12 @@ class MainActivity : AppCompatActivity() {
             navController.graph = graph
         }
     }
+
+    fun rerun() {
+        val refresh = Intent(this, MainActivity::class.java)
+        refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        this.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        this.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(refresh)
+    }
 }
