@@ -90,7 +90,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         binding.icFavourites.clicks().debounce(200).onEach {
             findNavController().navigate(
                 LibraryScreenDirections.actionLibraryScreenToInnerLibraryScreen(
-                    -1, getString(R.string.bookmarked), getString(R.string.only_bookmarkeds), true
+                    -1, getString(R.string.favourites), getString(R.string.only_selected_articles_are_displayed_here), true
                 )
             )
         }.launchIn(lifecycleScope)

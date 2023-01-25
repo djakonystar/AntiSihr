@@ -12,20 +12,16 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @[Provides Singleton]
-    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
-
-    @[Provides Singleton]
     fun providesOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor, @ApplicationContext context: Context
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
+        interceptor: AntiSihrInterceptor
+    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
 
     @[Provides Singleton]

@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:text="Позволит выявить признаки" />
+        android:text="@string/lets_identify_signs" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
