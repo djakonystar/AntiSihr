@@ -77,7 +77,7 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/type_smth" />
+            android:hint="@string/enter_something_you_want" />
 
 
     </net.cachapa.expandablelayout.ExpandableLayout>
@@ -88,9 +88,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-
         android:fontFamily="@font/nunito_ttf"
-        android:text="Наилушим из лечения является то,\nчто вы сами читаете себе."
+        android:text="@string/the_best_cure_is_what_you_read_to_yourself."
         android:textColor="#80260101"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/tv_audio"
@@ -154,7 +153,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/nunito_bold_ttf"
-            android:text="От проблем в жизни"
+            tools:text="От проблем в жизни"
             app:layout_constraintBottom_toTopOf="@id/tv_author"
             app:layout_constraintEnd_toStartOf="@id/btn_pause"
             app:layout_constraintStart_toEndOf="@id/ic_image"
@@ -167,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/nunito_ttf"
-            android:text="Мухаммад Даутукаев"
+            tools:text="Мухаммад Даутукаев"
             app:layout_constraintBottom_toBottomOf="@id/ic_image"
             app:layout_constraintEnd_toStartOf="@id/btn_pause"
             app:layout_constraintStart_toStartOf="@id/tv_name"

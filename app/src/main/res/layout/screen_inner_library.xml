@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:fontFamily="@font/nunito_extrabold_ttf"
-        android:text="Лекарь"
+        tools:text="Лекарь"
         android:textColor="#260101"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,7 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/type_smth" />
+            android:hint="@string/enter_something_you_want" />
     </net.cachapa.expandablelayout.ExpandableLayout>
 
 
