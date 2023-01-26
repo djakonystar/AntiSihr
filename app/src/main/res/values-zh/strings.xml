@@ -37,7 +37,7 @@
     <string name="en">zh</string>
     <string name="the_choosen_ones">天选者</string>
     <string name="get_treated">接受治疗</string>
-    <string name="rub"> 擦。</string>
+    <string name="rub">%s 擦。</string>
     <string name="close">关</string>
     <string name="your_phone_number">你的电话号码: %1$s</string>
     <string name="share_app">分享申请</string>
@@ -60,10 +60,10 @@
     <string name="readers">读者</string>
     <string name="further">更远</string>
     <string name="search">搜索</string>
-    <string name="telephone_only">电话: %1$s</string>
+    <string name="telephone_only">电话:</string>
     <string name="update">更新…</string>
     <string name="authorization_required">需要授权</string>
-    <string name="send">Отправить</string>
+    <string name="send">发送</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">您输入的所有数据都是严格保密的</string>
     <string name="error">错误</string>
     <string name="capacity">容量</string>

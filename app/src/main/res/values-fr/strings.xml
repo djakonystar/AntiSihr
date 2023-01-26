@@ -37,7 +37,7 @@
     <string name="en">fr</string>
     <string name="the_choosen_ones">Les selectionnés</string>
     <string name="get_treated">Se faire soigner</string>
-    <string name="rub"> frotter.</string>
+    <string name="rub">%s frotter.</string>
     <string name="close">Proche</string>
     <string name="your_phone_number">Votre numéro de téléphone: %1$s</string>
     <string name="share_app">Partager l\'application</string>
@@ -60,7 +60,7 @@
     <string name="readers">Lecteurs</string>
     <string name="further">Plus loin</string>
     <string name="search">Chercher</string>
-    <string name="telephone_only">Téléphone: %1$s</string>
+    <string name="telephone_only">Téléphone:</string>
     <string name="update">Mise à jour…</string>
     <string name="authorization_required">Autorisation requise</string>
     <string name="send">Envoyer</string>

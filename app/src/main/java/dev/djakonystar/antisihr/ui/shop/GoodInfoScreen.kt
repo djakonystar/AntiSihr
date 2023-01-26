@@ -45,7 +45,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
         }.launchIn(lifecycleScope)
 
         binding.icBack.clicks().debounce(200).onEach {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
     }
 
@@ -57,7 +57,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
             binding.tvCapacity.text = item.weight
             binding.tvPrice.text = item.price.toString()
             binding.tvDescription.text = item.description
-            binding.tvShopName.text = item.seller.name
+            binding.tvShopName.text = item.seller?.name
             initViewPagerAdapter(listOf(item.image, item.image, item.image))
         }.launchIn(lifecycleScope)
 

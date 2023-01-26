@@ -8,7 +8,7 @@
     <string name="more">Подробнее</string>
     <string name="donot_have_featured_articles">У вас нету выбранных статьи</string>
     <string name="our_adress">Наш адрес:</string>
-    <string name="info_collected_here">Собранные данные здесь</string>
+    <string name="info_collected_here">Здесь собранная информация</string>
     <string name="city_name">Название города…</string>
     <string name="authorization">Авторизация…</string>
     <string name="error_connecting_server">Ошибка при соединений с сервером</string>
@@ -19,7 +19,7 @@
     <string name="all_rights_reserved">Все права защищины</string>
     <string name="to_favourites">В избранное</string>
     <string name="sending_data">Данные отправляются…</string>
-    <string name="volume"> Lautstärke: </string>
+    <string name="volume">Звук: </string>
     <string name="ready">Сохранить</string>
     <string name="favourites">Избранные</string>
     <string name="error_while_receving_data_from_server">Ошибка при получений данных их сервера</string>
@@ -37,7 +37,7 @@
     <string name="en">ru</string>
     <string name="the_choosen_ones">Выбранные</string>
     <string name="get_treated">Пройти лечение</string>
-    <string name="rub"> рубль.</string>
+    <string name="rub">%s рубль.</string>
     <string name="close">Закрыть</string>
     <string name="your_phone_number">Ваш телефон: %1$s</string>
     <string name="share_app">Поделиться приложением</string>
@@ -60,12 +60,12 @@
     <string name="readers">Чтецы</string>
     <string name="further">Далее</string>
     <string name="search">Поиск</string>
-    <string name="telephone_only">Телефон: %1$s</string>
+    <string name="telephone_only">Телефон:</string>
     <string name="update">Обновление…</string>
     <string name="authorization_required">Авторизация обязательна</string>
     <string name="send">Отправить</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">Все введенные вами данные\nстрого конфиденциальны</string>
-    <string name="error">Fehler</string>
+    <string name="error">Ошибка</string>
     <string name="capacity">Объем</string>
     <string name="language">Язык</string>
     <string name="shop">Магазин</string>

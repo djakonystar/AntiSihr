@@ -19,9 +19,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @[Provides Singleton]
+    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+
+    @[Provides Singleton]
     fun providesOkHttpClient(
-        interceptor: AntiSihrInterceptor
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        interceptor: AntiSihrInterceptor, loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(loggingInterceptor).build()
 
 
     @[Provides Singleton]

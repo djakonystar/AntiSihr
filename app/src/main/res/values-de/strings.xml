@@ -38,7 +38,7 @@
     <string name="en">de</string>
     <string name="the_choosen_ones">Die Auserwählten</string>
     <string name="get_treated">Lass dich behandeln</string>
-    <string name="rub"> reiben.</string>
+    <string name="rub">%s reiben.</string>
     <string name="close">Nah dran</string>
     <string name="your_phone_number">Deine Telefonnummer: %1$s</string>
     <string name="share_app">Anwendung teilen</string>
@@ -61,7 +61,7 @@
     <string name="readers">Leser</string>
     <string name="further">Des Weiteren</string>
     <string name="search">Suche</string>
-    <string name="telephone_only">Telefon:</string>
+    <string name="telephone_only">Telefon: </string>
     <string name="update">Aktualisieren…</string>
     <string name="authorization_required">Autorisierung erforderlich</string>
     <string name="send">Senden</string>

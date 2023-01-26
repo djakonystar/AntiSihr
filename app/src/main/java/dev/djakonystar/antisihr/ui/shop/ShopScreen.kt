@@ -19,7 +19,9 @@ import com.google.android.material.tabs.TabLayout.Tab
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.shop.SellerData
+import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenShopBinding
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.ShopScreenViewModelImpl
@@ -36,14 +38,14 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     private val binding by viewBinding(ScreenShopBinding::bind)
     private val viewModel: ShopScreenViewModel by viewModels<ShopScreenViewModelImpl>()
     private val sellersList = mutableListOf<SellerData>()
+    private val allProducts = mutableListOf<ShopItemBookmarked>()
     private var _adapter: ShopsAdapter? = null
     private val adapter get() = _adapter!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
@@ -52,12 +54,20 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initVariables()
         initListeners()
         initObservers()
+
+        lifecycleScope.launchWhenResumed {
+            view
+        }
     }
 
     private fun initListeners() {
+        _adapter = ShopsAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.expandableLayout.duration = 300
+
+
         adapter.setOnItemClickListener {
             findNavController().navigate(
                 ShopScreenDirections.actionShopScreenToGoodInfoScreen(
@@ -65,6 +75,20 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 )
             )
         }
+
+        adapter.setOnItemBookmarkClickListener {
+            lifecycleScope.launchWhenResumed {
+                if (it.isFavourite){
+                    viewModel.deleteFromBookmarked(it)
+                }else{
+                    viewModel.addToBookmarked(it)
+                }
+            }
+        }
+
+        binding.icFavorites.clicks().debounce(200).onEach {
+            findNavController().navigate(ShopScreenDirections.actionShopScreenToProductsBookmarkedBottomSheet())
+        }.launchIn(lifecycleScope)
 
         binding.icSearch.clicks().debounce(200).onEach {
             binding.tvTitle.text = getString(R.string.search)
@@ -92,9 +116,13 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
 
                 lifecycleScope.launchWhenResumed {
-                    viewModel.getAllProductsOfSeller(sellersList.find {
-                        it.name == tvTab.text.toString()
-                    }!!.id)
+                    if (tvTab.text.toString() != getString(R.string.all)) {
+                        viewModel.getAllProductsOfSeller(sellersList.find {
+                            it.name == tvTab.text.toString()
+                        }!!.id)
+                    } else {
+                        viewModel.getAllProducts()
+                    }
                 }
             }
 
@@ -112,8 +140,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     private fun initObservers() {
+
         viewModel.getGoodsSuccessFlow.onEach {
-            adapter.submitList(it)
+            allProducts.clear()
+            allProducts.addAll(it)
+            adapter.shopItems = allProducts
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -149,13 +180,5 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         viewModel.errorFlow.onEach {
             Log.d("TTTT", "Error in ShopScreen, cause: ${it.message}")
         }.launchIn(lifecycleScope)
-    }
-
-    private fun initVariables() {
-        _adapter = ShopsAdapter()
-        binding.recyclerView.adapter = adapter
-
-        binding.expandableLayout.duration = 300
-
     }
 }

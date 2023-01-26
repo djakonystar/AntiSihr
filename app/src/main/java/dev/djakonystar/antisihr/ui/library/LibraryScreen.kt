@@ -30,6 +30,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     private val binding: ScreenLibraryBinding by viewBinding(ScreenLibraryBinding::bind)
     private val viewModel: LibraryScreenViewModel by viewModels<LibraryScreenViewModelImpl>()
     private val allLibrary = mutableListOf<LibraryResultData>()
+
     private var _adapter: LibraryAdapter? = null
     private val adapter: LibraryAdapter get() = _adapter!!
 
@@ -122,9 +123,4 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             )
         }
     }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _adapter = null
-//    }
 }

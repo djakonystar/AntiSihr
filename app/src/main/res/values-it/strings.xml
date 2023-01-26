@@ -37,7 +37,7 @@
     <string name="en">えん</string>
     <string name="the_choosen_ones">選ばれたもの</string>
     <string name="get_treated">治療してください</string>
-    <string name="rub">こする。</string>
+    <string name="rub">%s こする。</string>
     <string name="close">近い</string>
     <string name="your_phone_number">あなたの電話番号: %s</string>
     <string name="share_app">シェアアプリ</string>
@@ -60,7 +60,7 @@
     <string name="readers">読者</string>
     <string name="further">さらに遠く</string>
     <string name="search">探す</string>
-    <string name="telephone_only">電話: %s</string>
+    <string name="telephone_only">電話:</string>
     <string name="update">アップデート…</string>
     <string name="authorization_required">認証が必要です</string>
     <string name="send">送信</string>

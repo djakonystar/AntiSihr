@@ -38,7 +38,7 @@
     <string name="en">ru</string>
     <string name="the_choosen_ones">المختارين</string>
     <string name="get_treated">احصل على العلاج</string>
-    <string name="rub"> فرك</string>
+    <string name="rub"> فرك %s</string>
     <string name="close">قريب</string>
     <string name="your_phone_number">رقم تليفونك: %1$s</string>
     <string name="share_app">مشاركة التطبيق</string>
@@ -60,7 +60,7 @@
     <string name="readers">القراء</string>
     <string name="further">إضافي</string>
     <string name="search">يبحث</string>
-    <string name="telephone_only">هاتف: %1$s</string>
+    <string name="telephone_only">هاتف:</string>
     <string name="update">تحديث…</string>
     <string name="authorization_required">إذن المطلوب</string>
     <string name="send">إرسال</string>

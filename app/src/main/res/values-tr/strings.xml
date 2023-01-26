@@ -37,7 +37,7 @@
     <string name="en">tr</string>
     <string name="the_choosen_ones">Seçilmiş olanlar</string>
     <string name="get_treated">Tedavi ol</string>
-    <string name="rub"> ovmak.</string>
+    <string name="rub">%s ovmak.</string>
     <string name="close">Kapat</string>
     <string name="your_phone_number">Telefon numaran: %1$s</string>
     <string name="share_app">Uygulamayı Paylaş</string>

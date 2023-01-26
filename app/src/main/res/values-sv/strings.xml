@@ -37,7 +37,7 @@
     <string name="en">sv</string>
     <string name="the_choosen_ones">De utvalda</string>
     <string name="get_treated">Bli behandlad</string>
-    <string name="rub"> gnugga.</string>
+    <string name="rub">%s gnugga.</string>
     <string name="close">Stänga</string>
     <string name="your_phone_number">Ditt telefonnummer: %1$s</string>
     <string name="share_app">Dela applikation</string>
@@ -60,7 +60,7 @@
     <string name="readers">Läsare</string>
     <string name="further">Ytterligare</string>
     <string name="search">Sök</string>
-    <string name="telephone_only">Telefon: %1$s</string>
+    <string name="telephone_only">Telefon:</string>
     <string name="update">Uppdatering…</string>
     <string name="authorization_required">Auktorisering krävs</string>
     <string name="send">Skicka</string>
