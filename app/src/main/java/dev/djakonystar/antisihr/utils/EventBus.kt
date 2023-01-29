@@ -8,3 +8,7 @@ val visibilityOfLoadingAnimationView = MutableSharedFlow<Boolean>()
 val visibilityAudioPlayer = MutableSharedFlow<Boolean>()
 
 val showBottomNavigationView = MutableSharedFlow<Unit>()
+
+
+
+val seekBarCurrentDuration = MutableSharedFlow<Int>()

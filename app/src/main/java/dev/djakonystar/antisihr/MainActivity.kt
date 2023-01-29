@@ -2,25 +2,18 @@ package dev.djakonystar.antisihr
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import dev.djakonystar.antisihr.data.local.LocalStorage
+import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
-import dev.djakonystar.antisihr.ui.about.AboutScreen
-import dev.djakonystar.antisihr.ui.audio.AudioScreen
-import dev.djakonystar.antisihr.ui.feedback.FeedbackScreen
-import dev.djakonystar.antisihr.ui.language.LanguageScreen
-import dev.djakonystar.antisihr.ui.library.LibraryScreen
-import dev.djakonystar.antisihr.ui.test.TestScreen
+import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -35,7 +28,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private var selectedMenuId = R.id.tests
-
+    val audioPlayerManager: PlayerManager by lazy {
+        PlayerManager.getInstance(this).get()!!
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,4 +186,12 @@ class MainActivity : AppCompatActivity() {
         this.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(refresh)
     }
+
+    fun setAudioList(list: List<AudioResultData>){
+        audioPlayerManager
+
+        audioPlayerManager.playlist = list as ArrayList<AudioResultData>
+    }
+
+
 }

@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:progress="10"
+        android:progress="0"
         android:progressTint="@color/main_color"
         android:thumbTint="@color/main_color"
         app:layout_constraintBottom_toTopOf="@id/btn_play"

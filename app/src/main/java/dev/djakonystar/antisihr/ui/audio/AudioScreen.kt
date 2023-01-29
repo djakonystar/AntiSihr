@@ -98,6 +98,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     private fun initObservers() {
         viewModel.getListOfAudiosSuccessFlow.onEach {
             adapter.submitList(it)
+            (requireActivity() as MainActivity).setAudioList(it)
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
     }
