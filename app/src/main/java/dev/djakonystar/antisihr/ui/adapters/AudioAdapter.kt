@@ -7,19 +7,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.data.models.AudioModel
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ItemAudioBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDiffUtil) {
+class AudioAdapter : ListAdapter<AudioBookmarked, AudioAdapter.ViewHolder>(MyDiffUtil) {
 
-    private var onItemClickListener: ((AudioResultData) -> Unit)? = null
-    private var onPlayClickListener: ((AudioResultData) -> Unit)? = null
+    private var onItemClickListener: ((AudioBookmarked) -> Unit)? = null
+    private var onPlayClickListener: ((AudioBookmarked) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (AudioResultData) -> Unit) {
+    fun setOnItemClickListener(block: (AudioBookmarked) -> Unit) {
         onItemClickListener = block
     }
 
-    fun setOnPlayClickListener(block: (AudioResultData) -> Unit) {
+    fun setOnPlayClickListener(block: (AudioBookmarked) -> Unit) {
         onPlayClickListener = block
     }
 
@@ -59,13 +60,13 @@ class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDif
         }
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<AudioResultData>() {
+    private object MyDiffUtil : DiffUtil.ItemCallback<AudioBookmarked>() {
         override fun areItemsTheSame(
-            oldItem: AudioResultData, newItem: AudioResultData
+            oldItem: AudioBookmarked, newItem: AudioBookmarked
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: AudioResultData, newItem: AudioResultData
-        ): Boolean = oldItem.name == newItem.name && oldItem.author == newItem.author
+            oldItem: AudioBookmarked, newItem: AudioBookmarked
+        ): Boolean = oldItem.name == newItem.name && oldItem.author == newItem.author && oldItem.id==newItem.id
     }
 }

@@ -45,7 +45,8 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
@@ -54,6 +55,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initVariables()
         initListeners()
         initObservers()
 
@@ -116,13 +118,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
 
                 lifecycleScope.launchWhenResumed {
-                    if (tvTab.text.toString() != getString(R.string.all)) {
-                        viewModel.getAllProductsOfSeller(sellersList.find {
-                            it.name == tvTab.text.toString()
-                        }!!.id)
-                    } else {
-                        viewModel.getAllProducts()
-                    }
+                    viewModel.getAllProductsOfSeller(sellersList.find {
+                        it.name == tvTab.text.toString()
+                    }?.id?:0)
                 }
             }
 
@@ -140,7 +138,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     private fun initObservers() {
-
         viewModel.getGoodsSuccessFlow.onEach {
             allProducts.clear()
             allProducts.addAll(it)
@@ -180,5 +177,13 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         viewModel.errorFlow.onEach {
             Log.d("TTTT", "Error in ShopScreen, cause: ${it.message}")
         }.launchIn(lifecycleScope)
+    }
+
+    private fun initVariables() {
+        _adapter = ShopsAdapter()
+        binding.recyclerView.adapter = adapter
+
+        binding.expandableLayout.duration = 300
+
     }
 }

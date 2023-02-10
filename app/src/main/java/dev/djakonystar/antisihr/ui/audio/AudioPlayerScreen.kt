@@ -1,7 +1,5 @@
 package dev.djakonystar.antisihr.ui.audio
 
-import android.media.MediaMetadataRetriever
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioPlayerBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
 import dev.djakonystar.antisihr.presentation.audio.impl.AudioScreenViewModelImpl
@@ -31,7 +30,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
 
-
 @AndroidEntryPoint
 class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeekBarChangeListener,
     PlayerManagerListener {
@@ -42,11 +40,17 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     private val mediaPlayerManager: PlayerManager
         get() = (requireActivity() as MainActivity).audioPlayerManager
 
-    //temp value
     private var isFavourite = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initListeners()
         initObservers()
+        initData()
+
+        lifecycleScope.launchWhenResumed {
+            visibilityOfBottomNavigationView.emit(false)
+            viewModel.getIsExistsInBookmarkeds(AudioBookmarked(args.id,args.author,"","",args.image,args.name,args.url))
+        }
     }
 
     private fun initListeners() {
@@ -56,33 +60,46 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icFavourite.clicks().debounce(200).onEach {
-            isFavourite = !isFavourite
+            isFavourite = isFavourite.not()
+            val audio = AudioBookmarked(
+                args.id, args.author, "", "", args.image, args.name, args.url
+            )
             if (isFavourite) {
-                binding.icFavourite.setImageResource(R.drawable.ic_favourites)
-            } else {
+                viewModel.addToBookmarkeds(
+                    audio
+                )
+                Log.d("TTTTT", "It is $audio")
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
+            } else {
+                viewModel.deleteFromBookmarkeds(
+                    audio
+                )
+                binding.icFavourite.setImageResource(R.drawable.ic_favourites)
             }
         }.launchIn(lifecycleScope)
 
         binding.btnPlay.clicks().debounce(200).onEach {
             if (binding.icPlay.isVisible) {
                 if (isFirstTime) {
-                    playAudio(args.id)
+                    resetPlayerInfo()
+                    (requireActivity() as MainActivity).playAudio(args.id)
                     isFirstTime = false
                 } else {
-                    continueAudio()
+                    (requireActivity() as MainActivity).continueAudio()
                 }
             } else {
-                pause()
+                (requireActivity() as MainActivity).pause()
             }
         }.launchIn(lifecycleScope)
 
         binding.icPrevious.clicks().debounce(200).onEach {
-            previous()
+            resetPlayerInfo()
+            (requireActivity() as MainActivity).previous()
         }.launchIn(lifecycleScope)
 
         binding.icForward.clicks().debounce(200).onEach {
-            next()
+            resetPlayerInfo()
+            (requireActivity() as MainActivity).next()
         }.launchIn(lifecycleScope)
 
         binding.icRepeat.clicks().debounce(200).onEach {
@@ -118,50 +135,82 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
 
-    private fun initObservers() {
+    private fun initData(){
         binding.tvAudioAuthor.text = args.author
         binding.tvAudioName.text = args.name
+        val duration = args.url.getMediaDuration()
+        binding.musicController.max = duration.toInt()
         binding.icAudioImage.setImageWithGlide(requireContext(), args.image)
-        binding.endTime.text = args.url.getMediaDuration().milliSecondsToTimer()
+        binding.endTime.text = duration.milliSecondsToTimer()
 
-        lifecycleScope.launchWhenResumed {
-            visibilityOfBottomNavigationView.emit(false)
+        if (args.isCurrentAudioPlaying) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                binding.musicController.setProgress(
+                    mediaPlayerManager.currentStatus!!.currentPosition.toInt(), true
+                )
+            } else {
+                binding.musicController.progress =
+                    mediaPlayerManager.currentStatus!!.currentPosition.toInt()
+            }
+            binding.currentTime.text =
+                mediaPlayerManager.currentStatus!!.currentPosition.milliSecondsToTimer()
+            binding.icPause.show()
+            binding.icPlay.hide()
+            isFirstTime = false
         }
+    }
+    private fun initObservers() {
+        viewModel.isExistsInBookmarkedsFlow.onEach {
+            isFavourite = it
+            if (it){
+                binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
+            }else{
+                binding.icFavourite.setImageResource(R.drawable.ic_favourites)
+            }
+        }.launchIn(lifecycleScope)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, i: Int, fromUser: Boolean) {
         if (fromUser) {
             mediaPlayerManager.seekTo(i)
+            binding.currentTime.text = i.toLong().milliSecondsToTimer()
         }
     }
 
     override fun onStartTrackingTouch(p0: SeekBar?) {
-
+        mediaPlayerManager.pauseAudio()
     }
 
     override fun onStopTrackingTouch(p0: SeekBar?) {
-        if (mediaPlayerManager.isPaused()) {
-            binding.icPlay.show()
-            binding.icPause.hide()
+        if (this.view != null) {
+            if (mediaPlayerManager.isPaused()) {
+                binding.icPlay.show()
+                binding.icPause.hide()
+                mediaPlayerManager.continueAudio()
+            }
         }
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-        val mediaDuration = status.audio!!.url.getMediaDuration()
-        binding.icPause.show()
-        binding.icPlay.hide()
         resetPlayerInfo()
-        onUpdateTitle(status.audio)
-        binding.musicController.max = mediaDuration.toInt()
-        binding.endTime.text = mediaDuration.milliSecondsToTimer()
+        if (this.view != null) {
+            onUpdateTitle(status.audio)
+            binding.icPause.show()
+            binding.icPlay.hide()
+            val mediaDuration = status.audio!!.url.getMediaDuration()
+            binding.musicController.max = mediaDuration.toInt()
+            binding.endTime.text = mediaDuration.milliSecondsToTimer()
+        }
     }
 
     private fun onUpdateTitle(audio: AudioResultData?) {
-        audio?.let {
-            binding.tvTitle.text = it.name
-            binding.tvAudioName.text = it.name
-            binding.tvAudioAuthor.text = it.author
-            binding.icAudioImage.setImageWithGlide(requireContext(), it.image)
+        if (this.view != null) {
+            audio?.let {
+                binding.tvTitle.text = it.name
+                binding.tvAudioName.text = it.name
+                binding.tvAudioAuthor.text = it.author
+                binding.icAudioImage.setImageWithGlide(requireContext(), it.image)
+            }
         }
     }
 
@@ -175,100 +224,68 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
     private fun resetPlayerInfo() {
-        binding.tvTitle.text = ""
-        binding.tvAudioName.text = ""
-        binding.tvAudioAuthor.text = ""
-        binding.musicController.progress = 0
-        binding.icAudioImage.setImageResource(R.drawable.ic_launcher_background)
+        if (this.view != null) {
+            binding.currentTime.hide()
+            binding.endTime.hide()
+            binding.tvTitle.text = ""
+            binding.tvAudioName.text = ""
+            binding.tvAudioAuthor.text = ""
+            binding.musicController.progress = 0
+            binding.icAudioImage.setImageDrawable(null)
+            binding.pbLoadingBar.show()
+        }
     }
 
     override fun onPaused(status: AudioStatus) {
+        if (this.view != null) {
+            binding.icPlay.show()
+            binding.icPause.hide()
+        }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
-        binding.icPause.show()
-        binding.icPlay.hide()
+        if (this.view != null) {
+            binding.icPause.show()
+            binding.icPlay.hide()
+        }
     }
 
     override fun onPlaying(status: AudioStatus) {
-        binding.icPlay.hide()
-        binding.icPause.show()
+        if (this.view != null) {
+            binding.icPlay.hide()
+            binding.icPause.show()
+        }
     }
 
     override fun onTimeChanged(status: AudioStatus) {
-        val currentPosition = status.currentPosition
-        requireActivity().runOnUiThread {
-            binding.musicController.post {
+        if (this.view != null) {
+            val currentPosition = status.currentPosition
+            lifecycleScope.launchWhenResumed {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     binding.musicController.setProgress(
-                        currentPosition.toInt(),
-                        true
+                        currentPosition.toInt(), true
                     )
                 } else {
                     binding.musicController.progress = currentPosition.toInt()
                 }
-            }
-            binding.currentTime.post {
-                binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                binding.currentTime.post {
+                    binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                }
+                binding.currentTime.show()
+                binding.endTime.show()
             }
         }
-
     }
 
     override fun onStopped(status: AudioStatus) {
+        if (this.view != null) {
+            binding.icPlay.show()
+            binding.icPause.hide()
+        }
     }
 
     override fun onJcpError(throwable: Throwable) {
     }
 
-    fun playAudio(jcAudio: Int) {
-        mediaPlayerManager.playlist.let {
-            val audio = it.find { it.id == jcAudio }
-            mediaPlayerManager.playAudio(audio!!)
-        }
-    }
 
-    fun next() {
-        mediaPlayerManager.let { player ->
-            player.currentAudio?.let {
-                resetPlayerInfo()
-
-                try {
-                    player.nextAudio()
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
-
-    fun previous() {
-        resetPlayerInfo()
-        try {
-            mediaPlayerManager.previousAudio()
-        } catch (e: Exception) {
-            binding.icPause.show()
-            binding.icPlay.hide()
-            e.printStackTrace()
-        }
-
-    }
-
-    fun continueAudio() {
-        try {
-            mediaPlayerManager.continueAudio()
-        } catch (e: Exception) {
-            binding.icPause.show()
-            binding.icPlay.hide()
-            e.printStackTrace()
-        }
-    }
-
-    fun pause() {
-        mediaPlayerManager.pauseAudio()
-        binding.icPause.hide()
-        binding.icPlay.show()
-    }
 }

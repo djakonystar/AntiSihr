@@ -13,7 +13,6 @@ import android.os.Looper
 import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.service.models.AudioStatus
 import dev.djakonystar.antisihr.service.models.PlayerServiceListener
-import dev.djakonystar.antisihr.utils.seekBarCurrentDuration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,8 +27,6 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     private val audioStatus = AudioStatus()
 
     private val binder = PlayerServiceBinder()
-
-    val scope = CoroutineScope(Dispatchers.Main + Job())
 
     private var mediaPlayer: MediaPlayer? = null
 
@@ -53,12 +50,11 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     override fun onBind(p0: Intent?): IBinder = binder
 
     override fun onPrepared(player: MediaPlayer?) {
+        val status = updateStatus(currentAudio, AudioStatus.PlayState.PLAY)
+        serviceListener?.onPreparedListener(status)
         this.mediaPlayer = player
         this.mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        val status = updateStatus(currentAudio, AudioStatus.PlayState.PLAY)
-
         updateTime()
-        serviceListener?.onPreparedListener(status)
     }
 
     fun play(audio: AudioResultData): AudioStatus {

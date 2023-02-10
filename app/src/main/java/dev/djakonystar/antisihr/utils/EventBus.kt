@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.utils
 
+import android.provider.MediaStore.Audio
 import dev.djakonystar.antisihr.data.models.AudioResultData
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -10,5 +11,7 @@ val visibilityAudioPlayer = MutableSharedFlow<Boolean>()
 val showBottomNavigationView = MutableSharedFlow<Unit>()
 
 
+val playAudioFlow = MutableSharedFlow<AudioResultData>()
 
-val seekBarCurrentDuration = MutableSharedFlow<Int>()
+
+val adapterItemCLickListener = MutableSharedFlow<AudioResultData>()

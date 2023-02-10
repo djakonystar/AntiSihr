@@ -67,5 +67,4 @@
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/nunito_bold_ttf</item>
     </style>
-
 </resources>

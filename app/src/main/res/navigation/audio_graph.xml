@@ -45,6 +45,12 @@
         <argument
             android:name="image"
             app:argType="string" />
+
+        <argument
+            android:name="isCurrentAudioPlaying"
+            app:argType="boolean" />
+
+
     </fragment>
 
 </navigation>

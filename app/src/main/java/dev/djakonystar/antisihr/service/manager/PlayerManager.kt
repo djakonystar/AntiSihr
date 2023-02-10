@@ -196,11 +196,10 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     private fun getPreviousAudio(): AudioResultData {
         return if (onShuffleMode) {
-            playlist[Random().nextInt(playlist.size)]
+            playlist[currentPositionList.dec()]
         } else {
             try {
                 playlist[currentPositionList.dec()]
-
             } catch (e: IndexOutOfBoundsException) {
                 return playlist.first()
             }

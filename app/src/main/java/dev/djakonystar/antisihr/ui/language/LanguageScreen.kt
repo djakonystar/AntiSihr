@@ -1,28 +1,16 @@
 package dev.djakonystar.antisihr.ui.language
 
-import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.LinearLayout.LayoutParams
-import android.widget.RadioButton
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.local.LocalStorage
-import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.databinding.ScreenLanguageBinding
-import dev.djakonystar.antisihr.presentation.drawer.MainViewModel
-import dev.djakonystar.antisihr.presentation.drawer.impl.MainViewModelImpl
-import dev.djakonystar.antisihr.utils.dp
 import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -37,9 +25,6 @@ class LanguageScreen : Fragment(R.layout.screen_language) {
     lateinit var localStorage: LocalStorage
 
     private val binding: ScreenLanguageBinding by viewBinding(ScreenLanguageBinding::bind)
-    private val viewModel: MainViewModel by viewModels<MainViewModelImpl>()
-    private val languages = mutableListOf<LanguageData>()
-    private var selectedPosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +36,13 @@ class LanguageScreen : Fragment(R.layout.screen_language) {
                     }
                 }
             })
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
-        initObservers()
-        lifecycleScope.launchWhenCreated {
-            viewModel.getLanguages()
-        }
+
+        checkCurrentLanguage()
     }
 
     private fun initListeners() {
@@ -69,47 +51,52 @@ class LanguageScreen : Fragment(R.layout.screen_language) {
         }.launchIn(lifecycleScope)
 
         binding.tvSave.clicks().debounce(200).onEach {
-            if (selectedPosition != -1) {
-                Log.d("TTTT","${languages[selectedPosition].prefix}")
-                localStorage.language = languages[selectedPosition].prefix
-            } else {
-                Log.d("TTTT","${languages.first().prefix}")
-                localStorage.language = languages.first().prefix
-            }
-//            visibilityOfBottomNavigationView.emit(true)
-            (requireActivity() as MainActivity).rerun()
-        }.launchIn(lifecycleScope)
-
-        binding.rgLang.setOnCheckedChangeListener { _, i ->
-            selectedPosition = i - 1
-        }
-    }
-
-    private fun initObservers() {
-        viewModel.getLanguagesSuccessFlow.onEach {
-            repeat(binding.rgLang.childCount) { i ->
-                binding.rgLang.removeViewAt(i)
-            }
-            languages.clear()
-            languages.addAll(it.result!!)
-            languages.forEachIndexed { index, lang ->
-                binding.rgLang.addView(newRadioButton(lang, index))
-            }
-            binding.rgLang.check(selectedPosition + 1)
+            localStorage.language = getLangCode()
+            (requireActivity() as MainActivity).setNewLocale()
+            visibilityOfBottomNavigationView.emit(true)
         }.launchIn(lifecycleScope)
     }
 
-    private fun newRadioButton(language: LanguageData, i: Int): RadioButton {
-        val radioButton = RadioButton(requireContext())
-        radioButton.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        radioButton.buttonTintList = ColorStateList.valueOf(Color.parseColor("#2787F5"))
-        radioButton.setPadding(16.dp, 16.dp, 16.dp, 16.dp)
-        radioButton.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
-        radioButton.text = language.name
-        if (language.prefix == localStorage.language) {
-            selectedPosition = i
+    private fun checkCurrentLanguage() {
+        binding.apply {
+            rgLang.clearCheck()
+            rgLang.check(
+                when (localStorage.language) {
+                    "ru" -> R.id.rb_ru
+                    "ar" -> R.id.rb_ar
+                    "es" -> R.id.rb_es
+                    "it" -> R.id.rb_it
+                    "zh" -> R.id.rb_zh
+                    "ko" -> R.id.rb_ko
+                    "de" -> R.id.rb_de
+                    "tr" -> R.id.rb_tr
+                    "fr" -> R.id.rb_fr
+                    "sv" -> R.id.rb_sv
+                    "ja" -> R.id.rb_ja
+                    else -> R.id.rb_en
+                }
+            )
         }
-        return radioButton
+    }
+
+    private fun getLangCode(): String {
+        binding.apply {
+            println(rgLang.checkedRadioButtonId)
+            println(R.id.rb_ru)
+            return when (rgLang.checkedRadioButtonId) {
+                R.id.rb_ru -> "ru"
+                R.id.rb_ar -> "ar"
+                R.id.rb_es -> "es"
+                R.id.rb_it -> "it"
+                R.id.rb_zh -> "zh"
+                R.id.rb_ko -> "ko"
+                R.id.rb_de -> "de"
+                R.id.rb_tr -> "tr"
+                R.id.rb_fr -> "fr"
+                R.id.rb_sv -> "sv"
+                R.id.rb_ja -> "ja"
+                else -> "en"
+            }
+        }
     }
 }

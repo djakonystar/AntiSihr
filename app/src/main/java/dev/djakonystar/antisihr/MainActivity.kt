@@ -2,8 +2,13 @@ package dev.djakonystar.antisihr
 
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -14,15 +19,26 @@ import dev.djakonystar.antisihr.data.local.LocalStorage
 import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
+import dev.djakonystar.antisihr.service.models.AudioStatus
+import dev.djakonystar.antisihr.service.models.PlayerManagerListener
+import dev.djakonystar.antisihr.ui.about.AboutScreen
+import dev.djakonystar.antisihr.ui.audio.AudioScreen
+import dev.djakonystar.antisihr.ui.feedback.FeedbackScreen
+import dev.djakonystar.antisihr.ui.language.LanguageScreen
+import dev.djakonystar.antisihr.ui.library.LibraryScreen
+import dev.djakonystar.antisihr.ui.test.TestScreen
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.view.clicks
+import java.util.*
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PlayerManagerListener {
     @Inject
     lateinit var localStorage: LocalStorage
     private lateinit var binding: ActivityMainBinding
@@ -37,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         setAppLocale(localStorage.language.ifEmpty { "ru" }, this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        audioPlayerManager.jcPlayerManagerListener = this
 
         initListeners()
         initObservers()
@@ -61,9 +78,14 @@ class MainActivity : AppCompatActivity() {
             }
         }.launchIn(lifecycleScope)
 
-
         showBottomNavigationView.onEach {
             binding.bottomNavigationBar.show()
+        }.launchIn(lifecycleScope)
+
+
+        playAudioFlow.onEach {
+            binding.layoutMusicPlayer.expand()
+            playAudio(it.id)
         }.launchIn(lifecycleScope)
     }
 
@@ -79,6 +101,26 @@ class MainActivity : AppCompatActivity() {
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+
+        binding.btnPause.clicks().debounce(200).onEach {
+            if (audioPlayerManager.isPlaying()) {
+                pause()
+                binding.icSkipForward.hide()
+                binding.icClose.show()
+            } else {
+                continueAudio()
+                binding.icClose.hide()
+                binding.icSkipForward.show()
+            }
+        }.launchIn(lifecycleScope)
+
+        binding.icSkipForward.clicks().debounce(200).onEach {
+            next()
+        }.launchIn(lifecycleScope)
+
+        binding.icClose.clicks().debounce(200).onEach {
+            binding.layoutMusicPlayer.collapse()
+        }.launchIn(lifecycleScope)
 
 
         binding.bottomNavigationBar.setOnItemSelectedListener {
@@ -164,6 +206,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setLocale() {
+        val localeName = localStorage.language
+        val locale = Locale(localeName)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.setLocale(locale)
+        res.updateConfiguration(conf, dm)
+    }
+
+    fun setNewLocale() {
+        val refresh = Intent(this, MainActivity::class.java)
+        refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        this.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        this.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(refresh)
+    }
+
 
     fun changeBottomNavigationSelectedItem(isTestScreen: Boolean) {
         if (isTestScreen) {
@@ -179,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setAudioList(list: List<AudioResultData>) {
     fun rerun() {
         val refresh = Intent(this, MainActivity::class.java)
         refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -193,5 +254,141 @@ class MainActivity : AppCompatActivity() {
         audioPlayerManager.playlist = list as ArrayList<AudioResultData>
     }
 
+    override fun onPreparedAudio(status: AudioStatus) {
+        binding.icPause.show()
+        binding.icPlay.hide()
+            resetPlayerInfo()
+            onUpdateTitle(status.audio)
+    }
 
+    private fun onUpdateTitle(audio: AudioResultData?) {
+        audio?.let {
+            binding.tvName.text = it.name
+            binding.tvAuthor.text = it.author
+            binding.icImage.setImageWithGlide(this, it.image)
+            binding.icSkipForward.show()
+            binding.icClose.hide()
+            if (navController.currentDestination?.id == R.id.audio_screen) {
+                binding.layoutMusicPlayer.expand()
+            }
+            binding.btnPause.show()
+            binding.pbLoadingBar.hide()
+            binding.icImage.show()
+        }
+    }
+
+    override fun onCompletedAudio() {
+        resetPlayerInfo()
+        try {
+            audioPlayerManager.nextAudio()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun resetPlayerInfo() {
+        binding.tvName.text = ""
+        binding.tvAuthor.text = ""
+        binding.icSkipForward.hide()
+        binding.icClose.hide()
+        binding.pbLoadingBar.show()
+        binding.icImage.invisible()
+        binding.btnPause.hide()
+    }
+
+    override fun onPaused(status: AudioStatus) {
+    }
+
+    override fun onContinueAudio(status: AudioStatus) {
+        binding.icPause.show()
+        binding.icPlay.hide()
+        binding.icSkipForward.show()
+        binding.icClose.hide()
+    }
+
+    override fun onPlaying(status: AudioStatus) {
+        binding.icPlay.hide()
+        binding.icPause.show()
+        binding.icSkipForward.show()
+        binding.icClose.hide()
+    }
+
+    override fun onTimeChanged(status: AudioStatus) {}
+
+    override fun onStopped(status: AudioStatus) {}
+
+    override fun onJcpError(throwable: Throwable) {}
+
+    fun playAudio(id: Int) {
+        audioPlayerManager.playlist.let {
+            resetPlayerInfo()
+            val audio = it.find { it.id == id }
+            audioPlayerManager.playAudio(audio!!)
+        }
+    }
+
+    fun next() {
+        audioPlayerManager.let { player ->
+            player.currentAudio?.let {
+                resetPlayerInfo()
+                try {
+                    player.nextAudio()
+                } catch (e: Exception) {
+                    binding.icPause.show()
+                    binding.icPlay.hide()
+                    binding.icSkipForward.hide()
+                    binding.icClose.hide()
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    fun continueAudio() {
+        try {
+            audioPlayerManager.continueAudio()
+        } catch (e: Exception) {
+            binding.icPause.show()
+            binding.icPlay.hide()
+            binding.icSkipForward.hide()
+            binding.icClose.hide()
+            e.printStackTrace()
+        }
+    }
+
+    fun pause() {
+        audioPlayerManager.pauseAudio()
+        binding.icPause.hide()
+        binding.icPlay.show()
+        binding.icSkipForward.show()
+        binding.icClose.hide()
+    }
+
+
+    fun previous() {
+        resetPlayerInfo()
+        try {
+            audioPlayerManager.previousAudio()
+        } catch (e: Exception) {
+            binding.icPause.show()
+            binding.icPlay.hide()
+            binding.icSkipForward.hide()
+            binding.icClose.hide()
+            e.printStackTrace()
+        }
+
+    }
+
+    fun visibilityMediaPlayer(visibility: Int) {
+        if (visibility == View.VISIBLE) {
+            binding.layoutMusicPlayer.expand()
+        } else {
+            binding.layoutMusicPlayer.collapse()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        audioPlayerManager.kill()
+    }
 }

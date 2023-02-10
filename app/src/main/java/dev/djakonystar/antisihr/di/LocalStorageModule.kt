@@ -25,6 +25,6 @@ class LocalStorageModule {
     fun provideAppDatabase(@ApplicationContext context: Context): LocalRoomDatabase {
         return Room.databaseBuilder(
             context, LocalRoomDatabase::class.java, LocalRoomDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 }
