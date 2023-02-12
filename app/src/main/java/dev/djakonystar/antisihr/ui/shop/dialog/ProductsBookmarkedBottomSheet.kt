@@ -20,6 +20,7 @@ import dev.djakonystar.antisihr.presentation.shop.impl.ShopScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.shop.adapter.BookmarkedProductsAdapter
 import dev.djakonystar.antisihr.utils.showSnackBar
 import dev.djakonystar.antisihr.utils.toast
+import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -68,8 +69,9 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initObservers() {
-        viewModel.getGoodsSuccessFlow.onEach {
+        viewModel.getBookmarkedGoodsSuccessFlow.onEach {
             adapter.submitList(it)
+            visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
@@ -84,7 +86,6 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
         dialog.setOnShowListener {
-
             val bottomSheetDialog = it as BottomSheetDialog
             val parentLayout =
                 bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

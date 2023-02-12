@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.di
 
+import android.util.Log
 import dev.djakonystar.antisihr.data.local.LocalStorage
 import okhttp3.Interceptor
 import okhttp3.Response

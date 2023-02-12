@@ -1,6 +1,7 @@
 package dev.djakonystar.antisihr.ui.readers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -70,7 +71,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
                     adapter.submitList(allReaders)
                 } else {
                     val newList = allReaders.filter { r ->
-                        r.city.name.startsWith(etSearch.text.toString(), ignoreCase = true)
+                        r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true)
                     }
                     adapter.submitList(newList)
                 }
@@ -110,38 +111,40 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
         }.launchIn(lifecycleScope)
     }
 
-    private fun addNewChip(city: City) {
-        try {
-            binding.apply {
-                val inflater = LayoutInflater.from(requireContext())
+    private fun addNewChip(city: City?) {
+        if (city!=null){
+            try {
+                binding.apply {
+                    val inflater = LayoutInflater.from(requireContext())
 
-                val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
-                newChip.text = city.name
+                    val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
+                    newChip.text = city.name
 
-                chipGroupCity.addView(newChip)
+                    chipGroupCity.addView(newChip)
 
-                newChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        chipGroupCity.check((buttonView as Chip).id)
-                        if (!selectedCities.contains(city.name)) {
-                            selectedCities.add(city.name)
+                    newChip.setOnCheckedChangeListener { buttonView, isChecked ->
+                        if (isChecked) {
+                            chipGroupCity.check((buttonView as Chip).id)
+                            if (!selectedCities.contains(city.name)) {
+                                selectedCities.add(city.name)
+                            }
+                        } else {
+                            if (selectedCities.contains(city.name)) {
+                                selectedCities.remove(city.name)
+                            }
                         }
-                    } else {
-                        if (selectedCities.contains(city.name)) {
-                            selectedCities.remove(city.name)
-                        }
+                        filterReaders()
                     }
-                    filterReaders()
                 }
+            } catch (e: Exception) {
+                e.localizedMessage?.let { toast(it) }
             }
-        } catch (e: Exception) {
-            e.localizedMessage?.let { toast(it) }
         }
     }
 
     private fun filterReaders() {
         val newList = if (selectedCities.isNotEmpty()) {
-            allReaders.filter { selectedCities.contains(it.city.name) }
+            allReaders.filter { selectedCities.contains(it.city!!.name) }
         } else allReaders
         adapter.submitList(newList)
     }

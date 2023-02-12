@@ -1,8 +1,10 @@
 package dev.djakonystar.antisihr.ui.language
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout.LayoutParams
 import android.widget.RadioButton
@@ -13,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.local.LocalStorage
 import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
@@ -67,11 +70,14 @@ class LanguageScreen : Fragment(R.layout.screen_language) {
 
         binding.tvSave.clicks().debounce(200).onEach {
             if (selectedPosition != -1) {
+                Log.d("TTTT","${languages[selectedPosition].prefix}")
                 localStorage.language = languages[selectedPosition].prefix
             } else {
+                Log.d("TTTT","${languages.first().prefix}")
                 localStorage.language = languages.first().prefix
             }
-            visibilityOfBottomNavigationView.emit(true)
+//            visibilityOfBottomNavigationView.emit(true)
+            (requireActivity() as MainActivity).rerun()
         }.launchIn(lifecycleScope)
 
         binding.rgLang.setOnCheckedChangeListener { _, i ->

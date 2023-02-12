@@ -76,7 +76,7 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/type_smth" />
+            android:hint="@string/enter_something_you_want" />
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 

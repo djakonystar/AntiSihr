@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_shop_screen_to_good_info_screen"
             app:destination="@id/good_info_screen" />
+        <action
+            android:id="@+id/action_shop_screen_to_products_bookmarked_bottom_sheet"
+            app:destination="@id/products_bookmarked_bottom_sheet" />
     </fragment>
 
 

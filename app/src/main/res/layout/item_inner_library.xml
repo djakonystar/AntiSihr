@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
-            tools:text="Ибн Аль Каййим говорит,что рукъя опирается на две вещи: Сила воли и упование..." />
+            android:text="@string/name_sihr"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

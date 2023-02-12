@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="40dp"
-        android:hint="Ваше ФИО:"
+        android:hint="@string/your_name"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:hint="Ваш номер телефона:"
+        android:hint="@string/telephone_only"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:hint="Название вашего вопроса:"
+        android:hint="@string/name_of_your_question"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:hint="Текст вашего сообщения"
+        android:hint="@string/name"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:hintTextColor="#959595"
@@ -166,6 +166,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Все введенные вами данные\nстрого конфиденциальны" />
+        android:text="@string/all_the_data_you_enter_is_strictly_confidential" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,8 +38,7 @@
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_close_test"
-        tools:text="Тест на сихра" />
+        app:layout_constraintTop_toBottomOf="@id/tv_close_test" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_step"
@@ -103,9 +102,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="64dp"
         android:orientation="vertical"
         android:visibility="visible"
-        android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
 
@@ -115,10 +114,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rect_15"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/nunito_bold_ttf"
-            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingVertical="14dp"
             android:text="@string/yes"
             android:textAllCaps="false"
@@ -132,12 +131,12 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_rect_15"
             android:backgroundTint="@color/white"
-            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingVertical="14dp"
-            android:text="@string/no"
+            android:text="@string/not"
             android:textAllCaps="false"
             android:textColor="@color/main_text_color"
             android:textSize="20sp" />
@@ -149,12 +148,12 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_rect_15"
             android:backgroundTint="@color/main_color"
-            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingVertical="14dp"
-            android:text="@string/next"
+            android:text="@string/further"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -170,14 +169,14 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/nunito_semibold_ttf"
         android:gravity="center"
-        android:text="По результатам ответов, которые вы дали, выяснилось, что есть вероятность, что вам сделали сихр."
         android:textColor="@color/main_text_color"
         android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/linear_result_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/number_layout" />
+        app:layout_constraintTop_toBottomOf="@id/number_layout"
+        tools:text="По результатам ответов, которые вы дали, выяснилось, что есть вероятность, что вам сделали сихр." />
 
     <LinearLayout
         android:id="@+id/linear_result_buttons"
@@ -196,10 +195,10 @@
             android:fontFamily="@font/nunito_bold"
             android:gravity="center"
             android:paddingVertical="16dp"
+            android:text="@string/take_cure_at_the_library"
             android:textAllCaps="false"
             android:textColor="#0F0F10"
-            android:textSize="20sp"
-            tools:text="Пройдите курс \nлечения в Библиотеке" />
+            android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/treatment_course"
@@ -208,12 +207,12 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_rect_15"
             android:backgroundTint="@color/main_color"
-            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="?android:attr/selectableItemBackground"
             android:paddingVertical="14dp"
-            android:text="@string/go_to_treatment"
+            android:text="@string/get_treated"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp" />

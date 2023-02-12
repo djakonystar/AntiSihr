@@ -70,23 +70,23 @@ class AboutScreen : Fragment(R.layout.screen_about) {
             val info = it.result!!.first()
             binding.ivLogo.setImageWithGlide(requireContext(), info.image)
             binding.tvAbout.text = info.description
-            binding.tvAddress.text = getString(R.string.address, info.address)
-            val phone = getString(R.string.text_phone, info.phone.toPhoneNumber)
-            val spanned = SpannableString(phone)
-            val start = spanned.indexOf('\n')
-            spanned.setSpan(
-                ForegroundColorSpan(Color.parseColor("#0048FF")),
-                start,
-                phone.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spanned.setSpan(
-                UnderlineSpan(),
-                start,
-                phone.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            binding.tvPhone.text = spanned
+            binding.tvAddress.text = getString(R.string.address_with_dots, info.address)
+            val phone = getString(R.string.phone_number, info.phone.toPhoneNumber)
+//            val spanned = SpannableString(phone)
+//            val start = spanned.indexOf('\n')
+//            spanned.setSpan(
+//                ForegroundColorSpan(Color.parseColor("#0048FF")),
+//                start,
+//                phone.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//            spanned.setSpan(
+//                UnderlineSpan(),
+//                start,
+//                phone.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+            binding.tvPhone.text = phone
             binding.tvPhone.clicks().debounce(200).onEach {
                 val intent = Intent(
                     Intent.ACTION_DIAL,

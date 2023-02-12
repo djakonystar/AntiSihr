@@ -30,6 +30,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     private val binding: ScreenLibraryBinding by viewBinding(ScreenLibraryBinding::bind)
     private val viewModel: LibraryScreenViewModel by viewModels<LibraryScreenViewModelImpl>()
     private val allLibrary = mutableListOf<LibraryResultData>()
+
     private var _adapter: LibraryAdapter? = null
     private val adapter: LibraryAdapter get() = _adapter!!
 
@@ -90,7 +91,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         binding.icFavourites.clicks().debounce(200).onEach {
             findNavController().navigate(
                 LibraryScreenDirections.actionLibraryScreenToInnerLibraryScreen(
-                    -1, getString(R.string.bookmarked), getString(R.string.only_bookmarkeds), true
+                    -1, getString(R.string.favourites), getString(R.string.only_selected_articles_are_displayed_here), true
                 )
             )
         }.launchIn(lifecycleScope)
@@ -122,9 +123,4 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             )
         }
     }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _adapter = null
-//    }
 }

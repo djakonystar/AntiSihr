@@ -5,7 +5,7 @@ data class ShopItemData(
     val name: String,
     val description: String,
     val price: Double,
-    val seller: SellerData,
+    val seller: SellerData?,
     val image: String,
-    val weight: String
+    val weight: String?
 )

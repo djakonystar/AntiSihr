@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:fontFamily="@font/nunito_extrabold_ttf"
-            android:text="Вы ищите чтеца?"
+            android:text="@string/are_you_looking_for_reader"
             android:textColor="#260101"
             android:textSize="23sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_ttf"
-            android:text="В каждом городе, по одному чтецу"
+            android:text="@string/in_every_city_one_reader"
             android:textColor="#99000000"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/tv_audio"
@@ -60,7 +60,7 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_city"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipSpacing="4dp"
                 app:singleSelection="false"

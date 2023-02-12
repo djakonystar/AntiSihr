@@ -66,7 +66,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
             binding.tvQuestion.hide()
             binding.tvResult.show()
             binding.linearResultButtons.show()
-            binding.tvTitleTest.text = "Резултат ${args.name.lowercase()}"
+            binding.tvTitleTest.text = getString(R.string.score, args.name.lowercase())
             binding.tvResult.text = it.result.first().name
             binding.loadingAnimation.hide()
 

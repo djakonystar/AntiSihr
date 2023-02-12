@@ -34,6 +34,10 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initAdapters()
+
+
+
+
         initListeners()
         initObservers()
 

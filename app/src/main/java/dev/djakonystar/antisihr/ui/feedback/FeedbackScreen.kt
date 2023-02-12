@@ -89,16 +89,16 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
                 viewModel.addFeedback(data)
             } else {
                 if (FeedbackValidator(data).isNotValidName()) {
-                    binding.tilName.error = "Please enter your name"
+                    binding.tilName.error = "sadasdasd"
                 }
                 if (FeedbackValidator(data).isNotValidPhone()) {
                     binding.tilPhone.error = "Please enter your phone"
                 }
                 if (FeedbackValidator(data).isNotValidTitle()) {
-                    binding.tilTopic.error = "Please enter title"
+                    binding.tilTopic.error = getString(R.string.question_title_and_description_are_required_to_submit_ticket)
                 }
                 if (FeedbackValidator(data).isNotValidDescription()) {
-                    binding.tilText.error = "Please enter description"
+                    binding.tilText.error = getString(R.string.question_title_and_description_are_required_to_submit_ticket)
                 }
             }
         }.launchIn(lifecycleScope)

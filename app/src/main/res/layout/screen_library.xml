@@ -78,7 +78,7 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/type_smth" />
+            android:hint="@string/enter_something_you_want" />
     </net.cachapa.expandablelayout.ExpandableLayout>
 
 
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_ttf"
-        android:text="Здесь собранная информация"
+        android:text="@string/info_collected_here"
         android:textColor="#80260101"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/tv_search"

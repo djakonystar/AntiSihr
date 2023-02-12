@@ -6,60 +6,68 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
+import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 import dev.djakonystar.antisihr.databinding.ItemShopBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class ShopsAdapter : ListAdapter<ShopItemBookmarked, ShopsAdapter.ShopViewHolder>(MyDiffUtil) {
-
-    private var onItemClickListener: ((ShopItemBookmarked) -> Unit)? = null
-
-    fun setOnItemClickListener(block: ((ShopItemBookmarked) -> Unit)) {
-        onItemClickListener = block
+class ShopsAdapter :RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
+    inner class ShopViewHolder(private val binding: ItemShopBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ShopItemBookmarked) {
+            binding.apply {
+                tvName.text = item.name
+                tvPeace.text = item.weight
+                tvPrice.text = binding.root.context.getString(R.string.rub,item.price.toString())
+                ivProduct.setImageWithGlide(binding.root.context, item.image)
+                if (item.isFavourite){
+                    ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
+                }else{
+                    ivFavorite.setImageResource(R.drawable.ic_favourites)
+                }
+                binding.root.setOnClickListener {
+                    onItemClick.invoke(item)
+                }
+                binding.ivFavorite.setOnClickListener {
+                    if (item.isFavourite){
+                        ivFavorite.setImageResource(R.drawable.ic_favourites)
+                    }else{
+                        ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
+                    }
+                    onItemBookmarkClick.invoke(item)
+                }
+            }
+        }
     }
 
-    inner class ShopViewHolder(val binding: ItemShopBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            val d = getItem(absoluteAdapterPosition)
-            binding.ivProduct.setImageWithGlide(binding.root.context, d.image)
-            binding.tvName.text = d.name
-            binding.tvPeace.text = d.weight
-            binding.tvPrice.text = d.price.toString()
-            if (d.isFavourite) {
-                binding.ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
-            } else {
-                binding.ivFavorite.setImageResource(R.drawable.ic_favourites)
-            }
+    var shopItems = listOf<ShopItemBookmarked>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
         }
 
-        init {
-            binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
-            }
-        }
-
+    override fun getItemCount(): Int {
+        return shopItems.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
-        return ShopViewHolder(
-            ItemShopBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_shop, parent, false)
+        val binding = ItemShopBinding.bind(v)
+        return ShopViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(shopItems[position])
     }
 
-    private object MyDiffUtil : DiffUtil.ItemCallback<ShopItemBookmarked>() {
-        override fun areItemsTheSame(
-            oldItem: ShopItemBookmarked, newItem: ShopItemBookmarked
-        ): Boolean = oldItem == newItem
+    private var onItemClick: (item: ShopItemBookmarked) -> Unit = { _ -> }
+    fun setOnItemClickListener(onItemClick: (contact: ShopItemBookmarked) -> Unit) {
+        this.onItemClick = onItemClick
+    }
 
-        override fun areContentsTheSame(
-            oldItem: ShopItemBookmarked, newItem: ShopItemBookmarked
-        ): Boolean = oldItem.name == newItem.name && oldItem.id == newItem.id
+    private var onItemBookmarkClick: (item: ShopItemBookmarked) -> Unit = { _ -> }
+    fun setOnItemBookmarkClickListener(onItemClick: (contact: ShopItemBookmarked) -> Unit) {
+        this.onItemBookmarkClick = onItemClick
     }
 }

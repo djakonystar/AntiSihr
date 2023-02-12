@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/nunito_semibold_ttf"
-        android:text="@string/save"
+        android:text="@string/done"
         android:textColor="#2787F5"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"

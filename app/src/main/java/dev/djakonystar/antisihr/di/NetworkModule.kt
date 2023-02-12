@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
@@ -22,10 +23,11 @@ class NetworkModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+
     @[Provides Singleton]
     fun providesOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor, @ApplicationContext context: Context
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
+        interceptor: AntiSihrInterceptor, loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(loggingInterceptor).build()
 
 
     @[Provides Singleton]

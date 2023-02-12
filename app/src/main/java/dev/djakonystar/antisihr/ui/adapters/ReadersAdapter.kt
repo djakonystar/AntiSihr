@@ -39,7 +39,9 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
             binding.apply {
                 tvAuthor.text = "${d.surname} ${d.name}"
                 icPhoto.setImageWithGlide(root.context, d.image)
-                tvCityName.text = d.city.name
+                if (d.city != null) {
+                    tvCityName.text = d.city.name
+                }
                 tvDescription.text = d.description
             }
         }
@@ -61,8 +63,7 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
         }
 
         override fun areContentsTheSame(oldItem: ReaderData, newItem: ReaderData): Boolean {
-            return oldItem.name == newItem.name && oldItem.surname == newItem.surname &&
-                    oldItem.description == newItem.description && oldItem.image == newItem.image
+            return oldItem.name == newItem.name && oldItem.surname == newItem.surname && oldItem.description == newItem.description && oldItem.image == newItem.image
         }
     }
 }
