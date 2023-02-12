@@ -33,7 +33,7 @@
     <string name="library">としょうかん</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="lets_identify_signs">兆候を見分けよう</string>
-    <string name="description">説明: %s</string>
+    <string name="text_description">説明: %s</string>
     <string name="buy">買う</string>
     <string name="en">えん</string>
     <string name="the_choosen_ones">選ばれたもの</string>
@@ -73,19 +73,12 @@
     <string name="about_app">アプリについて</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="to_saved">В избранное</string>
     <string name="favorites">Избранное</string>
-    <string name="city_name">Название города</string>
-    <string name="buy">Купить</string>
     <string name="shop_name">Магазин:</string>
-    <string name="capacity">Объем:</string>
-    <string name="description">Описание:</string>
-    <string name="search">Поиск</string>
     <string name="bookmarked">Избранные</string>
     <string name="only_bookmarkeds">Тут отображаются только избранные статьи</string>
-    <string name="all">Все</string>
     <string name="russian">Русский</string>
     <string name="text_en">Английский</string>
 </resources>

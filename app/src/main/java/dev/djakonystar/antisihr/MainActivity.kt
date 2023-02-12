@@ -2,13 +2,9 @@ package dev.djakonystar.antisihr
 
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -21,12 +17,6 @@ import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.service.models.AudioStatus
 import dev.djakonystar.antisihr.service.models.PlayerManagerListener
-import dev.djakonystar.antisihr.ui.about.AboutScreen
-import dev.djakonystar.antisihr.ui.audio.AudioScreen
-import dev.djakonystar.antisihr.ui.feedback.FeedbackScreen
-import dev.djakonystar.antisihr.ui.language.LanguageScreen
-import dev.djakonystar.antisihr.ui.library.LibraryScreen
-import dev.djakonystar.antisihr.ui.test.TestScreen
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -237,15 +227,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
             val graph = navController.navInflater.inflate(R.navigation.library_graph)
             navController.graph = graph
         }
-    }
-
-    fun setAudioList(list: List<AudioResultData>) {
-    fun rerun() {
-        val refresh = Intent(this, MainActivity::class.java)
-        refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        this.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        this.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(refresh)
     }
 
     fun setAudioList(list: List<AudioResultData>){

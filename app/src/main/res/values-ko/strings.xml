@@ -33,7 +33,7 @@
     <string name="library">도서관</string>
     <string name="privacy_policy">개인 정보 정책</string>
     <string name="lets_identify_signs">징후를 확인하자</string>
-    <string name="description">설명: %1$s</string>
+    <string name="text_description">설명: %1$s</string>
     <string name="buy">구입하다</string>
     <string name="en">ko</string>
     <string name="the_choosen_ones">선택받은 자들</string>
@@ -73,19 +73,12 @@
     <string name="about_app">앱 정보</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="to_saved">В избранное</string>
     <string name="favorites">Избранное</string>
-    <string name="city_name">Название города</string>
-    <string name="buy">Купить</string>
     <string name="shop_name">Магазин:</string>
-    <string name="capacity">Объем:</string>
-    <string name="description">Описание:</string>
-    <string name="search">Поиск</string>
     <string name="bookmarked">Избранные</string>
     <string name="only_bookmarkeds">Тут отображаются только избранные статьи</string>
-    <string name="all">Все</string>
     <string name="russian">Русский</string>
     <string name="text_en">Английский</string>
 </resources>

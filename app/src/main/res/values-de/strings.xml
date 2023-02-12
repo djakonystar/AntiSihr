@@ -33,7 +33,7 @@
     <string name="library">Bibliothek</string>
     <string name="privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="lets_identify_signs">Lassen Sie uns die Zeichen identifizieren</string>
-    <string name="description">Beschreibung:</string>
+    <string name="text_description">Beschreibung:</string>
     <string name="buy">Besorgen</string>
     <string name="en">de</string>
     <string name="the_choosen_ones">Die Auserwählten</string>
@@ -73,19 +73,12 @@
     <string name="about_app">über die App</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="to_saved">В избранное</string>
     <string name="favorites">Избранное</string>
-    <string name="city_name">Название города</string>
-    <string name="buy">Купить</string>
     <string name="shop_name">Магазин:</string>
-    <string name="capacity">Объем:</string>
-    <string name="description">Описание:</string>
-    <string name="search">Поиск</string>
     <string name="bookmarked">Избранные</string>
     <string name="only_bookmarkeds">Тут отображаются только избранные статьи</string>
-    <string name="all">Все</string>
     <string name="russian">Русский</string>
     <string name="text_en">Английский</string>
 </resources>

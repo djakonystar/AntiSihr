@@ -28,7 +28,7 @@
     <string name="buy">Купить</string>
     <string name="shop_name">Магазин:</string>
     <string name="capacity">Объем:</string>
-    <string name="description">Описание:</string>
+    <string name="text_description">Описание:</string>
     <string name="search">Поиск</string>
     <string name="bookmarked">Избранные</string>
     <string name="only_bookmarkeds">Тут отображаются только избранные статьи</string>

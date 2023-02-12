@@ -49,7 +49,17 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         lifecycleScope.launchWhenResumed {
             visibilityOfBottomNavigationView.emit(false)
-            viewModel.getIsExistsInBookmarkeds(AudioBookmarked(args.id,args.author,"","",args.image,args.name,args.url))
+            viewModel.getIsExistsInBookmarkeds(
+                AudioBookmarked(
+                    args.id,
+                    args.author,
+                    "",
+                    "",
+                    args.image,
+                    args.name,
+                    args.url
+                )
+            )
         }
     }
 
@@ -135,7 +145,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
 
-    private fun initData(){
+    private fun initData() {
         binding.tvAudioAuthor.text = args.author
         binding.tvAudioName.text = args.name
         val duration = args.url.getMediaDuration()
@@ -159,12 +169,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             isFirstTime = false
         }
     }
+
     private fun initObservers() {
         viewModel.isExistsInBookmarkedsFlow.onEach {
             isFavourite = it
-            if (it){
+            if (it) {
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
-            }else{
+            } else {
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites)
             }
         }.launchIn(lifecycleScope)
@@ -238,22 +249,28 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
     override fun onPaused(status: AudioStatus) {
         if (this.view != null) {
-            binding.icPlay.show()
-            binding.icPause.hide()
+            requireActivity().runOnUiThread {
+                binding.icPlay.show()
+                binding.icPause.hide()
+            }
         }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
         if (this.view != null) {
-            binding.icPause.show()
-            binding.icPlay.hide()
+            requireActivity().runOnUiThread {
+                binding.icPause.show()
+                binding.icPlay.hide()
+            }
         }
     }
 
     override fun onPlaying(status: AudioStatus) {
         if (this.view != null) {
-            binding.icPlay.hide()
-            binding.icPause.show()
+            requireActivity().runOnUiThread {
+                binding.icPlay.hide()
+                binding.icPause.show()
+            }
         }
     }
 

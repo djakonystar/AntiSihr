@@ -33,7 +33,7 @@
     <string name="library">مكتبة</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="lets_identify_signs">دعونا نتعرف على العلامات</string>
-    <string name="description">وصف: %1$s</string>
+    <string name="text_description">وصف: %1$s</string>
     <string name="buy">يشتري</string>
     <string name="en">ru</string>
     <string name="the_choosen_ones">المختارين</string>
