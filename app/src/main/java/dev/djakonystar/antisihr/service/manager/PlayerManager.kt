@@ -24,6 +24,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     private var jcPlayerService: AudioPlayerService? = null
     private var serviceBound = false
     var playlist: ArrayList<AudioResultData> = ArrayList()
+    var shuffleModeList: ArrayList<AudioResultData> = ArrayList()
     private var currentPositionList: Int = 0
     private val managerListeners: CopyOnWriteArrayList<PlayerManagerListener> =
         CopyOnWriteArrayList()
@@ -183,7 +184,9 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     private fun getNextAudio(): AudioResultData? {
         return if (onShuffleMode) {
-            playlist[Random().nextInt(playlist.size)]
+            val randomNumber = Random().nextInt(playlist.size)
+            shuffleModeList.add(playlist[randomNumber])
+            playlist[randomNumber]
         } else {
             try {
                 playlist[currentPositionList.inc()]
@@ -195,13 +198,17 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     }
 
     private fun getPreviousAudio(): AudioResultData {
-        return if (onShuffleMode) {
-            playlist[currentPositionList.dec()]
+        if (onShuffleMode) {
+            return try {
+                shuffleModeList[shuffleModeList.lastIndex-1]
+            }catch (e: Exception){
+                shuffleModeList.first()
+            }
         } else {
-            try {
+            return try {
                 playlist[currentPositionList.dec()]
             } catch (e: IndexOutOfBoundsException) {
-                return playlist.first()
+                playlist.first()
             }
         }
     }
@@ -232,7 +239,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
                 sleep(1000)
             }
         }.start()
-
     }
 
     override fun onContinueListener(status: AudioStatus) {

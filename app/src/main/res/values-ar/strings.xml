@@ -72,4 +72,16 @@
     <string name="about_app">حول التطبيق</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
+    <string name="text_ru">Русский</string>
+    <string name="text_en">English</string>
+    <string name="text_ja">日本語</string>
+    <string name="text_sv">svensk</string>
+    <string name="text_fr">français</string>
+    <string name="text_tr">Türk</string>
+    <string name="text_de">Nederlands</string>
+    <string name="text_ko">한국어</string>
+    <string name="text_zh">中文</string>
+    <string name="text_it">italiano</string>
+    <string name="text_es">español</string>
+    <string name="text_ar">العربية</string>
 </resources>
