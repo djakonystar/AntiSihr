@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:text="@string/description"
+                android:text="@string/text_description"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="@id/ic_photo"
