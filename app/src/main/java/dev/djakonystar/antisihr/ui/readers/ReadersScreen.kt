@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -25,8 +26,10 @@ import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import dev.djakonystar.antisihr.utils.toast
 import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 
 @AndroidEntryPoint
 class ReadersScreen : Fragment(R.layout.screen_readers) {
@@ -71,7 +74,9 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
                     adapter.submitList(allReaders)
                 } else {
                     val newList = allReaders.filter { r ->
-                        r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true)
+                        r.city!!.name.startsWith(
+                            etSearch.text.toString(), ignoreCase = true
+                        ) || r.name.contains(etSearch.text.toString(), true)
                     }
                     adapter.submitList(newList)
                 }
@@ -112,7 +117,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
     }
 
     private fun addNewChip(city: City?) {
-        if (city!=null){
+        if (city != null) {
             try {
                 binding.apply {
                     val inflater = LayoutInflater.from(requireContext())

@@ -9,7 +9,8 @@
     <View
         android:layout_width="50dp"
         android:layout_height="3dp"
-        android:background="@color/grey"
+        android:background="@drawable/bg_rect_100"
+        android:backgroundTint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@id/tv_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

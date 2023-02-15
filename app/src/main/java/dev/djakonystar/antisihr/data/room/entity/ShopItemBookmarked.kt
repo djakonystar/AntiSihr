@@ -14,7 +14,7 @@ data class ShopItemBookmarked(
     val price: Double,
     val image: String,
     val weight: String,
-    val isFavourite: Boolean,
+    var isFavourite: Boolean,
     val sellerId:Int,
     val sellerName:String,
     val sellerUrl:String

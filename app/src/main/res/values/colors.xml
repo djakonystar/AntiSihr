@@ -15,5 +15,6 @@
     <color name="main_color">#7950DF</color>
     <color name="et_background">#4DD3D3D3</color>
     <color name="et_text_color">#80260101</color>
+    <color name="gray_text_color">#0F0F10</color>
 <!--    <color name="mtrl_textinput_default_box_stroke_color">@android:color/transparent</color>-->
 </resources>

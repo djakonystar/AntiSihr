@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+import android.media.MediaPlayer
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dev.djakonystar.antisihr.data.models.GenericResponse
+import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,21 +62,8 @@ fun String.toPhoneType(): String {
     return output
 }
 
-fun String.getMediaDuration(): Long {
-    if (this.isEmpty()) return 0L
-    val retriever = MediaMetadataRetriever()
-    return try {
-        retriever.setDataSource(this)
-        val duration = retriever.extractMetadata(METADATA_KEY_DURATION)
-        retriever.release()
-        duration?.toLongOrNull() ?: 0L
-    } catch (exception: Exception) {
-        0L
-    }
-}
 
 fun Long.milliSecondsToTimer(): String {
-    Log.d("TTTT", this.toString())
     val pattern = if (this >= 3_600_000L) "HH:mm:ss" else "mm:ss"
     val simpleDateFormat = SimpleDateFormat(pattern, Locale.ROOT)
     simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+0")

@@ -13,6 +13,7 @@ import dev.djakonystar.antisihr.domain.usecase.AudioUseCase
 import dev.djakonystar.antisihr.domain.usecase.TestUseCase
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.HomeScreenViewModel
+import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -45,11 +46,6 @@ class AudioScreenViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override val isExistsInBookmarkedsFlow= MutableSharedFlow<Boolean>()
-
-    override suspend fun getIsExistsInBookmarkeds(item: AudioBookmarked) {
-        isExistsInBookmarkedsFlow.emit(useCase.isExistsInBookmarkeds(item))
-    }
 
     override suspend fun getBookmarkedAudios() {
         useCase.getListOfBookmarkedAudios().onEach {
@@ -68,12 +64,13 @@ class AudioScreenViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override suspend fun addToBookmarkeds(audioBookmarked: AudioBookmarked) {
-        useCase.addAudioToBookmarked(audioBookmarked).launchIn(viewModelScope)
-    }
 
-    override suspend fun deleteFromBookmarkeds(audioBookmarked: AudioBookmarked) {
-        useCase.deleteAudioFromBookmarked(audioBookmarked).launchIn(viewModelScope)
+
+    init {
+        viewModelScope.launch {
+            getListOfAudios()
+            visibilityOfLoadingAnimationView.emit(true)
+        }
     }
 
 }

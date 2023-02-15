@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -30,6 +31,7 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 import kotlin.random.Random
 
@@ -45,8 +47,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
@@ -60,7 +61,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         initObservers()
 
         lifecycleScope.launchWhenResumed {
-            view
+            viewModel.getAllProducts()
+            visibilityOfLoadingAnimationView.emit(true)
+
         }
     }
 
@@ -80,9 +83,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
         adapter.setOnItemBookmarkClickListener {
             lifecycleScope.launchWhenResumed {
-                if (it.isFavourite){
+                if (it.isFavourite) {
                     viewModel.deleteFromBookmarked(it)
-                }else{
+                } else {
                     viewModel.addToBookmarked(it)
                 }
             }
@@ -120,7 +123,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 lifecycleScope.launchWhenResumed {
                     viewModel.getAllProductsOfSeller(sellersList.find {
                         it.name == tvTab.text.toString()
-                    }?.id?:0)
+                    }?.id ?: 0)
                 }
             }
 
@@ -135,6 +138,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
             override fun onTabReselected(tab: Tab?) {}
         })
+
+        binding.swipeRefreshLayout.refreshes().onEach {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.getAllProducts()
+        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
     private fun initObservers() {

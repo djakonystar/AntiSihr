@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.ui.audio
 
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,9 @@ import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioPlayerBinding
+import dev.djakonystar.antisihr.presentation.audio.AudioPlayerScreenViewModel
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
+import dev.djakonystar.antisihr.presentation.audio.impl.AudioPlayerScreenViewModelImpl
 import dev.djakonystar.antisihr.presentation.audio.impl.AudioScreenViewModelImpl
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.service.models.AudioStatus
@@ -34,8 +37,9 @@ import ru.ldralighieri.corbind.view.clicks
 class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeekBarChangeListener,
     PlayerManagerListener {
     private val binding: ScreenAudioPlayerBinding by viewBinding(ScreenAudioPlayerBinding::bind)
-    private val viewModel: AudioScreenViewModel by viewModels<AudioScreenViewModelImpl>()
+    private val viewModel: AudioPlayerScreenViewModel by viewModels<AudioPlayerScreenViewModelImpl>()
     private val args: AudioPlayerScreenArgs by navArgs()
+    private var currentMusic: AudioBookmarked? = null
     private var isFirstTime = true
     private val mediaPlayerManager: PlayerManager
         get() = (requireActivity() as MainActivity).audioPlayerManager
@@ -51,13 +55,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             visibilityOfBottomNavigationView.emit(false)
             viewModel.getIsExistsInBookmarkeds(
                 AudioBookmarked(
-                    args.id,
-                    args.author,
-                    "",
-                    "",
-                    args.image,
-                    args.name,
-                    args.url
+                    args.id, args.author, "", "", args.image, args.name, args.url
                 )
             )
         }
@@ -71,18 +69,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         binding.icFavourite.clicks().debounce(200).onEach {
             isFavourite = isFavourite.not()
-            val audio = AudioBookmarked(
-                args.id, args.author, "", "", args.image, args.name, args.url
-            )
             if (isFavourite) {
                 viewModel.addToBookmarkeds(
-                    audio
+                    currentMusic!!
                 )
-                Log.d("TTTTT", "It is $audio")
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
             } else {
                 viewModel.deleteFromBookmarkeds(
-                    audio
+                    currentMusic!!
                 )
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites)
             }
@@ -114,11 +108,16 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         binding.icRepeat.clicks().debounce(200).onEach {
             mediaPlayerManager.activeRepeat()
-            binding.icRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.black))
             if (mediaPlayerManager.repeatCurrAudio) {
                 binding.icRepeat.setColorFilter(
                     ContextCompat.getColor(
                         requireContext(), R.color.main_color
+                    )
+                )
+            } else {
+                binding.icRepeat.setColorFilter(
+                    ContextCompat.getColor(
+                        requireContext(), R.color.black
                     )
                 )
             }
@@ -148,10 +147,12 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     private fun initData() {
         binding.tvAudioAuthor.text = args.author
         binding.tvAudioName.text = args.name
-        val duration = args.url.getMediaDuration()
-        binding.musicController.max = duration.toInt()
         binding.icAudioImage.setImageWithGlide(requireContext(), args.image)
-        binding.endTime.text = duration.milliSecondsToTimer()
+
+        currentMusic = AudioBookmarked(
+            args.id, args.author, "", "", args.image, args.name, args.url
+        )
+
 
         if (args.isCurrentAudioPlaying) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -164,9 +165,29 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             }
             binding.currentTime.text =
                 mediaPlayerManager.currentStatus!!.currentPosition.milliSecondsToTimer()
+            binding.musicController.max = mediaPlayerManager.currentStatus!!.duration
+            binding.endTime.text =
+                mediaPlayerManager.currentStatus!!.duration.toLong().milliSecondsToTimer()
             binding.icPause.show()
             binding.icPlay.hide()
             isFirstTime = false
+        }
+
+
+        if (mediaPlayerManager.onShuffleMode) {
+            binding.icShuffle.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(), R.color.main_color
+                )
+            )
+        }
+
+        if (mediaPlayerManager.repeatCurrAudio) {
+            binding.icRepeat.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(), R.color.main_color
+                )
+            )
         }
     }
 
@@ -205,12 +226,30 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     override fun onPreparedAudio(status: AudioStatus) {
         resetPlayerInfo()
         if (this.view != null) {
+            currentMusic = AudioBookmarked(
+                status.audio!!.id,
+                status.audio!!.author,
+                status.audio!!.date_create,
+                status.audio!!.date_update,
+                status.audio!!.image,
+                status.audio!!.name,
+                status.audio!!.url,
+            )
+            lifecycleScope.launchWhenResumed {
+                viewModel.getIsExistsInBookmarkeds(
+                    currentMusic!!
+                )
+            }
             onUpdateTitle(status.audio)
             binding.icPause.show()
             binding.icPlay.hide()
-            val mediaDuration = status.audio!!.url.getMediaDuration()
-            binding.musicController.max = mediaDuration.toInt()
-            binding.endTime.text = mediaDuration.milliSecondsToTimer()
+            binding.musicController.max = status.duration
+            binding.endTime.text = status.duration.toLong().milliSecondsToTimer()
+            binding.musicController.isEnabled = true
+            binding.icPrevious.isEnabled = true
+            binding.icForward.isEnabled = true
+            binding.btnPlay.isClickable = true
+            binding.icFavourite.show()
         }
     }
 
@@ -225,10 +264,11 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }
     }
 
+    //
     override fun onCompletedAudio() {
         resetPlayerInfo()
         try {
-            mediaPlayerManager.nextAudio()
+//            mediaPlayerManager.nextAudio()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -244,9 +284,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.musicController.progress = 0
             binding.icAudioImage.setImageDrawable(null)
             binding.pbLoadingBar.show()
+            binding.icFavourite.hide()
+            binding.musicController.isEnabled = false
+            binding.icPrevious.isEnabled = false
+            binding.icForward.isEnabled = false
         }
     }
 
+    //
     override fun onPaused(status: AudioStatus) {
         if (this.view != null) {
             requireActivity().runOnUiThread {
@@ -258,10 +303,10 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
     override fun onContinueAudio(status: AudioStatus) {
         if (this.view != null) {
-            requireActivity().runOnUiThread {
-                binding.icPause.show()
-                binding.icPlay.hide()
-            }
+            binding.musicController.max = status.duration
+            binding.endTime.text = status.duration.toLong().milliSecondsToTimer()
+            binding.icPause.show()
+            binding.icPlay.hide()
         }
     }
 

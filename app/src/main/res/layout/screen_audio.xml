@@ -25,7 +25,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="10dp"
+        android:padding="8dp"
         android:src="@drawable/ic_favourites"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
@@ -39,7 +39,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="10dp"
+        android:padding="8dp"
         android:src="@drawable/ic_search"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/tv_audio"
@@ -95,7 +95,9 @@
         app:layout_constraintStart_toStartOf="@id/tv_audio"
         app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -111,6 +113,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_audio" />
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

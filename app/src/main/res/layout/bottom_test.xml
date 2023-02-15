@@ -9,7 +9,8 @@
     <View
         android:layout_width="50dp"
         android:layout_height="3dp"
-        android:background="@color/grey"
+        android:background="@drawable/bg_rect_100"
+        android:backgroundTint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@id/tv_close_test"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +118,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="@drawable/bg_ripple_effect"
             android:paddingVertical="14dp"
             android:text="@string/yes"
             android:textAllCaps="false"
@@ -134,7 +135,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="@drawable/bg_ripple_effect"
             android:paddingVertical="14dp"
             android:text="@string/not"
             android:textAllCaps="false"
@@ -151,7 +152,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="@drawable/bg_ripple_effect_for_dark"
             android:paddingVertical="14dp"
             android:text="@string/further"
             android:textAllCaps="false"
@@ -190,15 +191,17 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_go_to_library"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_bold"
+            android:fontFamily="@font/nunito_bold_ttf"
             android:gravity="center"
             android:paddingVertical="16dp"
             android:text="@string/take_cure_at_the_library"
             android:textAllCaps="false"
-            android:textColor="#0F0F10"
-            android:textSize="20sp" />
+            android:textColor="@color/gray_text_color"
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/treatment_course"
@@ -210,12 +213,13 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/nunito_bold_ttf"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="@drawable/bg_ripple_effect_for_dark"
             android:paddingVertical="14dp"
             android:text="@string/get_treated"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_close"

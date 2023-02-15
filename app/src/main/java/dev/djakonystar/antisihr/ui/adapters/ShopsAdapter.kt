@@ -10,29 +10,35 @@ import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 import dev.djakonystar.antisihr.databinding.ItemShopBinding
+import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class ShopsAdapter :RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
+class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
     inner class ShopViewHolder(private val binding: ItemShopBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShopItemBookmarked) {
             binding.apply {
                 tvName.text = item.name
                 tvPeace.text = item.weight
-                tvPrice.text = binding.root.context.getString(R.string.rub,item.price.toString())
+                if (item.weight == "0") {
+                    binding.tvPeace.hide()
+                }
+                tvPrice.text = binding.root.context.getString(R.string.rub, item.price.toString())
                 ivProduct.setImageWithGlide(binding.root.context, item.image)
-                if (item.isFavourite){
+                if (item.isFavourite) {
                     ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
-                }else{
+                } else {
                     ivFavorite.setImageResource(R.drawable.ic_favourites)
                 }
+
                 binding.root.setOnClickListener {
                     onItemClick.invoke(item)
                 }
                 binding.ivFavorite.setOnClickListener {
-                    if (item.isFavourite){
+                    item.isFavourite = item.isFavourite.not()
+                    if (item.isFavourite) {
                         ivFavorite.setImageResource(R.drawable.ic_favourites)
-                    }else{
+                    } else {
                         ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
                     }
                     onItemBookmarkClick.invoke(item)
