@@ -10,7 +10,7 @@ import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 
 
-@Database(entities = [ArticlesBookmarked::class, ShopItemBookmarked::class, AudioBookmarked::class], version = 4)
+@Database(entities = [ArticlesBookmarked::class, ShopItemBookmarked::class, AudioBookmarked::class], version = 5)
 abstract class LocalRoomDatabase: RoomDatabase() {
     abstract fun articleDao(): ArticlesDao
     abstract fun goodsDao(): ShopsDao

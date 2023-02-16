@@ -1,8 +1,11 @@
 package dev.djakonystar.antisihr.ui.test
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,9 +19,7 @@ import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
 import dev.djakonystar.antisihr.presentation.test.HomeScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.impl.HomeScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.TestAdapter
-import dev.djakonystar.antisihr.utils.showBottomNavigationView
-import dev.djakonystar.antisihr.utils.showSnackBar
-import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
+import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -34,10 +35,6 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initAdapters()
-
-
-
-
         initListeners()
         initObservers()
 
@@ -46,6 +43,16 @@ class TestScreen : Fragment(R.layout.screen_home) {
             showBottomNavigationView.emit(Unit)
         }
 
+        lifecycleScope.launchWhenResumed {
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    binding.icLogo.setImageResource(R.drawable.logo_antisihr_light)
+                }
+                else -> {
+                    binding.icLogo.setImageResource(R.drawable.logo_antisihr_dark)
+                }
+            }
+        }
     }
 
     private fun initObservers() {
@@ -70,14 +77,40 @@ class TestScreen : Fragment(R.layout.screen_home) {
     }
 
     private fun initListeners() {
-        adapter.setOnItemClickListener { id, name->
-            findNavController().navigate(TestScreenDirections.actionHomeScreenToTestFragment(id,name))
+        val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+        val ivClose = requireActivity().findViewById<AppCompatImageView>(R.id.iv_close)
+
+        drawer.addDrawerListener(
+            object : ActionBarDrawerToggle(
+                requireActivity(),
+                drawer,
+                androidx.navigation.ui.R.string.nav_app_bar_open_drawer_description,
+                androidx.navigation.ui.R.string.nav_app_bar_navigate_up_description
+            ) {
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                    ivClose.show()
+                }
+
+                override fun onDrawerClosed(drawerView: View) {
+                    super.onDrawerClosed(drawerView)
+                    ivClose.hide()
+                }
+            }
+        )
+
+        adapter.setOnItemClickListener { id, name ->
+            findNavController().navigate(
+                TestScreenDirections.actionHomeScreenToTestFragment(
+                    id,
+                    name
+                )
+            )
         }
 
         binding.menuBtn.clicks().debounce(200).onEach {
-            requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout).open()
+            drawer.open()
         }.launchIn(lifecycleScope)
-
     }
 
     override fun onDestroy() {

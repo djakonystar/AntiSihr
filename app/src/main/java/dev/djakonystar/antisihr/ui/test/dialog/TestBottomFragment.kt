@@ -75,6 +75,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
 
             if (!it.result.first().disease) {
                 binding.treatmentCourse.hide()
+                binding.tvTreatmentCourseTitle.hide()
             }
         }.launchIn(lifecycleScope)
     }

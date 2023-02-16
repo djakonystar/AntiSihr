@@ -83,6 +83,25 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
                 binding.icFavourites.setImageResource(R.drawable.ic_saved)
             }
         }.launchIn(lifecycleScope)
+
+        binding.tvFavourites.clicks().debounce(200).onEach {
+            isBookmarked = !isBookmarked
+            if (isBookmarked) {
+                viewModel.addArticleToBookmarkeds(
+                    ArticlesBookmarked(
+                        args.id, lead ?: "", title ?: ""
+                    )
+                )
+                binding.icFavourites.setImageResource(R.drawable.ic_saved_filled)
+            } else {
+                viewModel.deleteArticleFromBookmarkeds(
+                    ArticlesBookmarked(
+                        args.id, lead ?: "", title ?: ""
+                    )
+                )
+                binding.icFavourites.setImageResource(R.drawable.ic_saved)
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun initObservers() {
@@ -93,9 +112,9 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
             binding.tvTitle.text = article.title
             binding.tvBody.text = article.lead
             binding.tvBodySecond.text = article.description
-            if (args.isBookmarked){
+            if (args.isBookmarked) {
                 binding.icFavourites.setImageResource(R.drawable.ic_saved_filled)
-            }else{
+            } else {
                 binding.icFavourites.setImageResource(R.drawable.ic_saved)
             }
         }.launchIn(lifecycleScope)

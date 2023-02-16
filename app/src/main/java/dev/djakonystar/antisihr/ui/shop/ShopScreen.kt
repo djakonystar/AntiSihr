@@ -80,9 +80,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
         adapter.setOnItemBookmarkClickListener {
             lifecycleScope.launchWhenResumed {
-                if (it.isFavourite){
+                if (it.isFavourite) {
                     viewModel.deleteFromBookmarked(it)
-                }else{
+                } else {
                     viewModel.addToBookmarked(it)
                 }
             }
@@ -120,7 +120,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 lifecycleScope.launchWhenResumed {
                     viewModel.getAllProductsOfSeller(sellersList.find {
                         it.name == tvTab.text.toString()
-                    }?.id?:0)
+                    }?.id ?: 0)
                 }
             }
 
@@ -146,6 +146,8 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         viewModel.getAllSellersSuccessFlow.onEach {
+            sellersList.clear()
+            binding.tabLayout.removeAllTabs()
             sellersList.addAll(it.result!!)
             val tab = binding.tabLayout.newTab()
             val tvTab = TextView(requireContext())

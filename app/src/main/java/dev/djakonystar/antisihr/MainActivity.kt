@@ -91,6 +91,9 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+        binding.ivClose.clicks().debounce(200).onEach {
+            binding.drawerLayout.close()
+        }
 
         binding.btnPause.clicks().debounce(200).onEach {
             if (audioPlayerManager.isPlaying()) {
@@ -229,7 +232,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         }
     }
 
-    fun setAudioList(list: List<AudioResultData>){
+    fun setAudioList(list: List<AudioResultData>) {
         audioPlayerManager
 
         audioPlayerManager.playlist = list as ArrayList<AudioResultData>
@@ -238,8 +241,8 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     override fun onPreparedAudio(status: AudioStatus) {
         binding.icPause.show()
         binding.icPlay.hide()
-            resetPlayerInfo()
-            onUpdateTitle(status.audio)
+        resetPlayerInfo()
+        onUpdateTitle(status.audio)
     }
 
     private fun onUpdateTitle(audio: AudioResultData?) {
