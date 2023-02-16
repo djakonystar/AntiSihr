@@ -74,9 +74,9 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
                     adapter.submitList(allReaders)
                 } else {
                     val newList = allReaders.filter { r ->
-                        r.city!!.name.startsWith(
-                            etSearch.text.toString(), ignoreCase = true
-                        ) || r.name.contains(etSearch.text.toString(), true)
+                        r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true) ||
+                                r.name.contains(etSearch.text.toString(), true) ||
+                                r.description.contains(etSearch.text.toString(), true)
                     }
                     adapter.submitList(newList)
                 }
