@@ -10,7 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#D6D6D6</item>
 
 
         <!-- Customize your theme here. -->
@@ -66,5 +67,9 @@
     <style name="myChipText" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/nunito_bold_ttf</item>
+    </style>
+
+    <style name="NunitoSemiboldStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/nunito_semibold_ttf</item>
     </style>
 </resources>

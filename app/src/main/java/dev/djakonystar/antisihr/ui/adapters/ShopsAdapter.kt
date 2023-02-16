@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +20,11 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
         fun bind(item: ShopItemBookmarked) {
             binding.apply {
                 tvName.text = item.name
-                tvPeace.text = item.weight
-                if (item.weight == "0") {
-                    binding.tvPeace.hide()
-                }
-                tvPrice.text = binding.root.context.getString(R.string.rub, item.price.toString())
+                tvPeace.isVisible = item.weight != 0.0
+                tvPeace.text = (item.weight ?: 0).toString()
+                val price = if (item.price % 1.0 == 0.0) item.price.toInt().toString()
+                else item.price.toString()
+                tvPrice.text = binding.root.context.getString(R.string.rub, price)
                 ivProduct.setImageWithGlide(binding.root.context, item.image)
                 if (item.isFavourite) {
                     ivFavorite.setImageResource(R.drawable.ic_favourites_filled)

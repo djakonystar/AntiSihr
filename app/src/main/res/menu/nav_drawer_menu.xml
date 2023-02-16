@@ -4,6 +4,10 @@
     tools:showIn="navigation_view">
 
     <item
+        android:id="@+id/main_group"
+        android:title="" />
+
+    <item
         android:id="@+id/about"
         android:icon="@drawable/ic_info"
         android:title="@string/about_app" />

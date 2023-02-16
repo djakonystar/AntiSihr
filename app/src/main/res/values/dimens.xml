@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
+    <dimen name="material_input_text_to_prefix_suffix_padding">0dp</dimen>
 </resources>

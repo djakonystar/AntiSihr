@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".ui.shop.GoodInfoScreen">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_back"
@@ -20,14 +21,16 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:ellipsize="end"
         android:fontFamily="@font/nunito_bold_ttf"
-        tools:text="Тминное Масло"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ic_back" />
+        app:layout_constraintEnd_toStartOf="@id/ic_favourites"
+        app:layout_constraintStart_toEndOf="@id/ic_back"
+        app:layout_constraintTop_toTopOf="@id/ic_back"
+        tools:text="Тминное Масло" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -44,13 +47,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:paddingBottom="16dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_images"
@@ -78,13 +81,13 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="14dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                tools:text="150"
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vp_images" />
+                app:layout_constraintTop_toBottomOf="@id/vp_images"
+                tools:text="150" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -100,12 +103,13 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_buy"
-                android:layout_width="108dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="14dp"
                 android:background="@drawable/bg_rect_15"
                 android:backgroundTint="@color/main_color"
                 android:fontFamily="@font/nunito_bold_ttf"
+                android:paddingHorizontal="32dp"
                 android:text="@string/buy"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -120,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/nunito_ttf"
-                android:text="@string/name"
+                android:text="@string/shop_name"
                 android:textColor="#66000000"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="@id/tv_price"
@@ -131,12 +135,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:ellipsize="marquee"
                 android:fontFamily="@font/nunito_semibold_ttf"
-                tools:text="Шифа"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_shop_title"
                 app:layout_constraintStart_toEndOf="@id/tv_shop_title"
-                app:layout_constraintTop_toTopOf="@id/tv_shop_title" />
+                app:layout_constraintTop_toTopOf="@id/tv_shop_title"
+                tools:text="Шифа" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_capacity_title"
@@ -157,11 +162,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/nunito_semibold_ttf"
-                tools:text="1 мл."
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_capacity_title"
                 app:layout_constraintStart_toEndOf="@id/tv_capacity_title"
-                app:layout_constraintTop_toTopOf="@id/tv_capacity_title" />
+                app:layout_constraintTop_toTopOf="@id/tv_capacity_title"
+                tools:text="1 мл." />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -183,12 +188,12 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_ttf"
-                tools:text="Масло влияет на основные «триггеры» в развитии аутоиммунного тиреоидита (АИТ): помогает восстановить кишечник, борется с вирусными инфекциями, нормализует сахар в крови."
                 android:textColor="#99000000"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/btn_buy"
                 app:layout_constraintStart_toStartOf="@id/tv_description_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_description_title"
+                tools:text="Масло влияет на основные «триггеры» в развитии аутоиммунного тиреоидита (АИТ): помогает восстановить кишечник, борется с вирусными инфекциями, нормализует сахар в крови." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

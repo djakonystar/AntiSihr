@@ -128,7 +128,9 @@ class TestBottomFragment : BottomSheetDialogFragment() {
                     viewModel.getResultForTests(args.id, countOfYes)
                 }
             }
-        }catch (e: Exception){ }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

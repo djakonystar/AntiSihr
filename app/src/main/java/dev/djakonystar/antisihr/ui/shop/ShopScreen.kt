@@ -154,6 +154,8 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         viewModel.getAllSellersSuccessFlow.onEach {
+            sellersList.clear()
+            binding.tabLayout.removeAllTabs()
             sellersList.addAll(it.result!!)
             val tab = binding.tabLayout.newTab()
             val tvTab = TextView(requireContext())

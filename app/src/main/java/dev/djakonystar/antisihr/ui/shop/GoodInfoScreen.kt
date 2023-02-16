@@ -3,6 +3,7 @@ package dev.djakonystar.antisihr.ui.shop
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -55,10 +56,12 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
             val item = it.result!!.first()
             setFavouriteDrawable()
             binding.tvTitle.text = item.name
-            binding.tvCapacity.text = item.weight
+            binding.tvCapacity.isVisible = item.weight != null
+            binding.tvCapacity.text = (item.weight ?: 0).toString()
             binding.tvPrice.text = item.price.toString()
             binding.tvDescription.text = item.description
             binding.tvShopName.text = item.seller?.name
+            binding.tvShopName.isSelected = true
             initViewPagerAdapter(listOf(item.image))
         }.launchIn(lifecycleScope)
 

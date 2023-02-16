@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.library
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -72,6 +73,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
         _adapter = InnerLibraryAdapter()
         binding.rcArticles.adapter = adapter
         binding.tvLibrary.text = args.name
+        binding.tvBody.isVisible = !args.isFavourite
         binding.tvBody.text = args.description
 
 

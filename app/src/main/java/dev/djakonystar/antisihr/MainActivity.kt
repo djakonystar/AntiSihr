@@ -2,11 +2,9 @@ package dev.djakonystar.antisihr
 
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -19,19 +17,12 @@ import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.service.models.AudioStatus
 import dev.djakonystar.antisihr.service.models.PlayerManagerListener
-import dev.djakonystar.antisihr.ui.about.AboutScreen
-import dev.djakonystar.antisihr.ui.audio.AudioScreen
-import dev.djakonystar.antisihr.ui.feedback.FeedbackScreen
-import dev.djakonystar.antisihr.ui.language.LanguageScreen
-import dev.djakonystar.antisihr.ui.library.LibraryScreen
-import dev.djakonystar.antisihr.ui.test.TestScreen
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
-import java.util.*
 import javax.inject.Inject
 
 
@@ -99,6 +90,9 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+        binding.ivClose.clicks().debounce(200).onEach {
+            binding.drawerLayout.close()
+        }
 
         binding.btnPause.clicks().debounce(200).onEach {
             if (audioPlayerManager.isPlaying()) {
