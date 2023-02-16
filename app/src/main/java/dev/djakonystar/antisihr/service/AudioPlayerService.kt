@@ -20,9 +20,11 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
 
 class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
-    MediaPlayer.OnCompletionListener,MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener {
+    MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener,
+    MediaPlayer.OnErrorListener {
 
     private val audioStatus = AudioStatus()
 
@@ -50,7 +52,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     override fun onBind(p0: Intent?): IBinder = binder
 
     override fun onPrepared(player: MediaPlayer?) {
-        val status = updateStatus(currentAudio, AudioStatus.PlayState.PLAY)
+        val status = updateStatus(currentAudio, AudioStatus.PlayState.PLAY, player?.duration)
         serviceListener?.onPreparedListener(status)
         this.mediaPlayer = player
         this.mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
@@ -73,7 +75,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
                             stop()
                             play(audio)
                         } else {
-                            status = updateStatus(audio, AudioStatus.PlayState.CONTINUE)
+                            status = updateStatus(audio, AudioStatus.PlayState.CONTINUE, mediaPlayer!!.duration)
                             updateTime()
                             serviceListener?.onContinueListener(status)
                         }
@@ -115,12 +117,15 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     }
 
     private fun updateStatus(
-        jcAudio: AudioResultData? = null,
-        status: AudioStatus.PlayState
+        jcAudio: AudioResultData? = null, status: AudioStatus.PlayState, duration: Int? = null
     ): AudioStatus {
         currentAudio = jcAudio
         audioStatus.audio = jcAudio
         audioStatus.playState = status
+
+        if (duration != null) {
+            audioStatus.duration = duration
+        }
 
         mediaPlayer?.let {
             audioStatus.currentPosition = it.currentPosition.toLong()

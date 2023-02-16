@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.shop
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout.LayoutParams
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -30,8 +32,10 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 @AndroidEntryPoint
 class ShopScreen : Fragment(R.layout.screen_shop) {
@@ -45,8 +49,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
@@ -60,7 +63,10 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         initObservers()
 
         lifecycleScope.launchWhenResumed {
-            view
+            viewModel.getAllSellers()
+            viewModel.getAllProducts()
+            visibilityOfLoadingAnimationView.emit(true)
+
         }
     }
 
@@ -128,13 +134,15 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 val tvTab = tab?.customView as TextView
                 tvTab.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
                 tvTab.setTextColor(Color.parseColor("#66000000"))
-                lifecycleScope.launchWhenResumed {
-                    viewModel.getAllProducts()
-                }
             }
 
             override fun onTabReselected(tab: Tab?) {}
         })
+
+        binding.swipeRefreshLayout.refreshes().onEach {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.getAllProducts()
+        }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
     private fun initObservers() {
@@ -159,9 +167,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
             binding.tabLayout.addTab(tab)
 
-            it.result.forEachIndexed { index, sellerData ->
+            it.result.forEach { sellerData ->
                 val tabb = binding.tabLayout.newTab()
                 val tvTabb = TextView(requireContext())
+                tvTabb.ellipsize = TextUtils.TruncateAt.END
+                tvTabb.isSingleLine = true
                 tabb.customView = tvTabb
                 tvTabb.text = sellerData.name
                 tvTabb.layoutParams =

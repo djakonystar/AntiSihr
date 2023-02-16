@@ -11,6 +11,7 @@ import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 import dev.djakonystar.antisihr.databinding.ItemShopBinding
+import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
 class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
@@ -30,10 +31,12 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
                 } else {
                     ivFavorite.setImageResource(R.drawable.ic_favourites)
                 }
+
                 binding.root.setOnClickListener {
                     onItemClick.invoke(item)
                 }
                 binding.ivFavorite.setOnClickListener {
+                    item.isFavourite = item.isFavourite.not()
                     if (item.isFavourite) {
                         ivFavorite.setImageResource(R.drawable.ic_favourites)
                     } else {

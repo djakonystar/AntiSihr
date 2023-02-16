@@ -24,6 +24,7 @@ import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 
 @AndroidEntryPoint
@@ -58,12 +59,17 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
 
 
         adapter.setOnClickListener {
-            showSnackBar(requireView(),"Basildi: ${it.name} and ${it.price}")
+            showSnackBar(requireView(), "Basildi: ${it.name} and ${it.price}")
         }
+
+        binding.swipeRefreshLayout.refreshes().debounce(200).onEach {
+            viewModel.getAllBookmarkedProducts()
+        }.launchIn(lifecycleScope)
 
         adapter.setOnRemoveClickListener {
             lifecycleScope.launchWhenResumed {
                 viewModel.deleteFromBookmarked(it)
+                viewModel.getAllBookmarkedProducts()
             }
         }
     }

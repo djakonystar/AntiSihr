@@ -44,13 +44,6 @@ class ShopScreenViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    init {
-        viewModelScope.launch {
-            getAllProducts()
-            visibilityOfLoadingAnimationView.emit(true)
-        }
-    }
-
     override val getAllSellersSuccessFlow = MutableSharedFlow<GenericResponse<List<SellerData>>>()
 
     override suspend fun getAllSellers() {
@@ -102,10 +95,10 @@ class ShopScreenViewModelImpl @Inject constructor(
     }
 
     override suspend fun deleteFromBookmarked(item: ShopItemBookmarked) {
-        useCase.deleteProductFromBookmarked(item)
+        useCase.deleteProductFromBookmarked(item).launchIn(viewModelScope)
     }
 
     override suspend fun addToBookmarked(item: ShopItemBookmarked) {
-        useCase.addProductToBookmarked(item)
+        useCase.addProductToBookmarked(item).launchIn(viewModelScope)
     }
 }

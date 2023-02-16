@@ -16,6 +16,7 @@ import dev.djakonystar.antisihr.databinding.ScreenGoodInfoBinding
 import dev.djakonystar.antisihr.presentation.shop.GoodInfoScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.GoodInfoScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.shop.adapter.ImageAdapter
+import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.showSnackBar
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -61,7 +62,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
             binding.tvDescription.text = item.description
             binding.tvShopName.text = item.seller?.name
             binding.tvShopName.isSelected = true
-            initViewPagerAdapter(listOf(item.image, item.image, item.image))
+            initViewPagerAdapter(listOf(item.image))
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
@@ -76,7 +77,11 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private fun initViewPagerAdapter(list: List<String>) {
         adapter = ImageAdapter(list, requireActivity().supportFragmentManager, lifecycle)
         binding.vpImages.adapter = adapter
-        binding.dotsIndicator.setViewPager2(binding.vpImages)
+        if (list.size == 1) {
+            binding.dotsIndicator.hide()
+        } else {
+            binding.dotsIndicator.setViewPager2(binding.vpImages)
+        }
     }
 
     private fun setFavouriteDrawable() {

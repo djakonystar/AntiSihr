@@ -39,7 +39,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
     private val args: TestBottomFragmentArgs by navArgs()
     private val binding: BottomTestBinding by viewBinding(BottomTestBinding::bind)
     private var currentPosition = -1
-    private lateinit var list: List<TestQuestionData>
+    private var list: List<TestQuestionData> = mutableListOf()
     private var countOfYes = 0
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class TestBottomFragment : BottomSheetDialogFragment() {
 
             if (!it.result.first().disease) {
                 binding.treatmentCourse.hide()
-                binding.tvTreatmentCourseTitle.hide()
+                binding.tvGoToLibrary.hide()
             }
         }.launchIn(lifecycleScope)
     }
@@ -110,22 +110,26 @@ class TestBottomFragment : BottomSheetDialogFragment() {
 
     private fun setQuestion() {
         currentPosition++
-        if (currentPosition <= list.size - 1) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-                binding.progressStep.setProgress(
-                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt(), true
-                )
+        try {
+            if (currentPosition <= list.size - 1) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                    binding.progressStep.setProgress(
+                        (((currentPosition + 1) / list.size.toDouble()) * 100).toInt(), true
+                    )
+                } else {
+                    binding.progressStep.progress =
+                        (((currentPosition + 1) / list.size.toDouble()) * 100).toInt()
+                }
+                binding.currentNumber.text = "${currentPosition + 1}"
+                binding.tvQuestion.text = list[currentPosition].name
             } else {
-                binding.progressStep.progress =
-                    (((currentPosition + 1) / list.size.toDouble()) * 100).toInt()
+                lifecycleScope.launchWhenResumed {
+                    binding.loadingAnimation.show()
+                    viewModel.getResultForTests(args.id, countOfYes)
+                }
             }
-            binding.currentNumber.text = "${currentPosition + 1}"
-            binding.tvQuestion.text = list[currentPosition].name
-        } else {
-            lifecycleScope.launchWhenResumed {
-                binding.loadingAnimation.show()
-                viewModel.getResultForTests(args.id, countOfYes)
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

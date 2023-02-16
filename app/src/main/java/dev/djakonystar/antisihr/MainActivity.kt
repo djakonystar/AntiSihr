@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
-import java.util.*
 import javax.inject.Inject
 
 
@@ -199,16 +198,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         }
     }
 
-    private fun setLocale() {
-        val localeName = localStorage.language
-        val locale = Locale(localeName)
-        val res = resources
-        val dm = res.displayMetrics
-        val conf = res.configuration
-        conf.setLocale(locale)
-        res.updateConfiguration(conf, dm)
-    }
-
     fun setNewLocale() {
         val refresh = Intent(this, MainActivity::class.java)
         refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -233,8 +222,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     }
 
     fun setAudioList(list: List<AudioResultData>) {
-        audioPlayerManager
-
         audioPlayerManager.playlist = list as ArrayList<AudioResultData>
     }
 
@@ -360,7 +347,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
             binding.icClose.hide()
             e.printStackTrace()
         }
-
     }
 
     fun visibilityMediaPlayer(visibility: Int) {

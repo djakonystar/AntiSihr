@@ -70,7 +70,7 @@ class AboutScreen : Fragment(R.layout.screen_about) {
             val info = it.result!!.first()
             binding.ivLogo.setImageWithGlide(requireContext(), info.image)
             binding.tvAbout.text = info.description
-            binding.tvAddress.text = getString(R.string.address_with_dots, info.address)
+            binding.tvAddress.text = getString(R.string.our_adress, info.address)
             val phone = getString(R.string.phone_number, info.phone.toPhoneNumber)
 //            val spanned = SpannableString(phone)
 //            val start = spanned.indexOf('\n')

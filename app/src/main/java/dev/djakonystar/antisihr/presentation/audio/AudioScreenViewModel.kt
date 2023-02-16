@@ -11,11 +11,8 @@ interface AudioScreenViewModel {
     val errorFlow: Flow<Throwable>
     suspend fun getListOfAudios()
 
-    val isExistsInBookmarkedsFlow: Flow<Boolean>
 
 
-    suspend fun getIsExistsInBookmarkeds(item:AudioBookmarked)
     suspend fun getBookmarkedAudios()
-    suspend fun addToBookmarkeds(audioBookmarked: AudioBookmarked)
-    suspend fun deleteFromBookmarkeds(audioBookmarked: AudioBookmarked)
+
 }

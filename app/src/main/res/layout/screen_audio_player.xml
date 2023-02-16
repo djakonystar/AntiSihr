@@ -22,13 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_bold_ttf"
-        tools:text="Рукъя от всего"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ic_back" />
+        app:layout_constraintTop_toTopOf="@id/ic_back"
+        tools:text="Рукъя от всего" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -48,10 +48,10 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/ic_audio_image"
         app:layout_constraintBottom_toBottomOf="@id/ic_audio_image"
+        app:layout_constraintEnd_toEndOf="@id/ic_audio_image"
         app:layout_constraintStart_toStartOf="@id/ic_audio_image"
-        app:layout_constraintEnd_toEndOf="@id/ic_audio_image"/>
+        app:layout_constraintTop_toTopOf="@id/ic_audio_image" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ic_audio_image"
@@ -59,12 +59,11 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="48dp"
         android:scaleType="centerCrop"
-        tools:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toTopOf="@id/tv_audio_name"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
-
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize15Percent"
+        tools:src="@drawable/ic_launcher_background" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -72,13 +71,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_bold_ttf"
-        tools:text="Чтение Корана от сихра"
         android:textColor="@color/main_text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/music_controller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ic_audio_image" />
+        app:layout_constraintTop_toBottomOf="@id/ic_audio_image"
+        tools:text="Чтение Корана от сихра" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_audio_author"
@@ -86,12 +85,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/nunito_ttf"
-        tools:text="Мухьаммад Даутукаев"
         android:textColor="#80000000"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_audio_name" />
+        app:layout_constraintTop_toBottomOf="@id/tv_audio_name"
+        tools:text="Мухьаммад Даутукаев" />
 
     <SeekBar
         android:id="@+id/music_controller"
@@ -111,9 +110,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito_medium"
+        android:text="00:00"
         app:layout_constraintStart_toStartOf="@id/music_controller"
-        app:layout_constraintTop_toBottomOf="@id/music_controller"
-        android:text="00:00" />
+        app:layout_constraintTop_toBottomOf="@id/music_controller" />
 
     <TextView
         android:id="@+id/end_time"
@@ -132,6 +131,8 @@
         android:layout_height="74dp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/main_color"
+        android:clickable="false"
+        android:foreground="@drawable/bg_ripple_effect_round"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,18 +141,18 @@
 
         <ImageView
             android:id="@+id/ic_play"
-            android:layout_marginStart="24dp"
             android:layout_width="wrap_content"
-            android:visibility="visible"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_big" />
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_play_big"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/ic_pause"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_pause" />
+            android:src="@drawable/ic_pause"
+            android:visibility="gone" />
     </LinearLayout>
 
 
@@ -159,8 +160,9 @@
         android:id="@+id/ic_forward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_forward"
         android:padding="8dp"
+        android:foreground="@drawable/bg_ripple_effect_round"
+        android:src="@drawable/ic_forward"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/ic_repeat"
         app:layout_constraintStart_toEndOf="@id/btn_play"
@@ -170,8 +172,9 @@
         android:id="@+id/ic_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_previous"
         android:padding="8dp"
+        android:foreground="@drawable/bg_ripple_effect_round"
+        android:src="@drawable/ic_previous"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/btn_play"
         app:layout_constraintStart_toEndOf="@id/ic_shuffle"
@@ -181,8 +184,9 @@
         android:id="@+id/ic_shuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_shuffle"
         android:padding="8dp"
+        android:src="@drawable/ic_shuffle"
+        android:foreground="@drawable/bg_ripple_effect_round"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/ic_previous"
         app:layout_constraintStart_toStartOf="parent"
@@ -192,8 +196,9 @@
         android:id="@+id/ic_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_repeat"
         android:padding="8dp"
+        android:foreground="@drawable/bg_ripple_effect_round"
+        android:src="@drawable/ic_repeat"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ic_forward"

@@ -6,6 +6,7 @@ class AudioStatus{
     var audio:AudioResultData? = null
     var playState:PlayState = PlayState.PREPARING
     var currentPosition: Long = 0
+    var duration: Int = 0
 
 
 
