@@ -124,9 +124,12 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
 
                 lifecycleScope.launchWhenResumed {
-                    viewModel.getAllProductsOfSeller(sellersList.find {
-                        it.name == tvTab.text.toString()
-                    }?.id ?: 0)
+                    val sellerData = sellersList.find { it.name == tvTab.text.toString() }
+                    sellerData?.let {
+                        viewModel.getAllProductsOfSeller(it.id)
+                    } ?: let {
+                        viewModel.getAllProducts()
+                    }
                 }
             }
 
@@ -141,6 +144,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
         binding.swipeRefreshLayout.refreshes().onEach {
             binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.getAllSellers()
             viewModel.getAllProducts()
         }.flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
@@ -188,6 +192,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
         viewModel.errorFlow.onEach {
             Log.d("TTTT", "Error in ShopScreen, cause: ${it.message}")
+            it.printStackTrace()
         }.launchIn(lifecycleScope)
     }
 
