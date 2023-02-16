@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.shop
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout.LayoutParams
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 @AndroidEntryPoint
 class ShopScreen : Fragment(R.layout.screen_shop) {
@@ -61,6 +63,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         initObservers()
 
         lifecycleScope.launchWhenResumed {
+            viewModel.getAllSellers()
             viewModel.getAllProducts()
             visibilityOfLoadingAnimationView.emit(true)
 
@@ -131,9 +134,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 val tvTab = tab?.customView as TextView
                 tvTab.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
                 tvTab.setTextColor(Color.parseColor("#66000000"))
-                lifecycleScope.launchWhenResumed {
-                    viewModel.getAllProducts()
-                }
             }
 
             override fun onTabReselected(tab: Tab?) {}
@@ -165,9 +165,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
             binding.tabLayout.addTab(tab)
 
-            it.result.forEachIndexed { index, sellerData ->
+            it.result.forEach { sellerData ->
                 val tabb = binding.tabLayout.newTab()
                 val tvTabb = TextView(requireContext())
+                tvTabb.ellipsize = TextUtils.TruncateAt.END
+                tvTabb.isSingleLine = true
                 tabb.customView = tvTabb
                 tvTabb.text = sellerData.name
                 tvTabb.layoutParams =
