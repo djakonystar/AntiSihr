@@ -62,9 +62,9 @@ class ShopUseCaseImpl @Inject constructor(
                             db.goodsDao().isExistsInBookmarkeds(
                                 it.id, it.name, it.image
                             ),
-                            it.seller!!.id,
-                            it.seller.name,
-                            it.seller.url
+                            it.seller?.id,
+                            it.seller?.name,
+                            it.seller?.url
                         )
                     )
                 }

@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_ttf"
-                android:text="@string/capacity"
+                android:text="@string/capacity_text"
                 android:textColor="#66000000"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="@id/tv_shop_title"

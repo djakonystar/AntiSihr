@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">Тесты</string>
     <string name="not">Нет</string>
     <string name="score">Результат %s</string>
@@ -38,20 +37,20 @@
     <string name="en">ru</string>
     <string name="the_choosen_ones">Выбранные</string>
     <string name="get_treated">Пройти лечение</string>
-    <string name="rub">%s руб.</string>
+    <string name="rub"> руб.</string>
     <string name="close">Закрыть</string>
     <string name="your_phone_number">Ваш номер телефона:</string>
     <string name="share_app">Поделиться приложением</string>
     <string name="loading_data">Загрузка данных…</string>
     <string name="audio">Аудио</string>
-    <string name="no_data">Нету данных</string>
+    <string name="no_data">Нет данных</string>
     <string name="full_name">Ваше полное имя</string>
     <string name="error_fetching_data">Ошибка при получении данных</string>
     <string name="the_best_cure_is_what_you_read_to_yourself.">Наилушим из лечения является то,\nчто вы сами читаете себе.</string>
     <string name="address_with_dots">Адрес:</string>
     <string name="in_every_city_one_reader">В каждом городе по одному чтецу</string>
     <string name="about">О приложении</string>
-    <string name="phone_number">Телефон номер: \n%s</string>
+    <string name="phone_number">Телефон номер:\n%s</string>
     <string name="done">Сохранить</string>
     <string name="yes">Да</string>
     <string name="all">Все</string>
@@ -68,23 +67,23 @@
     <string name="all_the_data_you_enter_is_strictly_confidential">Все введенные вами данные\nстрого конфиденциальны</string>
     <string name="error">Ошибка</string>
     <string name="capacity">Объем</string>
-    <string name="language">Язык</string>
+    <string name="capacity_text">Объем:</string>
+    <string name="language">Языки</string>
     <string name="shop">Магазин</string>
-    <string name="shop_name">Магазин:</string>
     <string name="about_app">О приложении</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">Русский</string>
+    <string name="text_ru" translatable="false">Русский</string>
     <string name="text_en">Английский</string>
     <string name="text_ja">Японский</string>
     <string name="text_sv">Шведский</string>
-    <string name="text_fr">Aранцузский</string>
+    <string name="text_fr">Французский</string>
     <string name="text_tr">Турецкий</string>
     <string name="text_de">Немецкий</string>
     <string name="text_ko">Корейский</string>
     <string name="text_zh">Китайский</string>
     <string name="text_it">Итальянский</string>
     <string name="text_es">Испанский</string>
-    <string name="text_ar">Арабский язык</string>
+    <string name="text_ar">Арабский</string>
     <string name="text_of_your_question">Текст вашего сообщения</string>
 </resources>

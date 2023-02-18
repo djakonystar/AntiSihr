@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -17,6 +18,7 @@ import dev.djakonystar.antisihr.utils.setImageWithGlide
 class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
     inner class ShopViewHolder(private val binding: ItemShopBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(item: ShopItemBookmarked) {
             binding.apply {
                 tvName.text = item.name
@@ -24,7 +26,7 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
                 tvPeace.text = (item.weight ?: 0).toString()
                 val price = if (item.price % 1.0 == 0.0) item.price.toInt().toString()
                 else item.price.toString()
-                tvPrice.text = binding.root.context.getString(R.string.rub, price)
+                tvPrice.text = "$price ${binding.root.context.getString(R.string.rub)}"
                 ivProduct.setImageWithGlide(binding.root.context, item.image)
                 if (item.isFavourite) {
                     ivFavorite.setImageResource(R.drawable.ic_favourites_filled)

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">Pruebas</string>
     <string name="not">No</string>
     <string name="score">Sin datos %s</string>
@@ -38,7 +36,7 @@
     <string name="en">es</string>
     <string name="the_choosen_ones">Los elegidos</string>
     <string name="get_treated">Obtener tratamiento</string>
-    <string name="rub">%s frotar.</string>
+    <string name="rub"> frotar.</string>
     <string name="close">Cerca</string>
     <string name="your_phone_number">Su número de teléfono: %1$s</string>
     <string name="share_app">Compartir aplicación</string>
@@ -67,9 +65,11 @@
     <string name="send">Enviar</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">Todos los datos que ingresas son estrictamente confidenciales</string>
     <string name="error">Error</string>
-    <string name="capacity">capacidad</string>
-    <string name="language">idioma</string>
-    <string name="shop">tienda</string>
+    <string name="capacity">Capacidad</string>
+    <string name="capacity_text">Capacidad:</string>
+    <string name="language">Idiomas</string>
+    <string name="shop">Tienda</string>
+    <string name="shop_name">Tienda:</string>
     <string name="about_app">acerca de la aplicación</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
