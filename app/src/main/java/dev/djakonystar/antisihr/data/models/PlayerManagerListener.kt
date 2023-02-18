@@ -1,4 +1,4 @@
-package dev.djakonystar.antisihr.service.models
+package dev.djakonystar.antisihr.data.models
 
 
 /**

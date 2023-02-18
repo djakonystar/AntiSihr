@@ -48,6 +48,12 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initListeners()
         initObservers()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.getListOfSectionsLibrary()
+            visibilityOfLoadingAnimationView.emit(true)
+
+        }
     }
 
     private fun initObservers() {

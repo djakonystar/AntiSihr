@@ -1,16 +1,30 @@
 package dev.djakonystar.antisihr.service.manager
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.content.ServiceConnection
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.os.Build
+import android.support.v4.media.session.MediaSessionCompat
+import androidx.core.app.NotificationCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.service.notification.MusicBroadcast
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.models.MusicState
 import dev.djakonystar.antisihr.service.AudioPlayerService
 import dev.djakonystar.antisihr.service.PlayerServiceConnection
-import dev.djakonystar.antisihr.service.models.AudioStatus
-import dev.djakonystar.antisihr.service.models.PlayerManagerListener
-import dev.djakonystar.antisihr.service.models.PlayerServiceListener
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerManagerListener
+import dev.djakonystar.antisihr.data.models.PlayerServiceListener
+import dev.djakonystar.antisihr.service.notification.MusicService
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
@@ -48,9 +62,16 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     var onShuffleMode: Boolean = false
 
     var repeatCurrAudio: Boolean = false
-        private set
 
-    private var repeatCount = 0
+    private lateinit var mediaSession: MediaSessionCompat
+
+    private var musicBroadcast: MusicBroadcast? = null
+
+    private var notification: NotificationCompat.Builder? = null
+    private var notificationManager: NotificationManager? = null
+
+    private var isFirstTimeCreation = true
+
 
     companion object {
 
@@ -63,38 +84,43 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             playlist: ArrayList<AudioResultData>? = null,
             listener: PlayerManagerListener? = null
         ): WeakReference<PlayerManager> = INSTANCE ?: let {
-            INSTANCE = WeakReference(
-                PlayerManager(PlayerServiceConnection(context)).also {
-                    it.context = context
-                    it.playlist = playlist ?: ArrayList()
-                    it.jcPlayerManagerListener = listener
-                }
-            )
+            INSTANCE = WeakReference(PlayerManager(PlayerServiceConnection(context)).also {
+                it.context = context
+                it.playlist = playlist ?: ArrayList()
+                it.jcPlayerManagerListener = listener
+            })
             INSTANCE!!
         }
     }
 
     init {
         initService()
+
+
     }
 
     /**
      * Connects with audio service.
      */
     private fun initService(connectionListener: ((service: AudioPlayerService?) -> Unit)? = null) =
-        serviceConnection.connect(
-            playlist = playlist,
-            onConnected = { binder ->
-                jcPlayerService = binder?.service.also { service ->
-                    serviceBound = true
-                    connectionListener?.invoke(service)
-                } ?: throw Exception()
-            },
-            onDisconnected = {
-                serviceBound = false
-                throw Exception("Disconnection error")
-            }
-        )
+        serviceConnection.connect(playlist = playlist, onConnected = { binder ->
+            jcPlayerService = binder?.service.also { service ->
+                serviceBound = true
+                if (musicBroadcast == null) {
+                    musicBroadcast = MusicBroadcast()
+                }
+                service?.registerReceiver(musicBroadcast, IntentFilter().apply {
+                    addAction(MusicState.NEXT.name)
+                    addAction(MusicState.PLAY.name)
+                    addAction(MusicState.PREVIOUS.name)
+                })
+                mediaSession = MediaSessionCompat(context, "My Music")
+                connectionListener?.invoke(service)
+            } ?: throw Exception()
+        }, onDisconnected = {
+            serviceBound = false
+            throw Exception("Disconnection error")
+        })
 
     /**
      * Plays the given [JcAudio].
@@ -104,6 +130,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         if (playlist.isEmpty()) {
             throw Exception("EMPTY LIST")
         } else {
+
             jcPlayerService?.let { service ->
                 service.serviceListener = this
                 service.play(jcAudio)
@@ -111,6 +138,12 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
                 jcPlayerService = service
                 playAudio(jcAudio)
             }
+//            if (isFirstTimeCreation) {
+//                showNotification()
+//                isFirstTimeCreation = false
+//            } else {
+//                updateNotification()
+//            }
         }
     }
 
@@ -123,15 +156,18 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             throw Exception("EMPTY LIST")
         } else {
             jcPlayerService?.let { service ->
-                if (repeatCurrAudio) {
-                    currentAudio?.let {
-                        service.seekTo(0)
-                        service.onPrepared(service.getMediaPlayer()!!)
-                    }
-                } else {
-                    service.stop()
-                    getNextAudio()?.let { service.play(it) } ?: service.finalize()
-                }
+                service.stop()
+                getNextAudio()?.let { service.play(it) } ?: service.finalize()
+//                updateNotification()
+            }
+        }
+    }
+
+    fun repeatAudio() {
+        jcPlayerService?.let { service ->
+            currentAudio?.let {
+                service.seekTo(0)
+                service.onPrepared(service.getMediaPlayer()!!)
             }
         }
     }
@@ -144,15 +180,9 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             throw Exception("EMPTY LIST")
         } else {
             jcPlayerService?.let { service ->
-                if (repeatCurrAudio) {
-                    currentAudio?.let {
-                        service.seekTo(0)
-                        service.onPrepared(service.getMediaPlayer()!!)
-                    }
-                } else {
-                    service.stop()
-                    getPreviousAudio().let { service.play(it) }
-                }
+                service.stop()
+                getPreviousAudio().let { service.play(it) }
+//                updateNotification()
             }
         }
     }
@@ -162,6 +192,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
      */
     fun pauseAudio() {
         jcPlayerService?.let { service -> currentAudio?.let { service.pause(it) } }
+//        updateNotification()
     }
 
     /**
@@ -173,6 +204,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         } else {
             val audio = jcPlayerService?.currentAudio ?: let { playlist.first() }
             playAudio(audio)
+//            updateNotification()
         }
     }
 
@@ -191,7 +223,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             try {
                 playlist[currentPositionList.inc()]
             } catch (e: IndexOutOfBoundsException) {
-
                 null
             }
         }
@@ -200,8 +231,8 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     private fun getPreviousAudio(): AudioResultData {
         if (onShuffleMode) {
             return try {
-                shuffleModeList[shuffleModeList.lastIndex-1]
-            }catch (e: Exception){
+                shuffleModeList[shuffleModeList.lastIndex - 1]
+            } catch (e: Exception) {
                 shuffleModeList.first()
             }
         } else {
@@ -285,29 +316,11 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     }
 
     /**
-     * Handles the repeat mode.
-     */
-    fun activeRepeat() {
-        if (repeatCount == 1) {
-            repeatCurrAudio = false
-            repeatCount--
-            return
-        }
-
-        if (repeatCount == 0) {
-            repeatCurrAudio = true
-            repeatCount = 1
-        }
-    }
-
-    /**
      * Updates the current position of the audio list.
      */
     private fun updatePositionAudioList() {
-        playlist.indices
-            .singleOrNull { playlist[it] == currentAudio }
-            ?.let { this.currentPositionList = it }
-            ?: let { this.currentPositionList = 0 }
+        playlist.indices.singleOrNull { playlist[it] == currentAudio }
+            ?.let { this.currentPositionList = it } ?: let { this.currentPositionList = 0 }
     }
 
     fun isPlaying(): Boolean {

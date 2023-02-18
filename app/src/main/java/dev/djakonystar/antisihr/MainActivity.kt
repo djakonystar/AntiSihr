@@ -11,12 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.app.App
 import dev.djakonystar.antisihr.data.local.LocalStorage
 import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
-import dev.djakonystar.antisihr.service.models.AudioStatus
-import dev.djakonystar.antisihr.service.models.PlayerManagerListener
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerManagerListener
+import dev.djakonystar.antisihr.service.notification.MusicService
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     private lateinit var navController: NavController
     private var selectedMenuId = R.id.tests
     val audioPlayerManager: PlayerManager by lazy {
-        PlayerManager.getInstance(this).get()!!
+        PlayerManager.getInstance(App.instance).get()!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,6 +114,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
         binding.icClose.clicks().debounce(200).onEach {
             binding.layoutMusicPlayer.collapse()
+            val intent = Intent(this,MusicService::class.java)
         }.launchIn(lifecycleScope)
 
 
@@ -268,6 +271,10 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     }
 
     override fun onPaused(status: AudioStatus) {
+        binding.icPause.hide()
+        binding.icPlay.show()
+        binding.icSkipForward.hide()
+        binding.icClose.show()
     }
 
     override fun onContinueAudio(status: AudioStatus) {

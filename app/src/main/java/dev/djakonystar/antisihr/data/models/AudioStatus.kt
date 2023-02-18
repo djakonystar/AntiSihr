@@ -1,10 +1,8 @@
-package dev.djakonystar.antisihr.service.models
-
-import dev.djakonystar.antisihr.data.models.AudioResultData
+package dev.djakonystar.antisihr.data.models
 
 class AudioStatus{
     var audio:AudioResultData? = null
-    var playState:PlayState = PlayState.PREPARING
+    var playState: PlayState = PlayState.PREPARING
     var currentPosition: Long = 0
     var duration: Int = 0
 

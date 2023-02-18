@@ -1,9 +1,7 @@
 package dev.djakonystar.antisihr.ui.audio
 
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
@@ -21,12 +19,10 @@ import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioPlayerBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioPlayerScreenViewModel
-import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
 import dev.djakonystar.antisihr.presentation.audio.impl.AudioPlayerScreenViewModelImpl
-import dev.djakonystar.antisihr.presentation.audio.impl.AudioScreenViewModelImpl
 import dev.djakonystar.antisihr.service.manager.PlayerManager
-import dev.djakonystar.antisihr.service.models.AudioStatus
-import dev.djakonystar.antisihr.service.models.PlayerManagerListener
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -107,7 +103,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icRepeat.clicks().debounce(200).onEach {
-            mediaPlayerManager.activeRepeat()
+            mediaPlayerManager.repeatCurrAudio= mediaPlayerManager.repeatCurrAudio.not()
             if (mediaPlayerManager.repeatCurrAudio) {
                 binding.icRepeat.setColorFilter(
                     ContextCompat.getColor(
@@ -268,7 +264,11 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     override fun onCompletedAudio() {
         resetPlayerInfo()
         try {
-//            mediaPlayerManager.nextAudio()
+            if (mediaPlayerManager.repeatCurrAudio) {
+                mediaPlayerManager.repeatAudio()
+            } else {
+                mediaPlayerManager.nextAudio()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
