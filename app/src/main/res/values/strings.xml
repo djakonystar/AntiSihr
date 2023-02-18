@@ -70,6 +70,7 @@
     <string name="capacity">Объем</string>
     <string name="language">Язык</string>
     <string name="shop">Магазин</string>
+    <string name="shop_name">Магазин:</string>
     <string name="about_app">О приложении</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>

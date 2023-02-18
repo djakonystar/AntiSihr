@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -78,6 +79,9 @@ class ReaderDetailBottomFragment : BottomSheetDialogFragment() {
                 tvAuthor.text = "${reader.surname} ${reader.name}"
                 tvCityName.text = reader.city.name
                 adapter.submitList(reader.socialNetworks)
+                tvAddressTitle.isVisible = reader.address != null
+                tvAddress.isVisible = reader.address != null
+                dividerFirst.isVisible = reader.address != null
                 tvAddress.text = reader.address ?: ""
                 tvPhone.text = reader.phone.toPhoneNumber
                 tvDescription.text = reader.description

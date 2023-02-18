@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import dev.djakonystar.antisihr.databinding.ScreenFeedbackBinding
 import dev.djakonystar.antisihr.presentation.drawer.MainViewModel
 import dev.djakonystar.antisihr.presentation.drawer.impl.MainViewModelImpl
 import dev.djakonystar.antisihr.ui.feedback.validator.FeedbackValidator
+import dev.djakonystar.antisihr.utils.dp
 import dev.djakonystar.antisihr.utils.showSnackBar
 import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import kotlinx.coroutines.flow.debounce
@@ -115,6 +117,13 @@ class FeedbackScreen : Fragment(R.layout.screen_feedback) {
         }
         binding.etText.doAfterTextChanged {
             binding.tilText.isErrorEnabled = false
+        }
+        binding.etPhone.setOnFocusChangeListener { _, b ->
+            if (b || binding.etPhone.text.toString().isNotEmpty()) {
+                binding.etPhone.updatePaddingRelative(start = 10.dp)
+            } else {
+                binding.etPhone.updatePaddingRelative(start = 20.dp)
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 package dev.djakonystar.antisihr.ui.shop
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -56,13 +58,21 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
             val item = it.result!!.first()
             setFavouriteDrawable()
             binding.tvTitle.text = item.name
+            binding.tvCapacityTitle.isVisible = item.weight != null
             binding.tvCapacity.isVisible = item.weight != null
             binding.tvCapacity.text = (item.weight ?: 0).toString()
-            binding.tvPrice.text = item.price.toString()
+            val price = if (item.price % 1 == 0.0) item.price.toInt().toString()
+            else item.price.toString()
+            binding.tvPrice.text = price
             binding.tvDescription.text = item.description
             binding.tvShopName.text = item.seller?.name
             binding.tvShopName.isSelected = true
             initViewPagerAdapter(listOf(item.image))
+
+            binding.btnBuy.clicks().debounce(200).onEach {
+                val uri = Uri.parse(item.seller?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }.launchIn(lifecycleScope)
         }.launchIn(lifecycleScope)
 
         viewModel.messageFlow.onEach {
