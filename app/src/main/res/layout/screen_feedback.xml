@@ -24,7 +24,7 @@
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/feedback"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
             android:paddingStart="20dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="17dp"
             tools:text="Jaksibay Khakimov" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,7 @@
             android:paddingStart="20dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="17dp"
             tools:text="(***) ***-**-**" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +113,7 @@
             android:paddingStart="20dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="17dp"
             tools:text="Благорадность" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -142,7 +142,7 @@
             android:maxLines="10"
             android:paddingStart="20dp"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,7 +165,7 @@
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/all_the_data_you_enter_is_strictly_confidential"
         android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

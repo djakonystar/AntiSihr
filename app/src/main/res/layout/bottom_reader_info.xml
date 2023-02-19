@@ -24,7 +24,7 @@
         android:fontFamily="@font/nunito_semibold_ttf"
         android:text="@string/close"
         android:textColor="#774FDC"
-        android:textSize="17sp"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:textSize="24sp"
+                android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ic_photo"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/nunito_bold_ttf"
                 android:textColor="#66000000"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_author"
@@ -102,7 +102,7 @@
                 android:fontFamily="@font/nunito_ttf"
                 android:text="@string/address_with_dots"
                 android:textColor="#959595"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_social_media" />
 
@@ -116,7 +116,7 @@
                 android:fontFamily="@font/nunito_medium"
                 tools:text="РИ, г. Сунжа, ул. Первая, д. 23"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_address_title" />
 
@@ -139,7 +139,7 @@
                 android:fontFamily="@font/nunito_ttf"
                 android:text="@string/telephone_only"
                 android:textColor="#959595"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_first" />
 
@@ -152,7 +152,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/nunito_medium"
                 android:textColor="#018AF8"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_phone_title"
                 tools:text="+7 (***) ***-**-**" />
@@ -184,7 +184,7 @@
                 android:fontFamily="@font/nunito_bold_ttf"
                 android:text="@string/description"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="@id/ic_photo"
                 app:layout_constraintTop_toBottomOf="@id/divider_second" />
 
@@ -200,7 +200,7 @@
 
 Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.  "
                 android:textColor="#99000000"
-                android:textSize="19sp"
+                android:textSize="19dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/ic_photo"
                 app:layout_constraintStart_toStartOf="@id/ic_photo"

@@ -25,7 +25,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/nunito_bold_ttf"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toStartOf="@id/ic_favourites"
         app:layout_constraintStart_toEndOf="@id/ic_back"
@@ -84,7 +84,7 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:textSize="28sp"
+                android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vp_images"
                 tools:text="150" />
@@ -95,7 +95,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/nunito_ttf"
                 android:text="₽"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_price"
                 app:layout_constraintStart_toEndOf="@id/tv_price"
                 app:layout_constraintTop_toTopOf="@id/tv_price" />
@@ -113,7 +113,7 @@
                 android:text="@string/buy"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_price" />
@@ -126,7 +126,7 @@
                 android:fontFamily="@font/nunito_ttf"
                 android:text="@string/shop_name"
                 android:textColor="#66000000"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="@id/tv_price"
                 app:layout_constraintTop_toBottomOf="@id/tv_price" />
 
@@ -139,7 +139,7 @@
                 android:ellipsize="marquee"
                 android:fontFamily="@font/nunito_semibold_ttf"
                 android:singleLine="true"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_shop_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_shop_title"
@@ -154,7 +154,7 @@
                 android:fontFamily="@font/nunito_ttf"
                 android:text="@string/capacity_text"
                 android:textColor="#66000000"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="@id/tv_shop_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_shop_title" />
 
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/nunito_semibold_ttf"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_capacity_title"
                 app:layout_constraintStart_toEndOf="@id/tv_capacity_title"
                 app:layout_constraintTop_toTopOf="@id/tv_capacity_title"
@@ -179,7 +179,7 @@
                 android:fontFamily="@font/nunito_bold_ttf"
                 android:text="@string/description"
                 android:textColor="#000000"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="@id/tv_shop_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_capacity_title" />
 
@@ -191,7 +191,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_ttf"
                 android:textColor="#99000000"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="@id/btn_buy"
                 app:layout_constraintStart_toStartOf="@id/tv_description_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_description_title"

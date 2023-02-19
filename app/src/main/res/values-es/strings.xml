@@ -83,7 +83,7 @@
     <string name="text_ko">Coreano</string>
     <string name="text_zh">Chino</string>
     <string name="text_it">italiano</string>
-    <string name="text_es">español</string>
+    <string name="text_es">Español</string>
     <string name="text_ar">Árabe</string>
     <string name="text_of_your_question">El texto de su mensaje</string>
 </resources>

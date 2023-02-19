@@ -24,7 +24,7 @@
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/language"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:fontFamily="@font/nunito_semibold_ttf"
         android:text="@string/done"
         android:textColor="#2787F5"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ic_back" />
@@ -55,65 +55,10 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
         <RadioButton
-            android:id="@+id/rb_ru"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_ru"
-            app:buttonTint="#2787F5"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/text_size_15"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
-
-        <RadioButton
             android:id="@+id/rb_ar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/text_ar"
-            app:buttonTint="#2787F5"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/text_size_15"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
-
-        <RadioButton
-            android:id="@+id/rb_es"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_es"
-            app:buttonTint="#2787F5"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/text_size_15"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
-
-        <RadioButton
-            android:id="@+id/rb_it"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_it"
-            app:buttonTint="#2787F5"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/text_size_15"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
-
-        <RadioButton
-            android:id="@+id/rb_zh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_zh"
-            app:buttonTint="#2787F5"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/text_size_15"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
-
-        <RadioButton
-            android:id="@+id/rb_ko"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_ko"
             app:buttonTint="#2787F5"
             android:fontFamily="@font/nunito_medium"
             android:textSize="@dimen/text_size_15"
@@ -132,10 +77,21 @@
             android:paddingEnd="16dp" />
 
         <RadioButton
-            android:id="@+id/rb_tr"
+            android:id="@+id/rb_en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_tr"
+            android:text="@string/text_en"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_es"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_es"
             app:buttonTint="#2787F5"
             android:fontFamily="@font/nunito_medium"
             android:textSize="@dimen/text_size_15"
@@ -154,10 +110,10 @@
             android:paddingEnd="16dp" />
 
         <RadioButton
-            android:id="@+id/rb_sv"
+            android:id="@+id/rb_it"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_sv"
+            android:text="@string/text_it"
             app:buttonTint="#2787F5"
             android:fontFamily="@font/nunito_medium"
             android:textSize="@dimen/text_size_15"
@@ -176,10 +132,54 @@
             android:paddingEnd="16dp" />
 
         <RadioButton
-            android:id="@+id/rb_en"
+            android:id="@+id/rb_ko"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_en"
+            android:text="@string/text_ko"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_ru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ru"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_sv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_sv"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_tr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_tr"
+            app:buttonTint="#2787F5"
+            android:fontFamily="@font/nunito_medium"
+            android:textSize="@dimen/text_size_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <RadioButton
+            android:id="@+id/rb_zh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_zh"
             app:buttonTint="#2787F5"
             android:fontFamily="@font/nunito_medium"
             android:textSize="@dimen/text_size_15"

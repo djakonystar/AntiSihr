@@ -91,7 +91,7 @@
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/info_collected_here"
         android:textColor="#80260101"
-        android:textSize="15sp"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@id/tv_search"
         app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
 
