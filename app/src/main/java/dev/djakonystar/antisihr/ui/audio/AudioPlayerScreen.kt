@@ -44,6 +44,8 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     private var isFavourite = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.background_color)
+
         initListeners()
         initObservers()
         initData()

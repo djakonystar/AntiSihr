@@ -60,6 +60,8 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
+
         initVariables()
         initListeners()
         initObservers()

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ScreenGoodInfoBinding
 import dev.djakonystar.antisihr.presentation.shop.GoodInfoScreenViewModel
@@ -36,6 +37,8 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private val args: GoodInfoScreenArgs by navArgs()
     private var isFavourite: Boolean = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.background_color)
+
         initListeners()
         initObservers()
         lifecycleScope.launchWhenResumed {

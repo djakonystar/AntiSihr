@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -114,7 +116,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
         binding.icClose.clicks().debounce(200).onEach {
             binding.layoutMusicPlayer.collapse()
-            val intent = Intent(this,MusicService::class.java)
+            val intent = Intent(this, MusicService::class.java)
         }.launchIn(lifecycleScope)
 
 
@@ -362,6 +364,10 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         } else {
             binding.layoutMusicPlayer.collapse()
         }
+    }
+
+    fun setStatusBarColor(@ColorRes color: Int) {
+        window.statusBarColor = ContextCompat.getColor(this, color)
     }
 
     override fun onDestroy() {

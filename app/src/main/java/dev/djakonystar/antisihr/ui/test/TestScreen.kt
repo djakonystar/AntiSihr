@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
 import dev.djakonystar.antisihr.presentation.test.HomeScreenViewModel
@@ -33,8 +34,7 @@ class TestScreen : Fragment(R.layout.screen_home) {
     private val viewModel: HomeScreenViewModel by viewModels<HomeScreenViewModelImpl>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val window = requireActivity().window
-        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_color)
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.background_color)
 
         initAdapters()
         initListeners()

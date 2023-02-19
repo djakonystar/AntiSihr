@@ -46,6 +46,8 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
+
         initListeners()
         initObservers()
 

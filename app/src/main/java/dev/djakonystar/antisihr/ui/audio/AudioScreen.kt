@@ -56,8 +56,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val window = requireActivity().window
-        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
 
         lifecycleScope.launchWhenResumed {
             showBottomNavigationView.emit(Unit)
