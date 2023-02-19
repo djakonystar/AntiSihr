@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -45,6 +46,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     private val allProducts = mutableListOf<ShopItemBookmarked>()
     private var _adapter: ShopsAdapter? = null
     private val adapter get() = _adapter!!
+    private var selectedCategoryId = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +118,24 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             hideKeyboard()
         }.launchIn(lifecycleScope)
 
+        binding.etSearch.addTextChangedListener {
+            val searchList = if (selectedCategoryId != -1) {
+                allProducts.filter { it.sellerId == selectedCategoryId }
+            } else {
+                allProducts
+            }
+
+            if (binding.etSearch.text.toString().isEmpty()) {
+                adapter.shopItems = searchList
+            } else {
+                val searchValue = binding.etSearch.text.toString()
+                val newList = searchList.filter { p ->
+                    p.name.contains(searchValue, ignoreCase = true)
+                }
+                adapter.shopItems = newList
+            }
+        }
+
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: Tab?) {
                 val tvTab = tab?.customView as TextView
@@ -127,8 +147,10 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                     val sellerData = sellersList.find { it.name == tvTab.text.toString() }
                     sellerData?.let {
                         viewModel.getAllProductsOfSeller(it.id)
+                        selectedCategoryId = it.id
                     } ?: let {
                         viewModel.getAllProducts()
+                        selectedCategoryId = -1
                     }
                 }
             }
