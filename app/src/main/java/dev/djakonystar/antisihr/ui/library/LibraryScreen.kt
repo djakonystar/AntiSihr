@@ -107,6 +107,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             binding.icFavourites.hide()
             binding.icSearch.hide()
             binding.icClose.show()
+            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
@@ -115,6 +116,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             binding.icClose.hide()
             binding.icFavourites.show()
             binding.icSearch.show()
+            binding.tvBody.show()
             binding.expandableLayout.collapse()
             binding.etSearch.setText("")
             hideKeyboard()

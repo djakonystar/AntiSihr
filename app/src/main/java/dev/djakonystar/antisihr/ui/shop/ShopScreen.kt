@@ -107,7 +107,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         binding.icClose.clicks().debounce(200).onEach {
-            binding.tvTitle.text = getString(R.string.library)
+            binding.tvTitle.text = getString(R.string.shop)
             binding.icClose.hide()
             binding.icFavorites.show()
             binding.icSearch.show()

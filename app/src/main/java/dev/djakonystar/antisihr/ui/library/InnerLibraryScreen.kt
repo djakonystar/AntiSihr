@@ -91,6 +91,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
             binding.icClose.hide()
             binding.icMenu.show()
             binding.icSearch.show()
+            binding.tvBody.show()
             binding.expandableLayout.collapse()
             binding.etSearch.setText("")
             hideKeyboard()

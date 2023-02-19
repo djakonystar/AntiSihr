@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.audio.AudioScreen">
 
     <TextView
         android:id="@+id/tv_audio"
@@ -13,19 +15,20 @@
         android:fontFamily="@font/nunito_extrabold_ttf"
         android:text="@string/audio"
         android:textColor="#260101"
-        android:textSize="23sp"
+        android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_favourites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_favourites"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
@@ -34,12 +37,12 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_search"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/tv_audio"

@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:src="@drawable/ic_hamburger_menu"
+        app:layout_constraintBottom_toBottomOf="@id/ic_logo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/ic_logo" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -32,7 +33,6 @@
         android:id="@+id/rc_tests"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:orientation="vertical"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

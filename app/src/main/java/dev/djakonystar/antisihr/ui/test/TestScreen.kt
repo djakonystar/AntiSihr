@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +35,9 @@ class TestScreen : Fragment(R.layout.screen_home) {
     private val viewModel: HomeScreenViewModel by viewModels<HomeScreenViewModelImpl>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val window = requireActivity().window
+        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_color)
+
         initAdapters()
         initListeners()
         initObservers()

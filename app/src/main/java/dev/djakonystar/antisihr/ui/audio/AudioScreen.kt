@@ -3,6 +3,7 @@ package dev.djakonystar.antisihr.ui.audio
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,6 +55,9 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val window = requireActivity().window
+        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+
         lifecycleScope.launchWhenResumed {
             showBottomNavigationView.emit(Unit)
         }
@@ -96,6 +100,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             binding.icFavourites.hide()
             binding.icSearch.hide()
             binding.icClose.show()
+            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
@@ -104,6 +109,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             binding.icClose.hide()
             binding.icFavourites.show()
             binding.icSearch.show()
+            binding.tvBody.show()
             binding.expandableLayout.collapse()
             binding.etAudio.setText("")
             hideKeyboard()
