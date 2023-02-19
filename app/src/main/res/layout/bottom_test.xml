@@ -200,7 +200,7 @@
             android:paddingVertical="16dp"
             android:text="@string/take_cure_at_the_library"
             android:textAllCaps="false"
-            android:textColor="@color/gray_text_color"
+            android:textColor="@color/main_text_color"
             android:textSize="20dp"
             android:visibility="visible" />
 

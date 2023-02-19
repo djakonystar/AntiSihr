@@ -2,7 +2,6 @@ package dev.djakonystar.antisihr.ui.test
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
@@ -13,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ScreenHomeBinding
@@ -45,17 +43,6 @@ class TestScreen : Fragment(R.layout.screen_home) {
         lifecycleScope.launchWhenCreated {
             visibilityOfLoadingAnimationView.emit(true)
             showBottomNavigationView.emit(Unit)
-        }
-
-        lifecycleScope.launchWhenResumed {
-            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    binding.icLogo.setImageResource(R.drawable.logo_antisihr_light)
-                }
-                else -> {
-                    binding.icLogo.setImageResource(R.drawable.logo_antisihr_dark)
-                }
-            }
         }
     }
 

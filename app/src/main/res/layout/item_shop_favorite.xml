@@ -35,6 +35,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/nunito_bold_ttf"
+        android:textColor="@color/main_text_color"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/nunito_bold_ttf"
+        android:textColor="@color/main_text_color"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="@id/tv_name"
         app:layout_constraintStart_toStartOf="@id/tv_name"
@@ -65,7 +67,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv_shop"
@@ -73,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/nunito_semibold_ttf"
+        android:textColor="@color/second_text_color"
         android:textSize="13dp"
-        android:textColor="#66000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tv_name"
         app:layout_constraintStart_toStartOf="@id/tv_name"

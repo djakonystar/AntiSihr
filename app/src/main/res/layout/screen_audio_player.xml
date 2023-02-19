@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".ui.audio.AudioPlayerScreen">
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -15,18 +16,22 @@
         android:padding="8dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
         android:fontFamily="@font/nunito_bold_ttf"
-        android:textColor="@color/black"
+        android:singleLine="true"
+        android:textColor="@color/main_text_color"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ic_favourite"
+        app:layout_constraintStart_toEndOf="@id/ic_back"
         app:layout_constraintTop_toTopOf="@id/ic_back"
         tools:text="Рукъя от всего" />
 
@@ -39,7 +44,8 @@
         android:padding="8dp"
         android:src="@drawable/ic_favourites"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -68,9 +74,13 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_audio_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:ellipsize="marquee"
         android:fontFamily="@font/nunito_bold_ttf"
+        android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/main_text_color"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/music_controller"
@@ -81,11 +91,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_audio_author"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginTop="6dp"
+        android:ellipsize="marquee"
         android:fontFamily="@font/nunito_ttf"
-        android:textColor="#80000000"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="@color/second_text_color"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,6 +125,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito_medium"
         android:text="00:00"
+        android:textColor="@color/second_text_color"
         app:layout_constraintStart_toStartOf="@id/music_controller"
         app:layout_constraintTop_toBottomOf="@id/music_controller" />
 
@@ -120,6 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/nunito_medium"
+        android:textColor="@color/second_text_color"
         app:layout_constraintEnd_toEndOf="@id/music_controller"
         app:layout_constraintTop_toBottomOf="@id/music_controller"
         tools:text="3:25" />
@@ -160,49 +176,53 @@
         android:id="@+id/ic_forward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:foreground="@drawable/bg_ripple_effect_round"
+        android:padding="8dp"
         android:src="@drawable/ic_forward"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/ic_repeat"
         app:layout_constraintStart_toEndOf="@id/btn_play"
-        app:layout_constraintTop_toTopOf="@id/btn_play" />
+        app:layout_constraintTop_toTopOf="@id/btn_play"
+        app:tint="@color/black" />
 
     <ImageView
         android:id="@+id/ic_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:foreground="@drawable/bg_ripple_effect_round"
+        android:padding="8dp"
         android:src="@drawable/ic_previous"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/btn_play"
         app:layout_constraintStart_toEndOf="@id/ic_shuffle"
-        app:layout_constraintTop_toTopOf="@id/btn_play" />
+        app:layout_constraintTop_toTopOf="@id/btn_play"
+        app:tint="@color/black" />
 
     <ImageView
         android:id="@+id/ic_shuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:foreground="@drawable/bg_ripple_effect_round"
         android:padding="8dp"
         android:src="@drawable/ic_shuffle"
-        android:foreground="@drawable/bg_ripple_effect_round"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toStartOf="@id/ic_previous"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_play" />
+        app:layout_constraintTop_toTopOf="@id/btn_play"
+        app:tint="@color/black" />
 
     <ImageView
         android:id="@+id/ic_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:foreground="@drawable/bg_ripple_effect_round"
+        android:padding="8dp"
         android:src="@drawable/ic_repeat"
         app:layout_constraintBottom_toBottomOf="@id/btn_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ic_forward"
-        app:layout_constraintTop_toTopOf="@id/btn_play" />
+        app:layout_constraintTop_toTopOf="@id/btn_play"
+        app:tint="@color/black" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

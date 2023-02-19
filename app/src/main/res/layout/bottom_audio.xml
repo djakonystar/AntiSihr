@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#B3F7F7F7">
+    android:background="@color/bg_bottom_audio">
 
 
     <View
         android:layout_width="54dp"
         android:layout_height="4dp"
         android:layout_marginTop="4dp"
-        android:background="#33000000"
+        android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +37,7 @@
         android:layout_marginEnd="12dp"
         android:fontFamily="@font/nunito_bold_ttf"
         tools:text="От проблем в жизни"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/tv_author"
         app:layout_constraintEnd_toStartOf="@id/btn_pause"
         app:layout_constraintStart_toEndOf="@id/ic_image"
@@ -50,6 +51,7 @@
         android:layout_marginEnd="12dp"
         android:fontFamily="@font/nunito_ttf"
         tools:text="Мухаммад Даутукаев"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/ic_image"
         app:layout_constraintEnd_toStartOf="@id/btn_pause"
         app:layout_constraintStart_toStartOf="@id/tv_name"

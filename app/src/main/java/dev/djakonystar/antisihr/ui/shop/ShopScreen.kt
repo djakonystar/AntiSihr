@@ -158,7 +158,12 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             override fun onTabUnselected(tab: Tab?) {
                 val tvTab = tab?.customView as TextView
                 tvTab.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
-                tvTab.setTextColor(Color.parseColor("#66000000"))
+                tvTab.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.second_text_color
+                    )
+                )
             }
 
             override fun onTabReselected(tab: Tab?) {}
@@ -203,7 +208,12 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTabb.layoutParams =
                     LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
                 tvTabb.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
-                tvTabb.setTextColor(Color.parseColor("#66000000"))
+                tvTabb.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.second_text_color
+                    )
+                )
                 binding.tabLayout.addTab(tabb)
             }
         }.launchIn(lifecycleScope)

@@ -60,6 +60,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_bold_ttf"
                 android:textSize="24dp"
+                android:textColor="@color/main_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ic_photo"
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:textColor="#66000000"
+                android:textColor="@color/second_text_color"
                 android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -199,7 +200,7 @@
                 tools:text="Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.
 
 Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.  "
-                android:textColor="#99000000"
+                android:textColor="@color/second_text_color"
                 android:textSize="19dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/ic_photo"

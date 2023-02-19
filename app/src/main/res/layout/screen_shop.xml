@@ -14,7 +14,7 @@
         android:layout_margin="12dp"
         android:fontFamily="@font/nunito_extrabold_ttf"
         android:text="@string/shop"
-        android:textColor="#1F1F2D"
+        android:textColor="@color/main_text_color"
         android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
         app:layout_constraintEnd_toStartOf="@id/ic_search"
-        app:layout_constraintTop_toTopOf="@id/ic_search" />
+        app:layout_constraintTop_toTopOf="@id/ic_search"
+        app:tint="@color/black" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_search"
@@ -46,7 +47,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title" />
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:tint="@color/black" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_close"
@@ -78,7 +80,9 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/enter_something_you_want" />
+            android:drawableTint="@color/black"
+            android:hint="@string/enter_something_you_want"
+            android:textColor="@color/main_text_color" />
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 

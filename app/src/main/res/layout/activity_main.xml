@@ -10,8 +10,7 @@
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -195,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/bg_rect_20"
-                    android:backgroundTint="#E8E8E8">
+                    android:backgroundTint="@color/background_color">
 
                     <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:layout_width="wrap_content"
@@ -214,7 +213,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/background_color"
             app:itemTextAppearance="@style/NunitoSemiboldStyle"
             app:menu="@menu/nav_drawer_menu" />
 
@@ -231,6 +230,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/white_only" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

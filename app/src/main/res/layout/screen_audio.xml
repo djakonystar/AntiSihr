@@ -14,7 +14,7 @@
         android:layout_margin="12dp"
         android:fontFamily="@font/nunito_extrabold_ttf"
         android:text="@string/audio"
-        android:textColor="#260101"
+        android:textColor="@color/main_text_color"
         android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/ic_search"
         app:layout_constraintEnd_toStartOf="@id/ic_search"
-        app:layout_constraintTop_toTopOf="@id/ic_search" />
+        app:layout_constraintTop_toTopOf="@id/ic_search"
+        app:tint="@color/black" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_search"
@@ -47,7 +48,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/tv_audio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_audio" />
+        app:layout_constraintTop_toTopOf="@id/tv_audio"
+        app:tint="@color/black" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_close"
@@ -80,7 +82,9 @@
             android:layout_height="54dp"
             android:layout_marginHorizontal="12dp"
             android:drawableStart="@drawable/ic_search"
-            android:hint="@string/enter_something_you_want" />
+            android:drawableTint="@color/black"
+            android:hint="@string/enter_something_you_want"
+            android:textColor="@color/main_text_color" />
 
 
     </net.cachapa.expandablelayout.ExpandableLayout>
@@ -93,7 +97,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/the_best_cure_is_what_you_read_to_yourself."
-        android:textColor="#80260101"
+        android:textColor="@color/second_text_color"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@id/tv_audio"
         app:layout_constraintTop_toBottomOf="@id/expandable_layout" />

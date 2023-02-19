@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.ui.audio
 
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -16,13 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioPlayerBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioPlayerScreenViewModel
 import dev.djakonystar.antisihr.presentation.audio.impl.AudioPlayerScreenViewModelImpl
 import dev.djakonystar.antisihr.service.manager.PlayerManager
-import dev.djakonystar.antisihr.data.models.AudioStatus
-import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -70,13 +71,22 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                     currentMusic!!
                 )
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
+                binding.icFavourite.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.fav_color)
+                )
             } else {
                 viewModel.deleteFromBookmarkeds(
                     currentMusic!!
                 )
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites)
+                binding.icFavourite.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.black)
+                )
             }
         }.launchIn(lifecycleScope)
+
+        binding.tvAudioName.isSelected = true
+        binding.tvAudioAuthor.isSelected = true
 
         binding.btnPlay.clicks().debounce(200).onEach {
             if (binding.icPlay.isVisible) {
@@ -103,7 +113,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icRepeat.clicks().debounce(200).onEach {
-            mediaPlayerManager.repeatCurrAudio= mediaPlayerManager.repeatCurrAudio.not()
+            mediaPlayerManager.repeatCurrAudio = mediaPlayerManager.repeatCurrAudio.not()
             if (mediaPlayerManager.repeatCurrAudio) {
                 binding.icRepeat.setColorFilter(
                     ContextCompat.getColor(
@@ -192,8 +202,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             isFavourite = it
             if (it) {
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites_filled)
+                binding.icFavourite.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.fav_color)
+                )
             } else {
                 binding.icFavourite.setImageResource(R.drawable.ic_favourites)
+                binding.icFavourite.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.black)
+                )
             }
         }.launchIn(lifecycleScope)
     }

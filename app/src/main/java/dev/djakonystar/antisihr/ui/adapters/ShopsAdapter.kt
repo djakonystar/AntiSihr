@@ -1,8 +1,10 @@
 package dev.djakonystar.antisihr.ui.adapters
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -30,8 +32,20 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
                 ivProduct.setImageWithGlide(binding.root.context, item.image)
                 if (item.isFavourite) {
                     ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
+                    ivFavorite.imageTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            ivFavorite.context,
+                            R.color.fav_color
+                        )
+                    )
                 } else {
                     ivFavorite.setImageResource(R.drawable.ic_favourites)
+                    ivFavorite.imageTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            ivFavorite.context,
+                            R.color.black
+                        )
+                    )
                 }
 
                 binding.root.setOnClickListener {
@@ -40,9 +54,21 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
                 binding.ivFavorite.setOnClickListener {
                     item.isFavourite = item.isFavourite.not()
                     if (item.isFavourite) {
-                        ivFavorite.setImageResource(R.drawable.ic_favourites)
-                    } else {
                         ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
+                        ivFavorite.imageTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                ivFavorite.context,
+                                R.color.fav_color
+                            )
+                        )
+                    } else {
+                        ivFavorite.setImageResource(R.drawable.ic_favourites)
+                        ivFavorite.imageTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                ivFavorite.context,
+                                R.color.black
+                            )
+                        )
                     }
                     onItemBookmarkClick.invoke(item)
                 }

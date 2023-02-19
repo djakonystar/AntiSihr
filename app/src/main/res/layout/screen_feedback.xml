@@ -15,7 +15,8 @@
         android:padding="8dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -149,11 +150,11 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_send"
         style="@style/myButtonStyle"
-        android:paddingVertical="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="55dp"
         android:layout_marginBottom="16dp"
+        android:paddingVertical="10dp"
         android:text="@string/send"
         app:layout_constraintBottom_toTopOf="@id/tv_hint" />
 

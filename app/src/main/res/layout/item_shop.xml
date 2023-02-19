@@ -27,7 +27,7 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/nunito_extrabold_ttf"
-        android:textColor="@color/black"
+        android:textColor="@color/main_text_color"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,10 +38,10 @@
         android:id="@+id/tv_peace"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_medium"
-        android:textColor="@color/black"
-        android:textSize="12dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/nunito_medium"
+        android:textColor="@color/main_text_color"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="@id/tv_name"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -52,11 +52,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_bold_ttf"
-        android:textColor="@color/black"
+        android:textColor="@color/main_text_color"
         android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@id/tv_peace"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="1340" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -68,8 +68,9 @@
         android:background="@drawable/bg_circle"
         android:padding="8dp"
         android:src="@drawable/ic_favourites"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/tv_price"
-        app:layout_constraintTop_toTopOf="@id/tv_price" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_price"
+        app:tint="@color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

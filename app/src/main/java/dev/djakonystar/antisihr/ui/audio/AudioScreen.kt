@@ -1,5 +1,6 @@
 package dev.djakonystar.antisihr.ui.audio
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -119,9 +120,15 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             isClickedFavourite = isClickedFavourite.not()
             if (isClickedFavourite) {
                 binding.icFavourites.setImageResource(R.drawable.ic_favourites_filled)
+                binding.icFavourites.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.fav_color)
+                )
                 viewModel.getBookmarkedAudios()
             } else {
                 binding.icFavourites.setImageResource(R.drawable.ic_favourites)
+                binding.icFavourites.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.black)
+                )
                 viewModel.getListOfAudios()
             }
         }.launchIn(lifecycleScope)
