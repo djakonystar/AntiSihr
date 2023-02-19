@@ -25,13 +25,17 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:fontFamily="@font/nunito_extrabold_ttf"
+        android:singleLine="true"
         android:textColor="@color/main_text_color"
         android:textSize="21sp"
         app:layout_constraintBottom_toTopOf="@id/tv_body"
+        app:layout_constraintEnd_toStartOf="@id/ic_forward"
         app:layout_constraintStart_toEndOf="@id/ic_image"
         app:layout_constraintTop_toTopOf="@id/ic_image"
         tools:text="Вопрос/Ответ" />

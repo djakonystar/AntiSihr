@@ -20,14 +20,15 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/nunito_extrabold_ttf"
             android:textColor="@color/main_text_color"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/tv_body"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Воздействие рукия над больным" />
