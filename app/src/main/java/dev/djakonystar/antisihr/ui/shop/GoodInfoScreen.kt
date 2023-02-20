@@ -39,6 +39,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private val args: GoodInfoScreenArgs by navArgs()
     private var isFavourite: Boolean = false
     private var shopItemData: ShopItemData? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.background_color)
 

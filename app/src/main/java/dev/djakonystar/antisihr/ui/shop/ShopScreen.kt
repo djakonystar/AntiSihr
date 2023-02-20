@@ -1,13 +1,11 @@
 package dev.djakonystar.antisihr.ui.shop
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
@@ -15,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -22,21 +21,19 @@ import com.google.android.material.tabs.TabLayout.Tab
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.models.shop.SellerData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenShopBinding
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.ShopScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.ShopsAdapter
+import dev.djakonystar.antisihr.ui.main.MainScreenDirections
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 @AndroidEntryPoint
 class ShopScreen : Fragment(R.layout.screen_shop) {
@@ -47,18 +44,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     private var _adapter: ShopsAdapter? = null
     private val adapter get() = _adapter!!
     private var selectedCategoryId = -1
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
-                }
-            })
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
@@ -81,8 +66,10 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
 
         adapter.setOnItemClickListener {
-            findNavController().navigate(
-                ShopScreenDirections.actionShopScreenToGoodInfoScreen(
+            val navController =
+                Navigation.findNavController(requireActivity(), R.id.activity_fragment_container)
+            navController.navigate(
+                MainScreenDirections.actionMainScreenToGoodInfoScreen(
                     it.id, it.isFavourite
                 )
             )

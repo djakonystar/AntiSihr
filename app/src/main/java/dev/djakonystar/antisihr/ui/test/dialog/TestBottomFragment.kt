@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -15,19 +14,15 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
-import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.TestQuestionData
 import dev.djakonystar.antisihr.databinding.BottomTestBinding
 import dev.djakonystar.antisihr.presentation.test.TestScreenViewModel
 import dev.djakonystar.antisihr.presentation.test.impl.TestScreenViewModelImpl
+import dev.djakonystar.antisihr.utils.changeBottomNavItemFlow
 import dev.djakonystar.antisihr.utils.hide
 import dev.djakonystar.antisihr.utils.show
-import dev.djakonystar.antisihr.utils.toast
-import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -103,7 +98,9 @@ class TestBottomFragment : BottomSheetDialogFragment() {
         }.launchIn(lifecycleScope)
 
         binding.treatmentCourse.clicks().debounce(200).onEach {
-            (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(false)
+            lifecycleScope.launchWhenCreated {
+                changeBottomNavItemFlow.emit(false)
+            }
         }.launchIn(lifecycleScope)
     }
 

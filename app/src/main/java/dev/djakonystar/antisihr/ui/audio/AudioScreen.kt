@@ -3,7 +3,6 @@ package dev.djakonystar.antisihr.ui.audio
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -16,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioResultData
-import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
@@ -41,18 +39,6 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     private val allAudio = mutableListOf<AudioBookmarked>()
     private var _adapter: AudioAdapter? = null
     private val adapter: AudioAdapter get() = _adapter!!
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
-                }
-            })
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
@@ -148,20 +134,22 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             )
             if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == audio) {
                 findNavController().navigate(
-                    AudioScreenDirections.actionAudioScreenToAudioInfoScreen(
+                    AudioScreenDirections.actionAudioScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, true
                     )
                 )
             } else {
                 findNavController().navigate(
-                    AudioScreenDirections.actionAudioScreenToAudioInfoScreen(
+                    AudioScreenDirections.actionAudioScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, false
                     )
                 )
                 (requireActivity() as MainActivity).pause()
                 (requireActivity() as MainActivity).playAudio(it.id, false)
             }
-            (requireActivity() as MainActivity).visibilityMediaPlayer(View.GONE)
+            lifecycleScope.launchWhenCreated {
+                showBottomPlayerFlow.emit(false)
+            }
         }
 
         adapter.setOnPlayClickListener {
@@ -176,10 +164,13 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             )
             lifecycleScope.launchWhenResumed {
                 playAudioFlow.emit(audio)
+                showBottomPlayerFlow.emit(true)
             }
         }
 
-
+        lifecycleScope.launchWhenCreated {
+            showBottomPlayerFlow.emit(true)
+        }
     }
 
 
@@ -228,7 +219,9 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     override fun onResume() {
         super.onResume()
         if (mediaPlayerManager.isPlaying()) {
-            (requireActivity() as MainActivity).visibilityMediaPlayer(View.VISIBLE)
+            lifecycleScope.launchWhenCreated {
+                showBottomPlayerFlow.emit(true)
+            }
         }
     }
 }

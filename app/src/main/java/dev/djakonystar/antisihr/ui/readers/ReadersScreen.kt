@@ -1,20 +1,16 @@
 package dev.djakonystar.antisihr.ui.readers
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.reader.City
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
@@ -24,12 +20,9 @@ import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModel
 import dev.djakonystar.antisihr.ui.adapters.ReadersAdapter
 import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import dev.djakonystar.antisihr.utils.toast
-import dev.djakonystar.antisihr.utils.visibilityOfBottomNavigationView
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 
 @AndroidEntryPoint
 class ReadersScreen : Fragment(R.layout.screen_readers) {
@@ -40,16 +33,6 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private var _adapter: ReadersAdapter? = null
     private val adapter: ReadersAdapter get() = _adapter!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
-                }
-            })
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -86,7 +69,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
         adapter.setOnItemClickListener {
             findNavController().navigate(
-                ReadersScreenDirections.actionReadersScreenToReaderDetailDialog(
+                ReadersScreenDirections.actionReadersScreenToReaderDetailBottomFragment(
                     it.id
                 )
             )

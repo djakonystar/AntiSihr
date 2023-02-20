@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph.xml"
+    app:startDestination="@id/testScreen">
+
+    <fragment
+        android:id="@+id/testScreen"
+        android:name="dev.djakonystar.antisihr.ui.test.TestScreen"
+        android:label="screen_home"
+        tools:layout="@layout/screen_home" >
+        <action
+            android:id="@+id/action_testScreen_to_testBottomFragment"
+            app:destination="@id/testBottomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/audioScreen"
+        android:name="dev.djakonystar.antisihr.ui.audio.AudioScreen"
+        android:label="screen_audio"
+        tools:layout="@layout/screen_audio" >
+        <action
+            android:id="@+id/action_audioScreen_to_audioPlayerScreen"
+            app:destination="@id/audioPlayerScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/libraryScreen"
+        android:name="dev.djakonystar.antisihr.ui.library.LibraryScreen"
+        android:label="screen_library"
+        tools:layout="@layout/screen_library" >
+        <action
+            android:id="@+id/action_libraryScreen_to_innerLibraryScreen"
+            app:destination="@id/innerLibraryScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopScreen"
+        android:name="dev.djakonystar.antisihr.ui.shop.ShopScreen"
+        android:label="screen_shop"
+        tools:layout="@layout/screen_shop" >
+        <action
+            android:id="@+id/action_shopScreen_to_productsBookmarkedBottomSheet"
+            app:destination="@id/productsBookmarkedBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/readersScreen"
+        android:name="dev.djakonystar.antisihr.ui.readers.ReadersScreen"
+        android:label="screen_readers"
+        tools:layout="@layout/screen_readers" >
+        <action
+            android:id="@+id/action_readersScreen_to_readerDetailBottomFragment"
+            app:destination="@id/readerDetailBottomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/innerLibraryScreen"
+        android:name="dev.djakonystar.antisihr.ui.library.InnerLibraryScreen"
+        android:label="screen_inner_library"
+        tools:layout="@layout/screen_inner_library" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="isFavourite"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_innerLibraryScreen_to_articleDetailBottomFragment"
+            app:destination="@id/articleDetailBottomFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/testBottomFragment"
+        android:name="dev.djakonystar.antisihr.ui.test.dialog.TestBottomFragment"
+        android:label="bottom_test"
+        tools:layout="@layout/bottom_test" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </dialog>
+    <dialog
+        android:id="@+id/articleDetailBottomFragment"
+        android:name="dev.djakonystar.antisihr.ui.library.dialog.ArticleDetailBottomFragment"
+        android:label="bottom_article_info"
+        tools:layout="@layout/bottom_article_info" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="isBookmarked"
+            app:argType="boolean" />
+    </dialog>
+    <fragment
+        android:id="@+id/audioPlayerScreen"
+        android:name="dev.djakonystar.antisihr.ui.audio.AudioPlayerScreen"
+        android:label="screen_audio_player"
+        tools:layout="@layout/screen_audio_player" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+
+        <argument
+            android:name="name"
+            app:argType="string" />
+
+
+        <argument
+            android:name="author"
+            app:argType="string" />
+
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+
+        <argument
+            android:name="image"
+            app:argType="string" />
+
+        <argument
+            android:name="isCurrentAudioPlaying"
+            app:argType="boolean" />
+    </fragment>
+    <dialog
+        android:id="@+id/productsBookmarkedBottomSheet"
+        android:name="dev.djakonystar.antisihr.ui.shop.dialog.ProductsBookmarkedBottomSheet"
+        android:label="bottom_shop_favourites"
+        tools:layout="@layout/bottom_shop_favourites" />
+    <dialog
+        android:id="@+id/readerDetailBottomFragment"
+        android:name="dev.djakonystar.antisihr.ui.readers.dialog.ReaderDetailBottomFragment"
+        android:label="bottom_reader_info"
+        tools:layout="@layout/bottom_reader_info" >
+        <argument
+            android:name="readerId"
+            app:argType="integer" />
+    </dialog>
+</navigation>

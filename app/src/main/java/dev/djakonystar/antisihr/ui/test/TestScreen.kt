@@ -1,11 +1,9 @@
 package dev.djakonystar.antisihr.ui.test
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,6 +41,7 @@ class TestScreen : Fragment(R.layout.screen_home) {
         lifecycleScope.launchWhenCreated {
 //            visibilityOfLoadingAnimationView.emit(true)
             showBottomNavigationView.emit(Unit)
+            viewModel.getListOfTests()
         }
     }
 
@@ -92,7 +91,7 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
         adapter.setOnItemClickListener { id, name ->
             findNavController().navigate(
-                TestScreenDirections.actionHomeScreenToTestFragment(
+                TestScreenDirections.actionTestScreenToTestBottomFragment(
                     id,
                     name
                 )
@@ -108,5 +107,4 @@ class TestScreen : Fragment(R.layout.screen_home) {
         super.onDestroy()
         _adapter = null
     }
-
 }

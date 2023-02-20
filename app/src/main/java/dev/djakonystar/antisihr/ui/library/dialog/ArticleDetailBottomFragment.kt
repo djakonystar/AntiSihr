@@ -1,9 +1,6 @@
 package dev.djakonystar.antisihr.ui.library.dialog
 
-import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,15 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.room.entity.ArticlesBookmarked
 import dev.djakonystar.antisihr.databinding.BottomArticleInfoBinding
-import dev.djakonystar.antisihr.databinding.BottomReaderInfoBinding
 import dev.djakonystar.antisihr.presentation.library.InnerLibraryScreenViewModel
 import dev.djakonystar.antisihr.presentation.library.impl.InnerLibraryScreenViewModelImpl
-import dev.djakonystar.antisihr.presentation.readers.ReadersScreenViewModel
-import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModelImpl
-import dev.djakonystar.antisihr.ui.adapters.SocialMediaAdapter
-import dev.djakonystar.antisihr.utils.setImageWithGlide
 import dev.djakonystar.antisihr.utils.showSnackBar
-import dev.djakonystar.antisihr.utils.toPhoneNumber
 import dev.djakonystar.antisihr.utils.toast
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn

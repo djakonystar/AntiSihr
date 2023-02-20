@@ -14,7 +14,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryBookmarkData
-import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ArticlesBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenInnerLibraryBinding
 import dev.djakonystar.antisihr.presentation.library.InnerLibraryScreenViewModel
@@ -103,7 +102,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
 
         adapter.setOnItemClickListener {
             findNavController().navigate(
-                InnerLibraryScreenDirections.actionInnerLibraryScreenToBottomArticleDialog(
+                InnerLibraryScreenDirections.actionInnerLibraryScreenToArticleDetailBottomFragment(
                     it.id, it.isBookmarked
                 )
             )
