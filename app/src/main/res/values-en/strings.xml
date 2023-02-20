@@ -71,4 +71,17 @@
     <string name="language">Languages</string>
     <string name="shop">Shop</string>
     <string name="about_app">About</string>
+    <string name="text_of_your_question">Text of your message</string>
+    <string name="text_ru">Russian</string>
+    <string name="text_en">English</string>
+    <string name="text_ja">Japanese</string>
+    <string name="text_sv">Swedish</string>
+    <string name="text_fr">French</string>
+    <string name="text_tr">Turkish</string>
+    <string name="text_de">Dutch</string>
+    <string name="text_ko">Korean</string>
+    <string name="text_zh">Chinese</string>
+    <string name="text_it">Italian</string>
+    <string name="text_es">Spanish</string>
+    <string name="text_ar">Arabian</string>
 </resources>
