@@ -64,7 +64,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
                         stop()
                         play(audio)
                     } else {
-                        if (tempJcAudio !== audio) {
+                        if (tempJcAudio != audio) {
                             stop()
                             play(audio)
                         } else {

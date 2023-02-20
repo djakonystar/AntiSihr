@@ -3,6 +3,7 @@ package dev.djakonystar.antisihr.ui.audio
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
@@ -171,9 +172,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                 binding.musicController.progress =
                     mediaPlayerManager.currentStatus!!.currentPosition.toInt()
             }
+            Log.d(
+                "TTTT",
+                "isCurrentAudioPlaying, ${mediaPlayerManager.currentStatus?.duration} and  ${mediaPlayerManager.currentStatus?.currentPosition}"
+            )
+            binding.musicController.max = mediaPlayerManager.currentStatus!!.duration
             binding.currentTime.text =
                 mediaPlayerManager.currentStatus!!.currentPosition.milliSecondsToTimer()
-            binding.musicController.max = mediaPlayerManager.currentStatus!!.duration
             binding.endTime.text =
                 mediaPlayerManager.currentStatus!!.duration.toLong().milliSecondsToTimer()
             binding.icPause.show()
@@ -238,7 +243,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-        resetPlayerInfo()
+            resetPlayerInfo()
         if (this.view != null) {
             currentMusic = AudioBookmarked(
                 status.audio!!.id,
@@ -262,12 +267,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.musicController.isEnabled = true
             binding.icPrevious.isEnabled = true
             binding.icForward.isEnabled = true
-            binding.btnPlay.isClickable = true
+            binding.btnPlay.isEnabled = true
             binding.icFavourite.show()
+            Log.d("TTTT", "onPreparedAudio: ${status.audio?.image} and ${status.audio?.author}")
         }
     }
 
     private fun onUpdateTitle(audio: AudioResultData?) {
+        Log.d("TTTT", "onUpdateTitle: ")
         if (this.view != null) {
             audio?.let {
                 binding.tvTitle.text = it.name
@@ -280,12 +287,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
     //
     override fun onCompletedAudio() {
-        resetPlayerInfo()
         try {
             if (mediaPlayerManager.repeatCurrAudio) {
-                mediaPlayerManager.repeatAudio()
-            } else {
-                mediaPlayerManager.nextAudio()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.musicController.setProgress(0, true)
+                } else {
+                    binding.musicController.progress = 0
+                }
+                binding.currentTime.text = "00:00"
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -306,6 +315,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.musicController.isEnabled = false
             binding.icPrevious.isEnabled = false
             binding.icForward.isEnabled = false
+            binding.btnPlay.isEnabled = false
         }
     }
 
@@ -321,6 +331,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
     override fun onContinueAudio(status: AudioStatus) {
         if (this.view != null) {
+            Log.d("TTTT", "onContinueAudio: ")
             binding.musicController.max = status.duration
             binding.endTime.text = status.duration.toLong().milliSecondsToTimer()
             binding.icPause.show()
@@ -329,6 +340,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
     override fun onPlaying(status: AudioStatus) {
+        Log.d("TTTT", "onPlaying: ")
         if (this.view != null) {
             requireActivity().runOnUiThread {
                 binding.icPlay.hide()

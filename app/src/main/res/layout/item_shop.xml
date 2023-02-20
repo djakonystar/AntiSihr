@@ -67,6 +67,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_circle"
         android:padding="8dp"
+        android:foreground="@drawable/bg_ripple_effect_round"
         android:src="@drawable/ic_favourites"
         app:layout_constraintBottom_toBottomOf="@id/tv_price"
         app:layout_constraintEnd_toEndOf="parent"

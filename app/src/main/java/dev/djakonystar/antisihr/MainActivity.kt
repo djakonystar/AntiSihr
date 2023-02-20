@@ -3,6 +3,7 @@ package dev.djakonystar.antisihr
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
@@ -117,6 +118,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         binding.icClose.clicks().debounce(200).onEach {
             binding.layoutMusicPlayer.collapse()
             val intent = Intent(this, MusicService::class.java)
+            stopService(intent)
         }.launchIn(lifecycleScope)
 
 
@@ -256,7 +258,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     override fun onCompletedAudio() {
         resetPlayerInfo()
         try {
-            audioPlayerManager.nextAudio()
+            audioPlayerManager.nextAudio(true)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -312,7 +314,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
             player.currentAudio?.let {
                 resetPlayerInfo()
                 try {
-                    player.nextAudio()
+                    player.nextAudio(false)
                 } catch (e: Exception) {
                     binding.icPause.show()
                     binding.icPlay.hide()

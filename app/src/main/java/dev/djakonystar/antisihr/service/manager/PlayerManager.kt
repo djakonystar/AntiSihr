@@ -11,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -63,16 +64,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     var repeatCurrAudio: Boolean = false
 
-    private lateinit var mediaSession: MediaSessionCompat
-
-    private var musicBroadcast: MusicBroadcast? = null
-
-    private var notification: NotificationCompat.Builder? = null
-    private var notificationManager: NotificationManager? = null
-
-    private var isFirstTimeCreation = true
-
-
     companion object {
 
         @Volatile
@@ -95,8 +86,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     init {
         initService()
-
-
     }
 
     /**
@@ -106,15 +95,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         serviceConnection.connect(playlist = playlist, onConnected = { binder ->
             jcPlayerService = binder?.service.also { service ->
                 serviceBound = true
-                if (musicBroadcast == null) {
-                    musicBroadcast = MusicBroadcast()
-                }
-                service?.registerReceiver(musicBroadcast, IntentFilter().apply {
-                    addAction(MusicState.NEXT.name)
-                    addAction(MusicState.PLAY.name)
-                    addAction(MusicState.PREVIOUS.name)
-                })
-                mediaSession = MediaSessionCompat(context, "My Music")
                 connectionListener?.invoke(service)
             } ?: throw Exception()
         }, onDisconnected = {
@@ -130,20 +110,14 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         if (playlist.isEmpty()) {
             throw Exception("EMPTY LIST")
         } else {
-
             jcPlayerService?.let { service ->
                 service.serviceListener = this
                 service.play(jcAudio)
+                shuffleModeList.add(jcAudio)
             } ?: initService { service ->
                 jcPlayerService = service
                 playAudio(jcAudio)
             }
-//            if (isFirstTimeCreation) {
-//                showNotification()
-//                isFirstTimeCreation = false
-//            } else {
-//                updateNotification()
-//            }
         }
     }
 
@@ -151,26 +125,24 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     /**
      * Goes to next audio.
      */
-    fun nextAudio() {
+    fun nextAudio(isProgrammatically: Boolean) {
         if (playlist.isEmpty()) {
             throw Exception("EMPTY LIST")
         } else {
             jcPlayerService?.let { service ->
-                service.stop()
-                getNextAudio()?.let { service.play(it) } ?: service.finalize()
-//                updateNotification()
+                if (repeatCurrAudio && isProgrammatically) {
+                    currentAudio?.let {
+                        service.seekTo(0)
+                        service.onPrepared(service.getMediaPlayer()!!)
+                    }
+                } else {
+                    service.stop()
+                    getNextAudio()?.let { service.play(it) } ?: service.finalize()
+                }
             }
         }
     }
 
-    fun repeatAudio() {
-        jcPlayerService?.let { service ->
-            currentAudio?.let {
-                service.seekTo(0)
-                service.onPrepared(service.getMediaPlayer()!!)
-            }
-        }
-    }
 
     /**
      * Goes to previous audio.
@@ -182,7 +154,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             jcPlayerService?.let { service ->
                 service.stop()
                 getPreviousAudio().let { service.play(it) }
-//                updateNotification()
             }
         }
     }
@@ -192,7 +163,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
      */
     fun pauseAudio() {
         jcPlayerService?.let { service -> currentAudio?.let { service.pause(it) } }
-//        updateNotification()
     }
 
     /**
@@ -204,7 +174,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         } else {
             val audio = jcPlayerService?.currentAudio ?: let { playlist.first() }
             playAudio(audio)
-//            updateNotification()
         }
     }
 
@@ -217,10 +186,10 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     private fun getNextAudio(): AudioResultData? {
         return if (onShuffleMode) {
             val randomNumber = Random().nextInt(playlist.size)
-            shuffleModeList.add(playlist[randomNumber])
             playlist[randomNumber]
         } else {
             try {
+                shuffleModeList.add(playlist[currentPositionList.inc()])
                 playlist[currentPositionList.inc()]
             } catch (e: IndexOutOfBoundsException) {
                 null
@@ -229,14 +198,14 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     }
 
     private fun getPreviousAudio(): AudioResultData {
-        if (onShuffleMode) {
-            return try {
+        return if (onShuffleMode) {
+            try {
                 shuffleModeList[shuffleModeList.lastIndex - 1]
             } catch (e: Exception) {
                 shuffleModeList.first()
             }
         } else {
-            return try {
+            try {
                 playlist[currentPositionList.dec()]
             } catch (e: IndexOutOfBoundsException) {
                 playlist.first()

@@ -17,6 +17,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.models.shop.ShopItemData
+import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenGoodInfoBinding
 import dev.djakonystar.antisihr.presentation.shop.GoodInfoScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.GoodInfoScreenViewModelImpl
@@ -36,6 +38,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private lateinit var adapter: ImageAdapter
     private val args: GoodInfoScreenArgs by navArgs()
     private var isFavourite: Boolean = false
+    private var shopItemData: ShopItemData? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.background_color)
 
@@ -50,7 +53,43 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private fun initListeners() {
         binding.icFavourites.clicks().debounce(200).onEach {
             isFavourite = !isFavourite
+            if (isFavourite) {
+                shopItemData?.let {
+                    viewModel.addToBookmarked(
+                        ShopItemBookmarked(
+                            it.id,
+                            it.name,
+                            it.description,
+                            it.price,
+                            it.image,
+                            it.weight,
+                            isFavourite,
+                            it.seller?.id,
+                            it.seller?.name,
+                            it.seller?.url
+                        )
+                    )
+                }
+            }else{
+                shopItemData?.let {
+                    viewModel.deleteFromBookmarked(
+                        ShopItemBookmarked(
+                            it.id,
+                            it.name,
+                            it.description,
+                            it.price,
+                            it.image,
+                            it.weight,
+                            isFavourite,
+                            it.seller?.id,
+                            it.seller?.name,
+                            it.seller?.url
+                        )
+                    )
+                }
+            }
             setFavouriteDrawable()
+
         }.launchIn(lifecycleScope)
 
         binding.icBack.clicks().debounce(200).onEach {
@@ -61,6 +100,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
     private fun initObservers() {
         viewModel.getProductInfoSuccesFlow.onEach {
             val item = it.result!!.first()
+            shopItemData = item
             setFavouriteDrawable()
             binding.tvTitle.text = item.name
             binding.tvCapacityTitle.isVisible = item.weight != null

@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.presentation.shop
 
 import dev.djakonystar.antisihr.data.models.GenericResponse
 import dev.djakonystar.antisihr.data.models.shop.ShopItemData
+import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import kotlinx.coroutines.flow.Flow
 
 interface GoodInfoScreenViewModel {
@@ -11,4 +12,7 @@ interface GoodInfoScreenViewModel {
 
 
     suspend fun getProductInfo(id:Int)
+
+    suspend fun deleteFromBookmarked(item: ShopItemBookmarked)
+    suspend fun addToBookmarked(item: ShopItemBookmarked)
 }

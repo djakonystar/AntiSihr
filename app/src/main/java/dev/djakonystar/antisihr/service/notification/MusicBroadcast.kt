@@ -24,7 +24,7 @@ class MusicBroadcast : BroadcastReceiver() {
                 }
             }
             MusicState.NEXT.name -> try {
-                playerManager.get()?.nextAudio()
+                playerManager.get()?.nextAudio(false)
             } catch (e: Exception) {
                 try {
                     playerManager.get()?.continueAudio()

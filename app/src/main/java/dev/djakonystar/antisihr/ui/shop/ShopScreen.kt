@@ -91,9 +91,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         adapter.setOnItemBookmarkClickListener {
             lifecycleScope.launchWhenResumed {
                 if (it.isFavourite) {
-                    viewModel.deleteFromBookmarked(it)
-                } else {
                     viewModel.addToBookmarked(it)
+                } else {
+                    viewModel.deleteFromBookmarked(it)
                 }
             }
         }

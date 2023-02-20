@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.djakonystar.antisihr.data.models.GenericResponse
 import dev.djakonystar.antisihr.data.models.ResultData
 import dev.djakonystar.antisihr.data.models.shop.ShopItemData
+import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.domain.usecase.ShopUseCase
 import dev.djakonystar.antisihr.presentation.shop.GoodInfoScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
@@ -37,6 +38,14 @@ class GoodInfoScreenViewModelImpl @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    override suspend fun deleteFromBookmarked(item: ShopItemBookmarked) {
+        useCase.deleteProductFromBookmarked(item).launchIn(viewModelScope)
+    }
+
+    override suspend fun addToBookmarked(item: ShopItemBookmarked) {
+        useCase.addProductToBookmarked(item).launchIn(viewModelScope)
     }
 
 }
