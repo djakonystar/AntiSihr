@@ -1,6 +1,8 @@
 package dev.djakonystar.antisihr
 
 import android.content.Intent
+import android.media.session.MediaSession
+import android.media.session.MediaSessionManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +34,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), PlayerManagerListener {
+class MainActivity : AppCompatActivity(), PlayerManagerListener{
     @Inject
     lateinit var localStorage: LocalStorage
     private lateinit var binding: ActivityMainBinding
@@ -328,7 +330,9 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         }
     }
 
-    fun next() {
+    fun
+
+            next() {
         audioPlayerManager.let { player ->
             player.currentAudio?.let {
                 resetPlayerInfo()

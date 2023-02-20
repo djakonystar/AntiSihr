@@ -34,7 +34,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class PlayerManager
 private constructor(private val serviceConnection: PlayerServiceConnection) :
-    PlayerServiceListener, MediaSession.Callback() {
+    PlayerServiceListener {
 
     lateinit var context: Context
     private var jcPlayerService: AudioPlayerService? = null
@@ -87,10 +87,6 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     init {
         initService()
-    }
-
-    override fun onSeekTo(pos: Long) {
-        this.seekTo(pos.toInt())
     }
 
     /**

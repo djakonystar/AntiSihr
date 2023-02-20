@@ -30,8 +30,6 @@ class MusicService : Service() {
 
     private var musicBroadcast: MusicBroadcast? = null
 
-    private var notification: Notification.Builder? = null
-
 
     override fun onBind(intent: Intent?): IBinder {
         return MyBinder()
@@ -62,8 +60,6 @@ class MusicService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val current = intent?.getIntExtra("current", 0) ?: 0
-        val max = intent?.getIntExtra("max", 0) ?: 0
         showNotification()
         return START_REDELIVER_INTENT
     }
@@ -101,54 +97,50 @@ class MusicService : Service() {
         )
 
         mediaSession.setPlaybackState(
-            PlaybackState.Builder()
-                .setState(
-                    if (playerManager?.isPlaying() == true) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED,
-                    playerManager?.currentStatus?.currentPosition ?: 0L,
-                    if (playerManager?.isPlaying() == true) 1.0f else 0f,
-                    SystemClock.elapsedRealtime()
-                )
-                .setActions(PlaybackState.ACTION_SEEK_TO)
-                .build()
+            PlaybackState.Builder().setState(
+                if (playerManager?.isPlaying() == true) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED,
+                playerManager?.currentStatus?.currentPosition ?: 0L,
+                if (playerManager?.isPlaying() == true) 1.0f else 0f,
+                SystemClock.elapsedRealtime()
+            ).setActions(PlaybackState.ACTION_SEEK_TO).build()
         )
 
-        notification = Notification.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_music)
-            .setStyle(
-                Notification.MediaStyle()
-                    .setMediaSession(mediaSession.sessionToken)
-            )
-            .setPriority(Notification.PRIORITY_HIGH)
-            .setOnlyAlertOnce(true)
-            .setOngoing(true)
-            .setVisibility(Notification.VISIBILITY_PUBLIC)
-            .addAction(R.drawable.ic_previous, "Previous", prevPendingIntent)
-            .addAction(
-                if (playerManager?.isPlaying()!!) {
-                    R.drawable.ic_pause
-                } else {
-                    R.drawable.ic_play
-                }, "Play", playPendingIntent
-            )
-            .addAction(R.drawable.ic_forward, "Next", nextPendingIntent)
+        val notification =
+            Notification.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.ic_music).setStyle(
+                Notification.MediaStyle().setMediaSession(mediaSession.sessionToken)
+            ).setPriority(Notification.PRIORITY_HIGH).setOnlyAlertOnce(true).setOngoing(true)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .addAction(R.drawable.ic_previous, "Previous", prevPendingIntent).addAction(
+                    if (playerManager?.isPlaying()!!) {
+                        R.drawable.ic_pause
+                    } else {
+                        R.drawable.ic_play
+                    }, "Play", playPendingIntent
+                ).addAction(R.drawable.ic_forward, "Next", nextPendingIntent)
 
         Glide.with(this).asBitmap().load(playerManager.currentAudio?.image).centerCrop()
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(
                     resource: Bitmap, transition: Transition<in Bitmap>?
                 ) {
-                    mediaSession.setMetadata(
-                        MediaMetadata.Builder()
-                            .putLong(
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        mediaSession.setMetadata(
+                            MediaMetadata.Builder().putLong(
                                 MediaMetadata.METADATA_KEY_DURATION,
                                 playerManager.currentStatus?.duration?.toLong() ?: 0L
-                            )
-                            .putString(MediaMetadata.METADATA_KEY_TITLE, playerManager.currentAudio?.name)
-                            .putString(MediaMetadata.METADATA_KEY_ARTIST, playerManager.currentAudio?.author)
-                            .putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, resource)
-                            .build()
-                    )
-                    startForeground(12, notification?.build())
+                            ).putString(
+                                MediaMetadata.METADATA_KEY_TITLE, playerManager.currentAudio?.name
+                            ).putString(
+                                MediaMetadata.METADATA_KEY_ARTIST,
+                                playerManager.currentAudio?.author
+                            ).putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, resource).build()
+                        )
+                    } else {
+                        notification.setLargeIcon(resource)
+                        notification.setContentTitle(playerManager.currentAudio?.name)
+                        notification.setContentText(playerManager.currentAudio?.author)
+                    }
+                    startForeground(12, notification.build())
 
                 }
 
