@@ -58,6 +58,8 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
 
         lifecycleScope.launchWhenResumed {
+            viewModel.getListOfAudios()
+//            visibilityOfLoadingAnimationView.emit(true)
             showBottomNavigationView.emit(Unit)
         }
 

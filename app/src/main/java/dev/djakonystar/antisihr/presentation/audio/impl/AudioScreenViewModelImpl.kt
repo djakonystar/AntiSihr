@@ -68,8 +68,6 @@ class AudioScreenViewModelImpl @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getListOfAudios()
-            visibilityOfLoadingAnimationView.emit(true)
         }
     }
 

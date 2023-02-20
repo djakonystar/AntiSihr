@@ -70,7 +70,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         lifecycleScope.launchWhenResumed {
             viewModel.getAllSellers()
             viewModel.getAllProducts()
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
         }
     }
 

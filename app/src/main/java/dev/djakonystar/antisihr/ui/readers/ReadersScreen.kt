@@ -54,7 +54,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         lifecycleScope.launchWhenResumed {
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
             showBottomNavigationView.emit(Unit)
             viewModel.getReaders()
         }

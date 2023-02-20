@@ -21,24 +21,22 @@ class ShopUseCaseImpl @Inject constructor(
             if (it is ResultData.Success) {
                 val list = mutableListOf<ShopItemBookmarked>()
                 it.data.result?.forEach {
-                    if (it.seller != null) {
-                        list.add(
-                            ShopItemBookmarked(
-                                it.id,
-                                it.name,
-                                it.description,
-                                it.price,
-                                it.image,
-                                it.weight ?: 0.0,
-                                db.goodsDao().isExistsInBookmarkeds(
-                                    it.id, it.name, it.image
-                                ),
-                                it.seller.id,
-                                it.seller.name,
-                                it.seller.url
-                            )
+                    list.add(
+                        ShopItemBookmarked(
+                            it.id,
+                            it.name,
+                            it.description,
+                            it.price,
+                            it.image,
+                            it.weight ?: 0.0,
+                            db.goodsDao().isExistsInBookmarkeds(
+                                it.id, it.name, it.image
+                            ),
+                            it.seller?.id,
+                            it.seller?.name,
+                            it.seller?.url
                         )
-                    }
+                    )
                 }
                 emit(ResultData.Success(list))
             }

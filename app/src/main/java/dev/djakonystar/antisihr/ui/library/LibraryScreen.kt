@@ -53,7 +53,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
 
         lifecycleScope.launchWhenResumed {
             viewModel.getListOfSectionsLibrary()
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
 
         }
     }

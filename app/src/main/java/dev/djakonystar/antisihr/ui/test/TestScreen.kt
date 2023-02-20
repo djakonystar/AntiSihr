@@ -41,7 +41,7 @@ class TestScreen : Fragment(R.layout.screen_home) {
         initObservers()
 
         lifecycleScope.launchWhenCreated {
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
             showBottomNavigationView.emit(Unit)
         }
     }
