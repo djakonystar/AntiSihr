@@ -186,7 +186,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         closeOfShopBottomSheetFlow.onEach {
-            viewModel.getAllProducts()
+            if (selectedCategoryId == -1) {
+                viewModel.getAllProducts()
+            } else {
+                viewModel.getAllProductsOfSeller(selectedCategoryId)
+            }
         }.launchIn(lifecycleScope)
 
 
