@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
                         val graph = navInflater.inflate(R.navigation.test_graph)
                         navController.graph = graph
                         selectedMenuId = R.id.tests
+                        binding.layoutMusicPlayer.collapse()
                     }
                 }
                 R.id.audio -> {
@@ -139,6 +140,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
                         val graph = navInflater.inflate(R.navigation.audio_graph)
                         navController.graph = graph
                         selectedMenuId = R.id.audio
+                        if (audioPlayerManager.isPlaying()) binding.layoutMusicPlayer.expand()
                     }
                 }
                 R.id.library -> {
@@ -240,6 +242,20 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         binding.icPlay.hide()
         resetPlayerInfo()
         onUpdateTitle(status.audio)
+
+        if (audioPlayerManager.onShuffleMode.not() &&
+            audioPlayerManager.currentPositionList == audioPlayerManager.playlist.lastIndex
+        ) {
+            binding.icSkipForward.isEnabled = false
+            binding.icSkipForward.setColorFilter(
+                ContextCompat.getColor(this, R.color.grey)
+            )
+        } else {
+            binding.icSkipForward.isEnabled = true
+            binding.icSkipForward.setColorFilter(
+                ContextCompat.getColor(this, R.color.black)
+            )
+        }
     }
 
     private fun onUpdateTitle(audio: AudioResultData?) {

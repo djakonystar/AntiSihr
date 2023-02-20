@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.session.MediaSession
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
@@ -33,7 +34,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class PlayerManager
 private constructor(private val serviceConnection: PlayerServiceConnection) :
-    PlayerServiceListener {
+    PlayerServiceListener, MediaSession.Callback() {
 
     lateinit var context: Context
     private var jcPlayerService: AudioPlayerService? = null
@@ -86,6 +87,10 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
 
     init {
         initService()
+    }
+
+    override fun onSeekTo(pos: Long) {
+        this.seekTo(pos.toInt())
     }
 
     /**

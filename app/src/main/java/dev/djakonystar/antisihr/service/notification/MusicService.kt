@@ -9,13 +9,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.MediaMetadata
+import android.media.session.MediaSession
+import android.media.session.PlaybackState
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
+import android.os.SystemClock
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -25,11 +26,11 @@ import dev.djakonystar.antisihr.service.manager.PlayerManager
 
 class MusicService : Service() {
 
-    private lateinit var mediaSession: MediaSessionCompat
+    private lateinit var mediaSession: MediaSession
 
     private var musicBroadcast: MusicBroadcast? = null
 
-    private var notification: NotificationCompat.Builder? = null
+    private var notification: Notification.Builder? = null
 
 
     override fun onBind(intent: Intent?): IBinder {
@@ -42,7 +43,7 @@ class MusicService : Service() {
             musicBroadcast = MusicBroadcast()
         }
 
-        mediaSession = MediaSessionCompat(this, "My Music")
+        mediaSession = MediaSession(this, "My Music")
 
 
         registerReceiver(musicBroadcast, IntentFilter().apply {
@@ -63,7 +64,7 @@ class MusicService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val current = intent?.getIntExtra("current", 0) ?: 0
         val max = intent?.getIntExtra("max", 0) ?: 0
-        showNotification(current, max)
+        showNotification()
         return START_REDELIVER_INTENT
     }
 
@@ -80,7 +81,7 @@ class MusicService : Service() {
         }
     }
 
-    private fun showNotification(current: Int, max: Int) {
+    private fun showNotification() {
         val playerManager = PlayerManager.getInstance(this).get()
 
         val prevIntent =
@@ -99,28 +100,54 @@ class MusicService : Service() {
             this, 0, nextIntent, PendingIntent.FLAG_IMMUTABLE
         )
 
-        notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(playerManager?.currentAudio?.name)
-            .setContentText(playerManager?.currentAudio?.author).setSmallIcon(R.drawable.ic_music)
+        mediaSession.setPlaybackState(
+            PlaybackState.Builder()
+                .setState(
+                    if (playerManager?.isPlaying() == true) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED,
+                    playerManager?.currentStatus?.currentPosition ?: 0L,
+                    if (playerManager?.isPlaying() == true) 1.0f else 0f,
+                    SystemClock.elapsedRealtime()
+                )
+                .setActions(PlaybackState.ACTION_SEEK_TO)
+                .build()
+        )
+
+        notification = Notification.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_music)
             .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
+                Notification.MediaStyle()
                     .setMediaSession(mediaSession.sessionToken)
-            ).setPriority(NotificationCompat.PRIORITY_HIGH).setOnlyAlertOnce(true).setOngoing(true)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .addAction(R.drawable.ic_previous, "Previous", prevPendingIntent).addAction(
+            )
+            .setPriority(Notification.PRIORITY_HIGH)
+            .setOnlyAlertOnce(true)
+            .setOngoing(true)
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
+            .addAction(R.drawable.ic_previous, "Previous", prevPendingIntent)
+            .addAction(
                 if (playerManager?.isPlaying()!!) {
                     R.drawable.ic_pause
                 } else {
                     R.drawable.ic_play
                 }, "Play", playPendingIntent
-            ).addAction(R.drawable.ic_forward, "Next", nextPendingIntent).setSilent(true)
+            )
+            .addAction(R.drawable.ic_forward, "Next", nextPendingIntent)
 
         Glide.with(this).asBitmap().load(playerManager.currentAudio?.image).centerCrop()
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(
                     resource: Bitmap, transition: Transition<in Bitmap>?
                 ) {
-                    notification?.setLargeIcon(resource)
+                    mediaSession.setMetadata(
+                        MediaMetadata.Builder()
+                            .putLong(
+                                MediaMetadata.METADATA_KEY_DURATION,
+                                playerManager.currentStatus?.duration?.toLong() ?: 0L
+                            )
+                            .putString(MediaMetadata.METADATA_KEY_TITLE, playerManager.currentAudio?.name)
+                            .putString(MediaMetadata.METADATA_KEY_ARTIST, playerManager.currentAudio?.author)
+                            .putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, resource)
+                            .build()
+                    )
                     startForeground(12, notification?.build())
 
                 }

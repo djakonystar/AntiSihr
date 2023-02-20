@@ -285,6 +285,30 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.btnPlay.isEnabled = true
             binding.icFavourite.show()
             Log.d("TTTT", "onPreparedAudio: ${status.audio?.image} and ${status.audio?.author}")
+
+            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
+                binding.icPrevious.isEnabled = false
+                binding.icPrevious.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.disabled_button_color)
+                )
+            } else {
+                binding.icPrevious.isEnabled = true
+                binding.icPrevious.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.black)
+                )
+            }
+
+            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
+                binding.icForward.isEnabled = false
+                binding.icForward.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.disabled_button_color)
+                )
+            } else {
+                binding.icForward.isEnabled = true
+                binding.icForward.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.black)
+                )
+            }
         }
     }
 

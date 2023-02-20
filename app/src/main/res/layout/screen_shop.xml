@@ -22,8 +22,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_favorites"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
