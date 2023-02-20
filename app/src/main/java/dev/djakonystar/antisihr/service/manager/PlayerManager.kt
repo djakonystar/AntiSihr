@@ -40,7 +40,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     private var serviceBound = false
     var playlist: ArrayList<AudioResultData> = ArrayList()
     var shuffleModeList: ArrayList<AudioResultData> = ArrayList()
-    private var currentPositionList: Int = 0
+    var currentPositionList: Int = 0
     private val managerListeners: CopyOnWriteArrayList<PlayerManagerListener> =
         CopyOnWriteArrayList()
 
@@ -106,17 +106,17 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
      * Plays the given [JcAudio].
      * @param jcAudio The audio to be played.
      */
-    fun playAudio(jcAudio: AudioResultData) {
+    fun playAudio(jcAudio: AudioResultData, isContinue: Boolean = true) {
         if (playlist.isEmpty()) {
             throw Exception("EMPTY LIST")
         } else {
             jcPlayerService?.let { service ->
                 service.serviceListener = this
-                service.play(jcAudio)
+                service.play(jcAudio, isContinue)
                 shuffleModeList.add(jcAudio)
             } ?: initService { service ->
                 jcPlayerService = service
-                playAudio(jcAudio)
+                playAudio(jcAudio, isContinue)
             }
         }
     }

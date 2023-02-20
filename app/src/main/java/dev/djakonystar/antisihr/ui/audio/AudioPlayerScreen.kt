@@ -38,7 +38,6 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     private val viewModel: AudioPlayerScreenViewModel by viewModels<AudioPlayerScreenViewModelImpl>()
     private val args: AudioPlayerScreenArgs by navArgs()
     private var currentMusic: AudioBookmarked? = null
-    private var isFirstTime = true
     private val mediaPlayerManager: PlayerManager
         get() = (requireActivity() as MainActivity).audioPlayerManager
 
@@ -93,10 +92,9 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         binding.btnPlay.clicks().debounce(200).onEach {
             if (binding.icPlay.isVisible) {
-                if (isFirstTime) {
-                    resetPlayerInfo()
+                if ((requireActivity() as MainActivity).isFirstTime) {
                     (requireActivity() as MainActivity).playAudio(args.id)
-                    isFirstTime = false
+                    (requireActivity() as MainActivity).isFirstTime = false
                 } else {
                     (requireActivity() as MainActivity).continueAudio()
                 }
@@ -106,13 +104,35 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icPrevious.clicks().debounce(200).onEach {
-            resetPlayerInfo()
-            (requireActivity() as MainActivity).previous()
+            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
+                binding.icPrevious.isEnabled = false
+                binding.icPrevious.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.disabled_button_color)
+                )
+            } else {
+                resetPlayerInfo()
+                (requireActivity() as MainActivity).previous()
+                binding.icPrevious.isEnabled = true
+                binding.icPrevious.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.black)
+                )
+            }
         }.launchIn(lifecycleScope)
 
         binding.icForward.clicks().debounce(200).onEach {
-            resetPlayerInfo()
-            (requireActivity() as MainActivity).next()
+            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
+                binding.icForward.isEnabled = false
+                binding.icForward.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.disabled_button_color)
+                )
+            } else {
+                resetPlayerInfo()
+                (requireActivity() as MainActivity).next()
+                binding.icForward.isEnabled = true
+                binding.icForward.setColorFilter(
+                    ContextCompat.getColor(requireContext(),R.color.black)
+                )
+            }
         }.launchIn(lifecycleScope)
 
         binding.icRepeat.clicks().debounce(200).onEach {
@@ -172,10 +192,6 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                 binding.musicController.progress =
                     mediaPlayerManager.currentStatus!!.currentPosition.toInt()
             }
-            Log.d(
-                "TTTT",
-                "isCurrentAudioPlaying, ${mediaPlayerManager.currentStatus?.duration} and  ${mediaPlayerManager.currentStatus?.currentPosition}"
-            )
             binding.musicController.max = mediaPlayerManager.currentStatus!!.duration
             binding.currentTime.text =
                 mediaPlayerManager.currentStatus!!.currentPosition.milliSecondsToTimer()
@@ -183,7 +199,6 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                 mediaPlayerManager.currentStatus!!.duration.toLong().milliSecondsToTimer()
             binding.icPause.show()
             binding.icPlay.hide()
-            isFirstTime = false
         }
 
 
@@ -243,7 +258,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-            resetPlayerInfo()
+        resetPlayerInfo()
         if (this.view != null) {
             currentMusic = AudioBookmarked(
                 status.audio!!.id,
@@ -322,16 +337,14 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     //
     override fun onPaused(status: AudioStatus) {
         if (this.view != null) {
-            requireActivity().runOnUiThread {
-                binding.icPlay.show()
-                binding.icPause.hide()
-            }
+            binding.icPlay.show()
+            binding.icPause.hide()
         }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
+        Log.d("TTTT", "onContinueAudio: ")
         if (this.view != null) {
-            Log.d("TTTT", "onContinueAudio: ")
             binding.musicController.max = status.duration
             binding.endTime.text = status.duration.toLong().milliSecondsToTimer()
             binding.icPause.show()
@@ -342,10 +355,8 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
     override fun onPlaying(status: AudioStatus) {
         Log.d("TTTT", "onPlaying: ")
         if (this.view != null) {
-            requireActivity().runOnUiThread {
-                binding.icPlay.hide()
-                binding.icPause.show()
-            }
+            binding.icPlay.hide()
+            binding.icPause.show()
         }
     }
 

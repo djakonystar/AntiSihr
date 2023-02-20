@@ -51,12 +51,12 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
         updateTime()
     }
 
-    fun play(audio: AudioResultData): AudioStatus {
+    fun play(audio: AudioResultData, isContinue: Boolean = true): AudioStatus {
         val tempJcAudio = currentAudio
         currentAudio = audio
         var status = AudioStatus()
 
-        val intent  = Intent(this,MusicService::class.java)
+        val intent = Intent(this, MusicService::class.java)
         if (audio.url != "") {
             try {
                 mediaPlayer?.let {
@@ -68,11 +68,16 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
                             stop()
                             play(audio)
                         } else {
-                            status = updateStatus(
-                                audio, AudioStatus.PlayState.CONTINUE, mediaPlayer!!.duration
-                            )
-                            updateTime()
-                            serviceListener?.onContinueListener(status)
+                            if (isContinue) {
+                                status = updateStatus(
+                                    audio, AudioStatus.PlayState.CONTINUE, it.duration
+                                )
+                                updateTime()
+                                serviceListener?.onContinueListener(status)
+                            } else {
+                                stop()
+                                play(audio)
+                            }
                         }
                     }
                 } ?: let {

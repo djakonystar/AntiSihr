@@ -16,10 +16,8 @@ class MusicBroadcast : BroadcastReceiver() {
         when (intent.action) {
             MusicState.PLAY.name -> {
                 if (playerManager.get()!!.isPlaying()) {
-                    Log.d("TTTT","PAUSE AUDIO")
                     playerManager.get()!!.pauseAudio()
                 } else {
-                    Log.d("TTTT","CONTINUE AUDIO")
                     playerManager.get()!!.continueAudio()
                 }
             }

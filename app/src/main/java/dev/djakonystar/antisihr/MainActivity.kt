@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     val audioPlayerManager: PlayerManager by lazy {
         PlayerManager.getInstance(App.instance).get()!!
     }
+    var isClickedFavourite = false
+    var isFirstTime = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -301,11 +304,11 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
     override fun onJcpError(throwable: Throwable) {}
 
-    fun playAudio(id: Int) {
+    fun playAudio(id: Int, isContinue: Boolean = true) {
         audioPlayerManager.playlist.let {
             resetPlayerInfo()
             val audio = it.find { it.id == id }
-            audioPlayerManager.playAudio(audio!!)
+            audioPlayerManager.playAudio(audio!!, isContinue)
         }
     }
 

@@ -39,7 +39,6 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         get() = (requireActivity() as MainActivity).audioPlayerManager
 
     private val allAudio = mutableListOf<AudioBookmarked>()
-    private var isClickedFavourite = false
     private var _adapter: AudioAdapter? = null
     private val adapter: AudioAdapter get() = _adapter!!
 
@@ -65,6 +64,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         initListeners()
         initObservers()
 
+
     }
 
     private fun initListeners() {
@@ -74,7 +74,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
         binding.swipeRefreshLayout.refreshes().onEach {
             binding.swipeRefreshLayout.isRefreshing = false
-            if (isClickedFavourite) {
+            if ((requireActivity() as MainActivity).isClickedFavourite) {
                 viewModel.getBookmarkedAudios()
             } else {
                 viewModel.getListOfAudios()
@@ -116,8 +116,9 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         }.launchIn(lifecycleScope)
 
         binding.icFavourites.clicks().debounce(200).onEach {
-            isClickedFavourite = isClickedFavourite.not()
-            if (isClickedFavourite) {
+            (requireActivity() as MainActivity).isClickedFavourite =
+                (requireActivity() as MainActivity).isClickedFavourite.not()
+            if ((requireActivity() as MainActivity).isClickedFavourite) {
                 binding.icFavourites.setImageResource(R.drawable.ic_favourites_filled)
                 binding.icFavourites.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(requireContext(), R.color.fav_color)
@@ -156,7 +157,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                     )
                 )
                 (requireActivity() as MainActivity).pause()
-                (requireActivity() as MainActivity).playAudio(it.id)
+                (requireActivity() as MainActivity).playAudio(it.id, false)
             }
             (requireActivity() as MainActivity).visibilityMediaPlayer(View.GONE)
         }
@@ -181,6 +182,23 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
 
     private fun initObservers() {
+        lifecycleScope.launchWhenResumed {
+            if ((requireActivity() as MainActivity).isClickedFavourite) {
+                binding.icFavourites.setImageResource(R.drawable.ic_favourites_filled)
+                binding.icFavourites.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.fav_color)
+                )
+                viewModel.getBookmarkedAudios()
+            } else {
+                binding.icFavourites.setImageResource(R.drawable.ic_favourites)
+                binding.icFavourites.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.black)
+                )
+                viewModel.getListOfAudios()
+            }
+        }
+
+
         viewModel.getListOfAudiosSuccessFlow.onEach {
             allAudio.clear()
             allAudio.addAll(it)

@@ -14,4 +14,4 @@ val showBottomNavigationView = MutableSharedFlow<Unit>()
 val playAudioFlow = MutableSharedFlow<AudioResultData>()
 
 
-val adapterItemCLickListener = MutableSharedFlow<AudioResultData>()
+val closeOfShopBottomSheetFlow = MutableSharedFlow<Unit>()

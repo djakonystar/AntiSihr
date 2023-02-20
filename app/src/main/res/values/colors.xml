@@ -22,5 +22,6 @@
     <color name="ripple_color">#25000000</color>
     <color name="bg_bottom_audio">#B3F7F7F7</color>
     <color name="fav_color">#DF5050</color>
+    <color name="disabled_button_color">#A0A3B1</color>
     <!--    <color name="mtrl_textinput_default_box_stroke_color">@android:color/transparent</color>-->
 </resources>

@@ -70,7 +70,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             viewModel.getAllSellers()
             viewModel.getAllProducts()
             visibilityOfLoadingAnimationView.emit(true)
-
         }
     }
 
@@ -162,8 +161,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTab.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
                 tvTab.setTextColor(
                     ContextCompat.getColor(
-                        requireContext(),
-                        R.color.second_text_color
+                        requireContext(), R.color.second_text_color
                     )
                 )
             }
@@ -185,6 +183,11 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             adapter.shopItems = allProducts
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
+
+        closeOfShopBottomSheetFlow.onEach {
+            viewModel.getAllProducts()
+        }.launchIn(lifecycleScope)
+
 
         viewModel.getAllSellersSuccessFlow.onEach {
             sellersList.clear()
@@ -212,8 +215,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 tvTabb.typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_medium)
                 tvTabb.setTextColor(
                     ContextCompat.getColor(
-                        requireContext(),
-                        R.color.second_text_color
+                        requireContext(), R.color.second_text_color
                     )
                 )
                 binding.tabLayout.addTab(tabb)

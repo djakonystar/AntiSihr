@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ShopScreenViewModel {
     val getGoodsSuccessFlow: Flow<List<ShopItemBookmarked>>
+    val deleteFromBookmarkedFlow: Flow<ShopItemBookmarked>
     val getBookmarkedGoodsSuccessFlow: Flow<List<ShopItemBookmarked>>
     val messageFlow: Flow<String>
     val errorFlow: Flow<Throwable>
