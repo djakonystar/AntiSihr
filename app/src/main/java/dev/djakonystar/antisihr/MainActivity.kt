@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     var isClickedFavourite = false
     var isFirstTime = true
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAppLocale(localStorage.language.ifEmpty { "ru" }, this)
@@ -58,14 +57,14 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     }
 
     private fun initObservers() {
-        visibilityOfLoadingAnimationView.onEach {
-            if (it) {
-                binding.loadingAnimation.show()
-            } else {
-                delay(500)
-                binding.loadingAnimation.hide()
-            }
-        }.launchIn(lifecycleScope)
+//        visibilityOfLoadingAnimationView.onEach {
+//            if (it) {
+//                binding.loadingAnimation.show()
+//            } else {
+//                delay(500)
+//                binding.loadingAnimation.hide()
+//            }
+//        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {

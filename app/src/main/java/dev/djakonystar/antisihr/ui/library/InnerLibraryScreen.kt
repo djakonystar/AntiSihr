@@ -46,7 +46,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
             } else {
                 viewModel.getListOfArticles(args.id)
             }
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
         }
     }
 
