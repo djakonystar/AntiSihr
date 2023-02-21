@@ -1,18 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.library.LibraryScreen">
 
     <TextView
+        android:id="@+id/tv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 7"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="12dp"
+        android:fontFamily="@font/nunito_extrabold_ttf"
+        android:text="@string/library"
+        android:textColor="@color/main_text_color"
+        android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_favourites"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:elevation="4dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_favourites"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/ic_search"
+        app:layout_constraintEnd_toStartOf="@id/ic_search"
+        app:layout_constraintTop_toTopOf="@id/ic_search"
+        app:tint="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_search"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:elevation="4dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_search"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/tv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_search"
+        app:tint="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_search" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:visibility="visible"
+        app:el_expanded="false"
+        app:layout_constraintStart_toStartOf="@id/tv_search"
+        app:layout_constraintTop_toBottomOf="@id/tv_search">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_search"
+            style="@style/myEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="12dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawableTint="@color/black"
+            android:hint="@string/enter_something_you_want"
+            android:textColor="@color/main_text_color" />
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_ttf"
+        android:text="@string/info_collected_here"
+        android:textColor="@color/second_text_color"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@id/tv_search"
+        app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_library"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_body"
+        tools:listitem="@layout/item_library" />
 </androidx.constraintlayout.widget.ConstraintLayout>

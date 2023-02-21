@@ -1,19 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".ui.test.dialog.TestBottomFragment">
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="3dp"
+        android:background="@drawable/bg_rect_100"
+        android:backgroundTint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/tv_close_test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_close_test" />
+
+    <TextView
+        android:id="@+id/tv_close_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_semibold_ttf"
+        android:text="@string/close"
+        android:textColor="#774fdc"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/nunito_semibold_ttf"
+        android:textColor="@color/main_text_color"
+        android:textSize="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_close_test" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:progressTint="@color/main_color"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_test"
+        app:trackColor="#C6C6C6"
+        app:trackCornerRadius="8dp" />
+
+    <LinearLayout
+        android:id="@+id/number_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_step">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/current_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:text="1"
+            android:textColor="@color/main_text_color"
+            android:textSize="20dp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/max_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:textColor="@color/second_text_color"
+            tools:text="/20" />
+    </LinearLayout>
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_question"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SCREEN NUMBER 28"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="32dp"
+        android:fontFamily="@font/nunito_bold_ttf"
+        android:gravity="center"
+        android:textColor="@color/main_text_color"
+        android:textSize="22dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/linear_test_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/number_layout"
+        tools:text="Бывают ли у вас ухудщение или провалы в памяти?" />
+
+
+    <LinearLayout
+        android:id="@+id/linear_test_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="64dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rect_15"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="@drawable/bg_ripple_effect"
+            android:paddingVertical="14dp"
+            android:text="@string/yes"
+            android:textAllCaps="false"
+            android:textColor="@color/main_text_color"
+            android:textSize="20dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rect_15"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="@drawable/bg_ripple_effect"
+            android:paddingVertical="14dp"
+            android:text="@string/not"
+            android:textAllCaps="false"
+            android:textColor="@color/main_text_color"
+            android:textSize="20dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_rect_15"
+            android:backgroundTint="@color/main_color"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="@drawable/bg_ripple_effect_for_dark"
+            android:paddingVertical="14dp"
+            android:text="@string/further"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/nunito_semibold_ttf"
+        android:gravity="center"
+        android:textColor="@color/main_text_color"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/linear_result_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/number_layout"
+        tools:text="По результатам ответов, которые вы дали, выяснилось, что есть вероятность, что вам сделали сихр." />
+
+    <LinearLayout
+        android:id="@+id/linear_result_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_result">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_go_to_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="@string/take_cure_at_the_library"
+            android:textAllCaps="false"
+            android:textColor="@color/main_text_color"
+            android:textSize="20dp"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/treatment_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rect_15"
+            android:backgroundTint="@color/main_color"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito_bold_ttf"
+            android:foreground="@drawable/bg_ripple_effect_for_dark"
+            android:paddingVertical="14dp"
+            android:text="@string/get_treated"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/nunito_extrabold_ttf"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="@string/close"
+            android:textAllCaps="false"
+            android:textColor="@color/main_text_color"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
