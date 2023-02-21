@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.library
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +14,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryBookmarkData
-import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ArticlesBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenInnerLibraryBinding
 import dev.djakonystar.antisihr.presentation.library.InnerLibraryScreenViewModel
@@ -46,7 +46,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
             } else {
                 viewModel.getListOfArticles(args.id)
             }
-            visibilityOfLoadingAnimationView.emit(true)
+//            visibilityOfLoadingAnimationView.emit(true)
         }
     }
 
@@ -72,6 +72,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
         _adapter = InnerLibraryAdapter()
         binding.rcArticles.adapter = adapter
         binding.tvLibrary.text = args.name
+        binding.tvBody.isVisible = !args.isFavourite
         binding.tvBody.text = args.description
 
 
@@ -89,6 +90,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
             binding.icClose.hide()
             binding.icMenu.show()
             binding.icSearch.show()
+            binding.tvBody.show()
             binding.expandableLayout.collapse()
             binding.etSearch.setText("")
             hideKeyboard()
@@ -100,7 +102,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
 
         adapter.setOnItemClickListener {
             findNavController().navigate(
-                InnerLibraryScreenDirections.actionInnerLibraryScreenToBottomArticleDialog(
+                InnerLibraryScreenDirections.actionInnerLibraryScreenToArticleDetailBottomFragment(
                     it.id, it.isBookmarked
                 )
             )

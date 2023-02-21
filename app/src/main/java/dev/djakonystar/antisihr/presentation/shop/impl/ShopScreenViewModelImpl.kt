@@ -24,6 +24,7 @@ class ShopScreenViewModelImpl @Inject constructor(
     private val useCase: ShopUseCase
 ) : ShopScreenViewModel, ViewModel() {
     override val getGoodsSuccessFlow = MutableSharedFlow<List<ShopItemBookmarked>>()
+    override val deleteFromBookmarkedFlow = MutableSharedFlow<ShopItemBookmarked>()
     override val getBookmarkedGoodsSuccessFlow = MutableSharedFlow<List<ShopItemBookmarked>>()
     override val messageFlow = MutableSharedFlow<String>()
     override val errorFlow = MutableSharedFlow<Throwable>()
@@ -42,13 +43,6 @@ class ShopScreenViewModelImpl @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    init {
-        viewModelScope.launch {
-            getAllProducts()
-            visibilityOfLoadingAnimationView.emit(true)
-        }
     }
 
     override val getAllSellersSuccessFlow = MutableSharedFlow<GenericResponse<List<SellerData>>>()
@@ -102,10 +96,10 @@ class ShopScreenViewModelImpl @Inject constructor(
     }
 
     override suspend fun deleteFromBookmarked(item: ShopItemBookmarked) {
-        useCase.deleteProductFromBookmarked(item)
+        useCase.deleteProductFromBookmarked(item).launchIn(viewModelScope)
     }
 
     override suspend fun addToBookmarked(item: ShopItemBookmarked) {
-        useCase.addProductToBookmarked(item)
+        useCase.addProductToBookmarked(item).launchIn(viewModelScope)
     }
 }

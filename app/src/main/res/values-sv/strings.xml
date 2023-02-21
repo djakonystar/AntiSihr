@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">Tester</string>
     <string name="not">Inte</string>
     <string name="score">Göra %1$s</string>
     <string name="your_name">Ditt namn:</string>
     <string name="more">Mer</string>
     <string name="donot_have_featured_articles">Du har inga utvalda artiklar</string>
-    <string name="our_adress">Vår adress:</string>
+    <string name="our_adress">Vår adress: \n%s</string>
     <string name="info_collected_here">Information samlad här</string>
     <string name="city_name">Stadens namn…</string>
     <string name="authorization">Tillstånd…</string>
@@ -32,14 +31,14 @@
     <string name="library">Bibliotek</string>
     <string name="privacy_policy">Integritetspolicy</string>
     <string name="lets_identify_signs">Låt oss identifiera tecknen</string>
-    <string name="description">Beskrivning: %1$s</string>
+    <string name="description">Beskrivning:</string>
     <string name="buy">Köpa</string>
     <string name="en">sv</string>
     <string name="the_choosen_ones">De utvalda</string>
     <string name="get_treated">Bli behandlad</string>
-    <string name="rub">%s gnugga.</string>
+    <string name="rub"> gnugga.</string>
     <string name="close">Stänga</string>
-    <string name="your_phone_number">Ditt telefonnummer: %1$s</string>
+    <string name="your_phone_number">Ditt telefonnummer:</string>
     <string name="share_app">Dela applikation</string>
     <string name="loading_data">Laddar data…</string>
     <string name="audio">Audio</string>
@@ -47,10 +46,10 @@
     <string name="full_name">FULLSTÄNDIGA NAMN</string>
     <string name="error_fetching_data">Fel vid hämtning av data</string>
     <string name="the_best_cure_is_what_you_read_to_yourself.">Det bästa botemedlet är vad du läser för dig själv.</string>
-    <string name="address_with_dots">Adress: %1$s</string>
+    <string name="address_with_dots">Adress:</string>
     <string name="in_every_city_one_reader">I varje stad, en läsare</string>
     <string name="about">Handla om</string>
-    <string name="phone_number">Telefonnummer: %1$s</string>
+    <string name="phone_number">Telefonnummer:\n%s</string>
     <string name="done">Gjort</string>
     <string name="yes">Ja</string>
     <string name="all">Allt</string>
@@ -66,10 +65,25 @@
     <string name="send">Skicka</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">Alla uppgifter du anger är strikt konfidentiella</string>
     <string name="error">Fel</string>
-    <string name="capacity">kapacitet</string>
-    <string name="language">språk</string>
-    <string name="shop">butik</string>
+    <string name="capacity">Kapacitet</string>
+    <string name="capacity_text">Kapacitet:</string>
+    <string name="language">Språk</string>
+    <string name="shop">Butik</string>
+    <string name="shop_name">Butik:</string>
     <string name="about_app">om app</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
+    <string name="text_ru">Rysk</string>
+    <string name="text_en">Engelsk</string>
+    <string name="text_ja">Japansk</string>
+    <string name="text_sv">Svenska</string>
+    <string name="text_fr">Fransk</string>
+    <string name="text_tr">Turk</string>
+    <string name="text_de">Nederlands</string>
+    <string name="text_ko">Koreansk</string>
+    <string name="text_zh">Kinesisk</string>
+    <string name="text_it">Italiensk</string>
+    <string name="text_es">Spansk</string>
+    <string name="text_ar">Arabiska</string>
+    <string name="text_of_your_question">Texten i ditt meddelande</string>
 </resources>

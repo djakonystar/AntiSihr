@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFF</color>
+    <color name="white">#000</color>
+    <color name="white_grey">#333333</color>
+    <color name="background_color">#222</color>
+    <color name="main_text_color">#FFF</color>
+    <color name="second_text_color">#66FFFFFF</color>
+    <color name="grey">#C6C6C6</color>
+    <color name="et_background">#4DD3D3D3</color>
+    <color name="et_text_color">#80260101</color>
+    <color name="gray_text_color">#DFDFEB</color>
+    <color name="ripple_color">#25FFFFFF</color>
+    <color name="bg_bottom_audio">#B3222222</color>
+</resources>

@@ -1,6 +1,7 @@
 package dev.djakonystar.antisihr.ui.shop.dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +15,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
+import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.BottomShopFavouritesBinding
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.ShopScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.shop.adapter.BookmarkedProductsAdapter
+import dev.djakonystar.antisihr.utils.closeOfShopBottomSheetFlow
 import dev.djakonystar.antisihr.utils.showSnackBar
 import dev.djakonystar.antisihr.utils.toast
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 
 @AndroidEntryPoint
@@ -58,19 +62,26 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
 
 
         adapter.setOnClickListener {
-            showSnackBar(requireView(),"Basildi: ${it.name} and ${it.price}")
+            showSnackBar(requireView(), "Basildi: ${it.name} and ${it.price}")
         }
 
-        adapter.setOnRemoveClickListener {
+        binding.swipeRefreshLayout.refreshes().debounce(200).onEach {
+            viewModel.getAllBookmarkedProducts()
+        }.launchIn(lifecycleScope)
+
+        adapter.setOnRemoveClickListener { item, pos ->
             lifecycleScope.launchWhenResumed {
-                viewModel.deleteFromBookmarked(it)
+                viewModel.deleteFromBookmarked(item)
+                adapter.notifyItemRemoved(pos)
+                adapter.models.remove(item)
+
             }
         }
     }
 
     private fun initObservers() {
         viewModel.getBookmarkedGoodsSuccessFlow.onEach {
-            adapter.submitList(it)
+            adapter.models = (it as MutableList<ShopItemBookmarked>)
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -103,5 +114,12 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
         val layoutParams = bottomSheet.layoutParams
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
         bottomSheet.layoutParams = layoutParams
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        lifecycleScope.launchWhenResumed {
+            closeOfShopBottomSheetFlow.emit(Unit)
+        }
     }
 }

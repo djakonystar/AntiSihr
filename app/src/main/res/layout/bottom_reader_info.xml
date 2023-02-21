@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".ui.readers.dialog.ReaderDetailBottomFragment">
 
     <View
         android:layout_width="50dp"
         android:layout_height="3dp"
-        android:background="@color/grey"
+        android:background="@drawable/bg_rect_100"
+        android:backgroundTint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@id/tv_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +25,7 @@
         android:fontFamily="@font/nunito_semibold_ttf"
         android:text="@string/close"
         android:textColor="#774FDC"
-        android:textSize="17sp"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:textSize="24sp"
+                android:textSize="24dp"
+                android:textColor="@color/main_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ic_photo"
@@ -71,8 +74,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/nunito_bold_ttf"
-                android:textColor="#66000000"
-                android:textSize="17sp"
+                android:textColor="@color/second_text_color"
+                android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_author"
@@ -101,7 +104,7 @@
                 android:fontFamily="@font/nunito_ttf"
                 android:text="@string/address_with_dots"
                 android:textColor="#959595"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_social_media" />
 
@@ -115,7 +118,7 @@
                 android:fontFamily="@font/nunito_medium"
                 tools:text="РИ, г. Сунжа, ул. Первая, д. 23"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_address_title" />
 
@@ -136,9 +139,9 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/nunito_ttf"
-                android:text="@string/phone_number"
+                android:text="@string/telephone_only"
                 android:textColor="#959595"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_first" />
 
@@ -151,7 +154,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/nunito_medium"
                 android:textColor="#018AF8"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_phone_title"
                 tools:text="+7 (***) ***-**-**" />
@@ -183,7 +186,7 @@
                 android:fontFamily="@font/nunito_bold_ttf"
                 android:text="@string/description"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="@id/ic_photo"
                 app:layout_constraintTop_toBottomOf="@id/divider_second" />
 
@@ -198,8 +201,8 @@
                 tools:text="Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.
 
 Является учеником известного Шейха “такого-то”, учился в Египте. Является Хафизом Корана. Живет в городе Сунжа.  "
-                android:textColor="#99000000"
-                android:textSize="19sp"
+                android:textColor="@color/second_text_color"
+                android:textSize="19dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/ic_photo"
                 app:layout_constraintStart_toStartOf="@id/ic_photo"

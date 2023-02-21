@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryBookmarkData
-import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
 import dev.djakonystar.antisihr.databinding.ItemInnerLibraryBinding
 
 class InnerLibraryAdapter :

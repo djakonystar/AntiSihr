@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">Pruebas</string>
     <string name="not">No</string>
-    <string name="score">Sin datos %1$s</string>
+    <string name="score">Sin datos %s</string>
     <string name="your_name">Sin datos:</string>
     <string name="more">Más</string>
     <string name="donot_have_featured_articles">No tienes artículos destacados</string>
-    <string name="our_adress">Nuestra dirección:</string>
+    <string name="our_adress">Nuestra dirección: \n%s</string>
     <string name="info_collected_here">Información recopilada aquí</string>
     <string name="city_name">Nombre de la ciudad…</string>
     <string name="authorization">Autorización…</string>
@@ -32,12 +31,12 @@
     <string name="library">Biblioteca</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="lets_identify_signs">Vamos a identificar los signos</string>
-    <string name="description">Descripción: %1$s</string>
+    <string name="description">Descripción:</string>
     <string name="buy">Comprar</string>
     <string name="en">es</string>
     <string name="the_choosen_ones">Los elegidos</string>
     <string name="get_treated">Obtener tratamiento</string>
-    <string name="rub">%s frotar.</string>
+    <string name="rub"> frotar.</string>
     <string name="close">Cerca</string>
     <string name="your_phone_number">Su número de teléfono: %1$s</string>
     <string name="share_app">Compartir aplicación</string>
@@ -47,10 +46,10 @@
     <string name="full_name">NOMBRE COMPLETO</string>
     <string name="error_fetching_data">Error al obtener datos</string>
     <string name="the_best_cure_is_what_you_read_to_yourself.">La mejor cura es lo que te lees a ti mismo.</string>
-    <string name="address_with_dots">Dirección: %1$s</string>
+    <string name="address_with_dots">Dirección:</string>
     <string name="in_every_city_one_reader">En cada ciudad, un lector</string>
     <string name="about">Sobre</string>
-    <string name="phone_number">Número de teléfono: %1$s</string>
+    <string name="phone_number">Número de teléfono: \n%s</string>
     <string name="done">Hecho</string>
     <string name="yes">Sí</string>
     <string name="all">Todos</string>
@@ -66,10 +65,25 @@
     <string name="send">Enviar</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">Todos los datos que ingresas son estrictamente confidenciales</string>
     <string name="error">Error</string>
-    <string name="capacity">capacidad</string>
-    <string name="language">idioma</string>
-    <string name="shop">tienda</string>
+    <string name="capacity">Capacidad</string>
+    <string name="capacity_text">Capacidad:</string>
+    <string name="language">Idiomas</string>
+    <string name="shop">Tienda</string>
+    <string name="shop_name">Tienda:</string>
     <string name="about_app">acerca de la aplicación</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
+    <string name="text_ru">Rusa</string>
+    <string name="text_en">Inglés</string>
+    <string name="text_ja">Japonés</string>
+    <string name="text_sv">Sueco</string>
+    <string name="text_fr">Francés</string>
+    <string name="text_tr">Turk</string>
+    <string name="text_de">Neerlandés</string>
+    <string name="text_ko">Coreano</string>
+    <string name="text_zh">Chino</string>
+    <string name="text_it">italiano</string>
+    <string name="text_es">Español</string>
+    <string name="text_ar">Árabe</string>
+    <string name="text_of_your_question">El texto de su mensaje</string>
 </resources>

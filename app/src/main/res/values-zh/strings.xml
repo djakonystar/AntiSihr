@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">测试</string>
     <string name="not">不是</string>
     <string name="score">分数 %1$s</string>
     <string name="your_name">你的名字:</string>
     <string name="more">更多的</string>
     <string name="donot_have_featured_articles">您没有精选文章</string>
-    <string name="our_adress">我们的地址:</string>
+    <string name="our_adress">我们的地址: \n%s</string>
     <string name="info_collected_here">这里收集的信息</string>
     <string name="city_name">城市名…</string>
     <string name="authorization">授权…</string>
@@ -32,14 +31,14 @@
     <string name="library">图书馆</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="lets_identify_signs">让我们识别标志</string>
-    <string name="description">描述: %1$s</string>
+    <string name="description">描述:</string>
     <string name="buy">买</string>
     <string name="en">zh</string>
     <string name="the_choosen_ones">天选者</string>
     <string name="get_treated">接受治疗</string>
-    <string name="rub">%s 擦。</string>
+    <string name="rub"> 擦。</string>
     <string name="close">关</string>
-    <string name="your_phone_number">你的电话号码: %1$s</string>
+    <string name="your_phone_number">你的电话号码:</string>
     <string name="share_app">分享申请</string>
     <string name="loading_data">加载数据中…</string>
     <string name="audio">声音的</string>
@@ -47,10 +46,10 @@
     <string name="full_name">全名</string>
     <string name="error_fetching_data">获取数据时出错</string>
     <string name="the_best_cure_is_what_you_read_to_yourself.">最好的治疗方法是你读给自己听的.</string>
-    <string name="address_with_dots">地址: %1$s</string>
+    <string name="address_with_dots">地址:</string>
     <string name="in_every_city_one_reader">在每个城市，一个读者</string>
     <string name="about">关于</string>
-    <string name="phone_number">电话号码: %1$s</string>
+    <string name="phone_number">电话号码:\n%s</string>
     <string name="done">完毕</string>
     <string name="yes">是的</string>
     <string name="all">全部</string>
@@ -67,9 +66,24 @@
     <string name="all_the_data_you_enter_is_strictly_confidential">您输入的所有数据都是严格保密的</string>
     <string name="error">错误</string>
     <string name="capacity">容量</string>
+    <string name="capacity_text">容量:</string>
     <string name="language">语言</string>
     <string name="shop">商店</string>
+    <string name="shop_name">商店:</string>
     <string name="about_app">关于应用程序</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
+    <string name="text_ru">俄语</string>
+    <string name="text_en">英语</string>
+    <string name="text_ja">日本语</string>
+    <string name="text_sv">瑞典语</string>
+    <string name="text_fr">法语</string>
+    <string name="text_tr">土耳其人</string>
+    <string name="text_de">尼德兰斯</string>
+    <string name="text_ko">韩国人</string>
+    <string name="text_zh">中文</string>
+    <string name="text_it">意大利文</string>
+    <string name="text_es">西班牙语</string>
+    <string name="text_ar">荷兰语</string>
+    <string name="text_of_your_question">您的消息文本</string>
 </resources>

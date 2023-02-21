@@ -17,7 +17,7 @@ class LibraryAdapter : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() 
                 tvBody.text = item.description
                 icImage.setImageWithGlide(binding.root.context, item.image)
 
-                binding.root.setOnClickListener {
+                root.setOnClickListener {
                     onItemClick.invoke(item)
                 }
             }

@@ -5,67 +5,67 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioModel
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.models.library.LibraryResultData
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ItemAudioBinding
+import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class AudioAdapter : ListAdapter<AudioResultData, AudioAdapter.ViewHolder>(MyDiffUtil) {
+class AudioAdapter : RecyclerView.Adapter<AudioAdapter.ViewHolder>() {
 
-    private var onItemClickListener: ((AudioResultData) -> Unit)? = null
-    private var onPlayClickListener: ((AudioResultData) -> Unit)? = null
+    private var onItemClickListener: ((AudioBookmarked) -> Unit)? = null
+    private var onPlayClickListener: ((AudioBookmarked) -> Unit)? = null
 
-    fun setOnItemClickListener(block: (AudioResultData) -> Unit) {
+    fun setOnItemClickListener(block: (AudioBookmarked) -> Unit) {
         onItemClickListener = block
     }
 
-    fun setOnPlayClickListener(block: (AudioResultData) -> Unit) {
+    fun setOnPlayClickListener(block: (AudioBookmarked) -> Unit) {
         onPlayClickListener = block
     }
 
+    var audios = listOf<AudioBookmarked>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
-    ): ViewHolder {
-        return ViewHolder(
-            ItemAudioBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
+
+    override fun getItemCount() = audios.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioAdapter.ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_audio, parent, false)
+        val binding = ItemAudioBinding.bind(v)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind()
+    override fun onBindViewHolder(holder: AudioAdapter.ViewHolder, position: Int) {
+        holder.bind(audios[position])
+    }
 
     inner class ViewHolder(private val binding: ItemAudioBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind() {
-            val d = getItem(absoluteAdapterPosition)
+        fun bind(d: AudioBookmarked) {
             binding.apply {
                 tvTitle.text = d.name
                 tvBody.text = d.author
-                icImage.setImageWithGlide(binding.root.context,d.image)
+                icImage.setImageWithGlide(binding.root.context, d.image)
+
+                root.setOnClickListener {
+                    onItemClickListener?.invoke(d)
+                }
+
+                icPlay.setOnClickListener {
+                    onPlayClickListener?.invoke(d)
+                }
             }
+
         }
 
-        init {
-            binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
-            }
 
-            binding.icPlay.setOnClickListener {
-                onPlayClickListener?.invoke(getItem(absoluteAdapterPosition))
-            }
-        }
-    }
-
-    private object MyDiffUtil : DiffUtil.ItemCallback<AudioResultData>() {
-        override fun areItemsTheSame(
-            oldItem: AudioResultData, newItem: AudioResultData
-        ): Boolean = oldItem == newItem
-
-        override fun areContentsTheSame(
-            oldItem: AudioResultData, newItem: AudioResultData
-        ): Boolean = oldItem.name == newItem.name && oldItem.author == newItem.author
     }
 }

@@ -1,10 +1,8 @@
 package dev.djakonystar.antisihr.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.djakonystar.antisihr.BuildConfig
 import dev.djakonystar.antisihr.data.remote.AntiSihrApi
@@ -23,12 +21,13 @@ class NetworkModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-
     @[Provides Singleton]
     fun providesOkHttpClient(
-        interceptor: AntiSihrInterceptor, loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(loggingInterceptor).build()
-
+        httpLoggingInterceptor: HttpLoggingInterceptor, antiSihrInterceptor: AntiSihrInterceptor
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(antiSihrInterceptor)
+        .build()
 
     @[Provides Singleton]
     fun providesRetrofitInstance(client: OkHttpClient): Retrofit =
