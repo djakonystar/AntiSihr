@@ -24,6 +24,7 @@ class ShopScreenViewModelImpl @Inject constructor(
     private val useCase: ShopUseCase
 ) : ShopScreenViewModel, ViewModel() {
     override val getGoodsSuccessFlow = MutableSharedFlow<List<ShopItemBookmarked>>()
+    override val deleteFromBookmarkedFlow = MutableSharedFlow<ShopItemBookmarked>()
     override val getBookmarkedGoodsSuccessFlow = MutableSharedFlow<List<ShopItemBookmarked>>()
     override val messageFlow = MutableSharedFlow<String>()
     override val errorFlow = MutableSharedFlow<Throwable>()

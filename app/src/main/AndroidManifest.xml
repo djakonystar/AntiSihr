@@ -4,6 +4,7 @@
 
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -32,6 +33,13 @@
         </activity>
 
         <service android:name=".service.AudioPlayerService" />
+
+        <service android:name=".service.notification.MusicService" />
+
+        <receiver
+            android:name=".service.notification.MusicBroadcast"
+            android:exported="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

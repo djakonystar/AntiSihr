@@ -1,11 +1,9 @@
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">الاختبارات</string>
     <string name="not">لا</string>
     <string name="no_data">لايوجد بيانات</string>
     <string name="score">نتيجة %s</string>
-    <string name="your_name">اسمك: s%</string>
+    <string name="your_name">اسمك:</string>
     <string name="more">أكثر</string>
     <string name="donot_have_featured_articles">ليس لديك مقالات مميزة</string>
     <string name="our_adress">عنواننا: %s</string>
@@ -35,10 +33,11 @@
     <string name="lets_identify_signs">دعونا نتعرف على العلامات</string>
     <string name="description">الوصف:</string>
     <string name="buy">يشتري</string>
-    <string name="en">ru</string>
+    <string name="shop_name">تسوق:</string>
+    <string name="en">ar</string>
     <string name="the_choosen_ones">المختارين</string>
     <string name="get_treated">احصل على العلاج</string>
-    <string name="rub"> فرك %s</string>
+    <string name="rub"> فرك.</string>
     <string name="close">قريب</string>
     <string name="your_phone_number">رقم تليفونك:</string>
     <string name="share_app">مشاركة التطبيق</string>
@@ -50,7 +49,7 @@
     <string name="address_with_dots">تبوك:</string>
     <string name="in_every_city_one_reader">في كل مدينة قارئ واحد</string>
     <string name="about">حول</string>
-    <string name="phone_number">رقم الهاتف: %s</string>
+    <string name="phone_number">رقم الهاتف:\n %s</string>
     <string name="done">فعله</string>
     <string name="yes">نعم</string>
     <string name="all">الجميع</string>
@@ -67,7 +66,8 @@
     <string name="all_the_data_you_enter_is_strictly_confidential">جميع البيانات التي تدخلها سرية للغاية</string>
     <string name="error">خطأ</string>
     <string name="capacity">السعة</string>
-    <string name="language">اللغة</string>
+    <string name="capacity_text">السعة:</string>
+    <string name="language">اللغات</string>
     <string name="shop">تسوق</string>
     <string name="about_app">حول التطبيق</string>
     <string name="name_anti">Anti</string>

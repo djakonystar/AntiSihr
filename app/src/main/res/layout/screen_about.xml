@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".ui.about.AboutScreen">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_back"
@@ -14,16 +15,17 @@
         android:padding="8dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_ttf"
-        android:text="@string/about_app"
+        android:text="@string/about"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +51,7 @@
         android:fontFamily="@font/ubuntu_bold"
         android:text="@string/name_anti"
         android:textColor="@color/black"
-        android:textSize="35sp"
+        android:textSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/iv_logo"
         app:layout_constraintEnd_toStartOf="@id/iv_logo"
         app:layout_constraintTop_toTopOf="@id/iv_logo" />
@@ -62,7 +64,7 @@
         android:fontFamily="@font/ubuntu_bold"
         android:text="@string/name_sihr"
         android:textColor="@color/black"
-        android:textSize="35sp"
+        android:textSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/iv_logo"
         app:layout_constraintStart_toEndOf="@id/iv_logo"
         app:layout_constraintTop_toTopOf="@id/iv_logo" />
@@ -75,7 +77,7 @@
         android:layout_marginTop="85dp"
         android:fontFamily="@font/nunito_ttf"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="18dp"
         app:layout_constraintTop_toBottomOf="@id/iv_logo"
         tools:text="Приложение разработано для того, что помочь тем, кого постиг сихр, для того, что помочь тем, кого постиг сихр " />
 
@@ -87,7 +89,7 @@
         android:fontFamily="@font/nunito_semibold_ttf"
         android:text="@string/our_adress"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/tv_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +104,7 @@
         android:fontFamily="@font/nunito_semibold_ttf"
         android:text="@string/phone_number"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/tv_copyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +128,7 @@
             android:fontFamily="@font/nunito_ttf"
             android:text="© AntiShir, 2022"
             android:textAlignment="center"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -134,7 +136,7 @@
             android:fontFamily="@font/nunito_ttf"
             android:text="@string/all_rights_reserved"
             android:textAlignment="center"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
     </LinearLayout>
 
 

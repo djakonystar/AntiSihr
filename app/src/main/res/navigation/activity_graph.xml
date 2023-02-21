@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_graph"
+    app:startDestination="@id/mainScreen">
+
+    <fragment
+        android:id="@+id/audioPlayerScreen"
+        android:name="dev.djakonystar.antisihr.ui.audio.AudioPlayerScreen"
+        android:label="screen_audio_player"
+        tools:layout="@layout/screen_audio_player">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+
+        <argument
+            android:name="name"
+            app:argType="string" />
+
+
+        <argument
+            android:name="author"
+            app:argType="string" />
+
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+
+        <argument
+            android:name="image"
+            app:argType="string" />
+
+        <argument
+            android:name="isCurrentAudioPlaying"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="dev.djakonystar.antisihr.ui.main.MainScreen"
+        android:label="screen_main"
+        tools:layout="@layout/screen_main" >
+        <action
+            android:id="@+id/action_mainScreen_to_goodInfoScreen"
+            app:destination="@id/goodInfoScreen" />
+        <action
+            android:id="@+id/action_mainScreen_to_aboutScreen"
+            app:destination="@id/aboutScreen" />
+        <action
+            android:id="@+id/action_mainScreen_to_feedbackScreen"
+            app:destination="@id/feedbackScreen" />
+        <action
+            android:id="@+id/action_mainScreen_to_languageScreen"
+            app:destination="@id/languageScreen" />
+        <action
+            android:id="@+id/action_mainScreen_to_audioPlayerScreen"
+            app:destination="@id/audioPlayerScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/goodInfoScreen"
+        android:name="dev.djakonystar.antisihr.ui.shop.GoodInfoScreen"
+        android:label="screen_good_info"
+        tools:layout="@layout/screen_good_info">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+        <argument
+            android:name="isFavourite"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/aboutScreen"
+        android:name="dev.djakonystar.antisihr.ui.about.AboutScreen"
+        android:label="screen_about"
+        tools:layout="@layout/screen_about" />
+    <fragment
+        android:id="@+id/feedbackScreen"
+        android:name="dev.djakonystar.antisihr.ui.feedback.FeedbackScreen"
+        android:label="screen_feedback"
+        tools:layout="@layout/screen_feedback" />
+    <fragment
+        android:id="@+id/languageScreen"
+        android:name="dev.djakonystar.antisihr.ui.language.LanguageScreen"
+        android:label="screen_language"
+        tools:layout="@layout/screen_language" />
+</navigation>

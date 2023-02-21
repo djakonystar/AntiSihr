@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/tests"
+        android:id="@id/testScreen"
         android:icon="@drawable/ic_test"
         android:title="@string/tests" />
     <item
-        android:id="@+id/audio"
+        android:id="@id/audioScreen"
         android:icon="@drawable/ic_music"
         android:title="@string/audio" />
 
     <item
-        android:id="@+id/library"
+        android:id="@id/libraryScreen"
         android:icon="@drawable/ic_library"
         android:title="@string/library" />
 
     <item
-        android:id="@+id/shop"
+        android:id="@id/shopScreen"
         android:icon="@drawable/ic_shop"
         android:title="@string/shop" />
 
     <item
-        android:id="@+id/readers"
+        android:id="@id/readersScreen"
         android:icon="@drawable/ic_readers"
         android:title="@string/readers" />
 </menu>

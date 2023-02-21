@@ -14,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
@@ -36,20 +37,6 @@ class AboutScreen : Fragment(R.layout.screen_about) {
     private val binding: ScreenAboutBinding by viewBinding(ScreenAboutBinding::bind)
     private val viewModel: MainViewModel by viewModels<MainViewModelImpl>()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    lifecycleScope.launchWhenResumed {
-                        visibilityOfBottomNavigationView.emit(true)
-                    }
-                }
-            })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
@@ -61,7 +48,7 @@ class AboutScreen : Fragment(R.layout.screen_about) {
 
     private fun initListeners() {
         binding.icBack.clicks().debounce(200).onEach {
-            visibilityOfBottomNavigationView.emit(true)
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
     }
 

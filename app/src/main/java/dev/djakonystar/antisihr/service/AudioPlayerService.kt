@@ -2,25 +2,17 @@ package dev.djakonystar.antisihr.service
 
 import android.app.Service
 import android.content.Intent
-import android.content.res.AssetFileDescriptor
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Binder
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
+import androidx.core.content.ContextCompat
+import dev.djakonystar.antisihr.app.App
 import dev.djakonystar.antisihr.data.models.AudioResultData
-import dev.djakonystar.antisihr.service.models.AudioStatus
-import dev.djakonystar.antisihr.service.models.PlayerServiceListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.io.File
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerServiceListener
+import dev.djakonystar.antisihr.service.notification.MusicService
 import java.io.IOException
-import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
 
 class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener,
@@ -59,11 +51,12 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
         updateTime()
     }
 
-    fun play(audio: AudioResultData): AudioStatus {
+    fun play(audio: AudioResultData, isContinue: Boolean = true): AudioStatus {
         val tempJcAudio = currentAudio
         currentAudio = audio
         var status = AudioStatus()
 
+        val intent = Intent(this, MusicService::class.java)
         if (audio.url != "") {
             try {
                 mediaPlayer?.let {
@@ -71,13 +64,20 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
                         stop()
                         play(audio)
                     } else {
-                        if (tempJcAudio !== audio) {
+                        if (tempJcAudio != audio) {
                             stop()
                             play(audio)
                         } else {
-                            status = updateStatus(audio, AudioStatus.PlayState.CONTINUE, mediaPlayer!!.duration)
-                            updateTime()
-                            serviceListener?.onContinueListener(status)
+                            if (isContinue) {
+                                status = updateStatus(
+                                    audio, AudioStatus.PlayState.CONTINUE, it.duration
+                                )
+                                updateTime()
+                                serviceListener?.onContinueListener(status)
+                            } else {
+                                stop()
+                                play(audio)
+                            }
                         }
                     }
                 } ?: let {
@@ -97,11 +97,14 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
         } else {
             throw Exception("MUSIC URL MUST NOT BE EMPTY")
         }
+        startService(intent)
         return status
     }
 
     fun pause(auduo: AudioResultData): AudioStatus {
         val status = updateStatus(auduo, AudioStatus.PlayState.PAUSE)
+        val intent = Intent(this, MusicService::class.java)
+        startService(intent)
         serviceListener?.onPausedListener(status)
         return status
     }
@@ -109,6 +112,8 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     fun stop(): AudioStatus {
         val status = updateStatus(status = AudioStatus.PlayState.STOP)
         serviceListener?.onStoppedListener(status)
+        val intent = Intent(this, MusicService::class.java)
+        stopService(intent)
         return status
     }
 
@@ -119,6 +124,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     private fun updateStatus(
         jcAudio: AudioResultData? = null, status: AudioStatus.PlayState, duration: Int? = null
     ): AudioStatus {
+
         currentAudio = jcAudio
         audioStatus.audio = jcAudio
         audioStatus.playState = status
@@ -138,7 +144,8 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
                     mediaPlayer?.start()
                     isPlaying = true
                     isPaused = false
-
+                    val intent = Intent(this, MusicService::class.java)
+                    startService(intent)
                 } catch (exception: Exception) {
                     serviceListener?.onError(exception)
                     exception.printStackTrace()

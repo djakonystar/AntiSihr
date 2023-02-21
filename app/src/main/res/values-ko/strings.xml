@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">테스트</string>
     <string name="not">아니다</string>
     <string name="score">점수 %1$s</string>
@@ -38,7 +36,7 @@
     <string name="en">ko</string>
     <string name="the_choosen_ones">선택받은 자들</string>
     <string name="get_treated">치료받으세요</string>
-    <string name="rub">%s 문질러.</string>
+    <string name="rub"> 문질러.</string>
     <string name="close">닫다</string>
     <string name="your_phone_number">전화 번호:</string>
     <string name="share_app">신청서 공유</string>
@@ -51,7 +49,7 @@
     <string name="address_with_dots">주소:</string>
     <string name="in_every_city_one_reader">모든 도시에서 한 명의 독자</string>
     <string name="about">에 대한</string>
-    <string name="phone_number">전화 번호: %1$s</string>
+    <string name="phone_number">전화 번호:\n%s</string>
     <string name="done">완료</string>
     <string name="yes">예</string>
     <string name="all">모두</string>
@@ -68,8 +66,10 @@
     <string name="all_the_data_you_enter_is_strictly_confidential">입력한 모든 데이터는 엄격하게 기밀로 유지됩니다</string>
     <string name="error">오류</string>
     <string name="capacity">용량</string>
+    <string name="capacity_text">용량:</string>
     <string name="language">언어</string>
     <string name="shop">쇼핑</string>
+    <string name="shop_name">쇼핑:</string>
     <string name="about_app">앱 정보</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>

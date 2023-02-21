@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Anti Sihr</string>
-    <string name="name_app">Anti Sihr</string>
     <string name="tests">Essais</string>
     <string name="not">Pas</string>
     <string name="score">Score %s</string>
@@ -38,7 +36,7 @@
     <string name="en">fr</string>
     <string name="the_choosen_ones">Les selectionnés</string>
     <string name="get_treated">Se faire soigner</string>
-    <string name="rub">%s frotter.</string>
+    <string name="rub"> frotter.</string>
     <string name="close">Proche</string>
     <string name="your_phone_number">Votre numéro de téléphone:</string>
     <string name="share_app">Partager l\'application</string>
@@ -51,10 +49,10 @@
     <string name="address_with_dots">Adresse:</string>
     <string name="in_every_city_one_reader">Dans chaque ville, un lecteur</string>
     <string name="about">À propos de</string>
-    <string name="phone_number">Numéro de téléphone: %1$s</string>
+    <string name="phone_number">Numéro de téléphone:\n%s</string>
     <string name="done">Fait</string>
     <string name="yes">Oui</string>
-    <string name="all">Oui</string>
+    <string name="all">Tout</string>
     <string name="only_selected_articles_are_displayed_here">Seuls les articles sélectionnés sont affichés ici</string>
     <string name="refresh">Rafraîchir</string>
     <string name="name">Nom</string>
@@ -67,10 +65,12 @@
     <string name="send">Envoyer</string>
     <string name="all_the_data_you_enter_is_strictly_confidential">Toutes les données que vous saisissez sont strictement confidentielles</string>
     <string name="error">Erreur</string>
-    <string name="capacity">capacité</string>
-    <string name="language">langue</string>
-    <string name="shop">boutique</string>
-    <string name="about_app">à propos de l\'application</string>
+    <string name="capacity">Capacité</string>
+    <string name="capacity_text">Capacité:</string>
+    <string name="language">Langues</string>
+    <string name="shop">Boutique</string>
+    <string name="shop_name">Boutique:</string>
+    <string name="about_app">À propos de l\'application</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
     <string name="text_ru">Russe</string>

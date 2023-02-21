@@ -41,12 +41,5 @@ class LibraryScreenViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    init {
-        viewModelScope.launch {
-            getListOfSectionsLibrary()
-            visibilityOfLoadingAnimationView.emit(true)
-        }
-    }
-
 
 }

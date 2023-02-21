@@ -5,22 +5,18 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.BottomReaderInfoBinding
@@ -78,6 +74,9 @@ class ReaderDetailBottomFragment : BottomSheetDialogFragment() {
                 tvAuthor.text = "${reader.surname} ${reader.name}"
                 tvCityName.text = reader.city.name
                 adapter.submitList(reader.socialNetworks)
+                tvAddressTitle.isVisible = reader.address != null
+                tvAddress.isVisible = reader.address != null
+                dividerFirst.isVisible = reader.address != null
                 tvAddress.text = reader.address ?: ""
                 tvPhone.text = reader.phone.toPhoneNumber
                 tvDescription.text = reader.description

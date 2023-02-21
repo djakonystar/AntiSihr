@@ -4,13 +4,14 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white_only</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/main_color</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/black_only</item>
         <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#D6D6D6</item>
 
 
         <!-- Customize your theme here. -->
@@ -44,7 +45,7 @@
         <item name="android:drawablePadding">12dp</item>
         <item name="android:fontFamily">@font/nunito_ttf</item>
         <item name="android:paddingStart">12dp</item>
-        <item name="android:textColor">@color/et_text_color</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">@dimen/text_size_15</item>
     </style>
 
@@ -66,5 +67,9 @@
     <style name="myChipText" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/nunito_bold_ttf</item>
+    </style>
+
+    <style name="NunitoSemiboldStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/nunito_semibold_ttf</item>
     </style>
 </resources>

@@ -2,7 +2,6 @@ package dev.djakonystar.antisihr.ui.library
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
-import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.databinding.ScreenLibraryBinding
 import dev.djakonystar.antisihr.presentation.library.LibraryScreenViewModel
 import dev.djakonystar.antisihr.presentation.library.impl.LibraryScreenViewModelImpl
@@ -34,20 +32,17 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
     private var _adapter: LibraryAdapter? = null
     private val adapter: LibraryAdapter get() = _adapter!!
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    (requireActivity() as MainActivity).changeBottomNavigationSelectedItem(true)
-                }
-            })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
+
         initListeners()
         initObservers()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.getListOfSectionsLibrary()
+//            visibilityOfLoadingAnimationView.emit(true)
+
+        }
     }
 
     private fun initObservers() {
@@ -101,6 +96,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             binding.icFavourites.hide()
             binding.icSearch.hide()
             binding.icClose.show()
+            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
@@ -109,6 +105,7 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
             binding.icClose.hide()
             binding.icFavourites.show()
             binding.icSearch.show()
+            binding.tvBody.show()
             binding.expandableLayout.collapse()
             binding.etSearch.setText("")
             hideKeyboard()
