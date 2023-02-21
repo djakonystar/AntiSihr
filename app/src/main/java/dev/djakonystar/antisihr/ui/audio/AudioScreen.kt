@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +22,7 @@ import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
 import dev.djakonystar.antisihr.presentation.audio.impl.AudioScreenViewModelImpl
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.ui.adapters.AudioAdapter
+import dev.djakonystar.antisihr.ui.main.MainScreenDirections
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -123,6 +125,9 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
 
         adapter.setOnItemClickListener {
+            val navController =
+                Navigation.findNavController(requireActivity(), R.id.activity_fragment_container)
+
             val audio = AudioResultData(
                 it.author,
                 it.date_create ?: "",
@@ -133,14 +138,14 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                 it.url
             )
             if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == audio) {
-                findNavController().navigate(
-                    AudioScreenDirections.actionAudioScreenToAudioPlayerScreen(
+                navController.navigate(
+                    MainScreenDirections.actionMainScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, true
                     )
                 )
             } else {
-                findNavController().navigate(
-                    AudioScreenDirections.actionAudioScreenToAudioPlayerScreen(
+                navController.navigate(
+                    MainScreenDirections.actionMainScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, false
                     )
                 )

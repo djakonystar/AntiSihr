@@ -18,11 +18,7 @@
         android:id="@+id/audioScreen"
         android:name="dev.djakonystar.antisihr.ui.audio.AudioScreen"
         android:label="screen_audio"
-        tools:layout="@layout/screen_audio" >
-        <action
-            android:id="@+id/action_audioScreen_to_audioPlayerScreen"
-            app:destination="@id/audioPlayerScreen" />
-    </fragment>
+        tools:layout="@layout/screen_audio" />
     <fragment
         android:id="@+id/libraryScreen"
         android:name="dev.djakonystar.antisihr.ui.library.LibraryScreen"
@@ -95,38 +91,6 @@
             android:name="isBookmarked"
             app:argType="boolean" />
     </dialog>
-    <fragment
-        android:id="@+id/audioPlayerScreen"
-        android:name="dev.djakonystar.antisihr.ui.audio.AudioPlayerScreen"
-        android:label="screen_audio_player"
-        tools:layout="@layout/screen_audio_player" >
-        <argument
-            android:name="id"
-            app:argType="integer" />
-
-
-        <argument
-            android:name="name"
-            app:argType="string" />
-
-
-        <argument
-            android:name="author"
-            app:argType="string" />
-
-
-        <argument
-            android:name="url"
-            app:argType="string" />
-
-        <argument
-            android:name="image"
-            app:argType="string" />
-
-        <argument
-            android:name="isCurrentAudioPlaying"
-            app:argType="boolean" />
-    </fragment>
     <dialog
         android:id="@+id/productsBookmarkedBottomSheet"
         android:name="dev.djakonystar.antisihr.ui.shop.dialog.ProductsBookmarkedBottomSheet"
