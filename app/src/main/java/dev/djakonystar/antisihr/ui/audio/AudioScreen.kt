@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
@@ -228,5 +227,10 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                 showBottomPlayerFlow.emit(true)
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        (requireActivity() as MainActivity).isClickedFavourite = false
     }
 }

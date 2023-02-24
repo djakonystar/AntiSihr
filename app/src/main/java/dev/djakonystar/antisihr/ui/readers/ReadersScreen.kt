@@ -54,7 +54,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             etSearch.doAfterTextChanged {
                 chipGroupCity.clearCheck()
                 if (etSearch.text.toString().isEmpty()) {
-                    adapter.submitList(allReaders)
+                    adapter.models = allReaders
                 } else {
                     val newList = allReaders.filter { r ->
                         r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true) ||
@@ -62,7 +62,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
                                 r.surname.contains(etSearch.text.toString(), true) ||
                                 r.description.contains(etSearch.text.toString(), true)
                     }
-                    adapter.submitList(newList)
+                    adapter.models = newList
                 }
             }
         }
@@ -78,11 +78,11 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private fun initObservers() {
         viewModel.getReadersSuccessFlow.onEach {
-            adapter.submitList(it)
             allReaders.clear()
-            allReaders.addAll(it)
             selectedCities.clear()
             binding.chipGroupCity.clearCheck()
+            allReaders.addAll(it)
+            adapter.models = it
             it.forEach { reader ->
                 addNewChip(reader.city)
             }
@@ -135,7 +135,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
         val newList = if (selectedCities.isNotEmpty()) {
             allReaders.filter { selectedCities.contains(it.city!!.name) }
         } else allReaders
-        adapter.submitList(newList)
+        adapter.models = newList
     }
 
     override fun onDetach() {

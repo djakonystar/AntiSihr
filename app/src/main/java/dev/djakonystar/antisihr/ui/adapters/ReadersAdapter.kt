@@ -5,18 +5,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.databinding.ItemReaderBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
-class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>(MyDiffUtil) {
+class ReadersAdapter : RecyclerView.Adapter<ReadersAdapter.ReadersViewHolder>() {
 
     private var onItemClickListener: ((ReaderData) -> Unit)? = null
 
     fun setOnItemClickListener(block: (ReaderData) -> Unit) {
         this.onItemClickListener = block
     }
+
+    var models = listOf<ReaderData>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun getItemCount() = models.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadersViewHolder {
         return ReadersViewHolder(
@@ -35,7 +44,7 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
 
         @SuppressLint("SetTextI18n")
         fun bind() {
-            val d = getItem(absoluteAdapterPosition)
+            val d = models[absoluteAdapterPosition]
             binding.apply {
                 tvAuthor.text = "${d.surname} ${d.name}"
                 icPhoto.setImageWithGlide(root.context, d.image)
@@ -48,22 +57,12 @@ class ReadersAdapter : ListAdapter<ReaderData, ReadersAdapter.ReadersViewHolder>
 
         init {
             binding.btnMore.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
+                onItemClickListener?.invoke(models[absoluteAdapterPosition])
             }
 
             binding.root.setOnClickListener {
-                onItemClickListener?.invoke(getItem(absoluteAdapterPosition))
+                onItemClickListener?.invoke(models[absoluteAdapterPosition])
             }
-        }
-    }
-
-    private object MyDiffUtil : DiffUtil.ItemCallback<ReaderData>() {
-        override fun areItemsTheSame(oldItem: ReaderData, newItem: ReaderData): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: ReaderData, newItem: ReaderData): Boolean {
-            return oldItem.name == newItem.name && oldItem.surname == newItem.surname && oldItem.description == newItem.description && oldItem.image == newItem.image
         }
     }
 }

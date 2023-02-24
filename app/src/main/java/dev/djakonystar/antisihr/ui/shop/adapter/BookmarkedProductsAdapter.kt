@@ -1,11 +1,13 @@
 package dev.djakonystar.antisihr.ui.shop.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.ItemShopFavoriteBinding
@@ -33,12 +35,14 @@ class BookmarkedProductsAdapter : RecyclerView.Adapter<BookmarkedProductsAdapter
 
     inner class ProductsViewHolder(val binding: ItemShopFavoriteBinding) :
         ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind() {
             val d = models[absoluteAdapterPosition]
             binding.tvName.text = d.name
             binding.tvPrice.text = d.price.toString()
             binding.ivProduct.setImageWithGlide(binding.root.context, d.image)
-            binding.tvShop.text = d.sellerName
+            binding.tvShop.text =
+                "${itemView.context.getString(R.string.shop_name)} ${d.sellerName}"
         }
         init {
             binding.ivDelete.setOnClickListener {
