@@ -44,6 +44,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
     private var _adapter: ShopsAdapter? = null
     private val adapter get() = _adapter!!
     private var selectedCategoryId = -1
+    private var selectedTabId = Tab.INVALID_POSITION
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
@@ -63,6 +64,19 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         _adapter = ShopsAdapter()
         binding.recyclerView.adapter = adapter
         binding.expandableLayout.duration = 300
+
+        lifecycleScope.launchWhenResumed {
+            val sellerData = sellersList.find {
+                it.name == binding.tabLayout.getTabAt(selectedTabId)?.text.toString()
+            }
+            sellerData?.let {
+                viewModel.getAllProductsOfSeller(it.id)
+                selectedCategoryId = it.id
+            } ?: let {
+                viewModel.getAllProducts()
+                selectedCategoryId = -1
+            }
+        }
 
 
         adapter.setOnItemClickListener {
@@ -108,11 +122,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         binding.etSearch.addTextChangedListener {
-            val searchList = if (selectedCategoryId != -1) {
-                allProducts.filter { it.sellerId == selectedCategoryId }
-            } else {
-                allProducts
-            }
+            val searchList = allProducts
 
             if (binding.etSearch.text.toString().isEmpty()) {
                 adapter.shopItems = searchList
@@ -141,6 +151,8 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                         viewModel.getAllProducts()
                         selectedCategoryId = -1
                     }
+                    selectedTabId = tab.id
+                    Log.d("SelectedCategoryNew", selectedCategoryId.toString())
                 }
             }
 
@@ -168,7 +180,14 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         viewModel.getGoodsSuccessFlow.onEach {
             allProducts.clear()
             allProducts.addAll(it)
-            adapter.shopItems = allProducts
+            val searchValue = binding.etSearch.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.shopItems = allProducts
+            } else {
+                adapter.shopItems = allProducts.filter { shopItem ->
+                    shopItem.name.contains(searchValue, true)
+                }
+            }
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -193,7 +212,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             val typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_extrabold_ttf)
             tvTab.typeface = typeface
             tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
+            Log.d("SelectedCategory", selectedCategoryId.toString())
             binding.tabLayout.addTab(tab)
+            if (selectedCategoryId == -1) tab.select()
 
             it.result.forEach { sellerData ->
                 val tabb = binding.tabLayout.newTab()
@@ -210,7 +231,10 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                         requireContext(), R.color.second_text_color
                     )
                 )
+                Log.d("SelectedCategory", selectedCategoryId.toString())
+                Log.d("SelectedCategoryTabId", tabb.id.toString())
                 binding.tabLayout.addTab(tabb)
+                if (sellerData.id == selectedCategoryId) tabb.select()
             }
         }.launchIn(lifecycleScope)
 
