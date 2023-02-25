@@ -16,7 +16,11 @@ import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -26,7 +30,7 @@ import dev.djakonystar.antisihr.service.manager.PlayerManager
 
 class MusicService : Service() {
 
-    private lateinit var mediaSession: MediaSession
+    private lateinit var mediaSession: MediaSessionCompat
 
     private var musicBroadcast: MusicBroadcast? = null
 
@@ -41,7 +45,7 @@ class MusicService : Service() {
             musicBroadcast = MusicBroadcast()
         }
 
-        mediaSession = MediaSession(this, "My Music")
+        mediaSession = MediaSessionCompat(this, "My Music")
 
 
         registerReceiver(musicBroadcast, IntentFilter().apply {
@@ -97,19 +101,19 @@ class MusicService : Service() {
         )
 
         mediaSession.setPlaybackState(
-            PlaybackState.Builder().setState(
-                if (playerManager?.isPlaying() == true) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED,
+            PlaybackStateCompat.Builder().setState(
+                if (playerManager?.isPlaying() == true) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED,
                 playerManager?.currentStatus?.currentPosition ?: 0L,
                 if (playerManager?.isPlaying() == true) 1.0f else 0f,
                 SystemClock.elapsedRealtime()
-            ).setActions(PlaybackState.ACTION_SEEK_TO).build()
+            ).setActions(PlaybackStateCompat.ACTION_SEEK_TO).build()
         )
 
         val notification =
-            Notification.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.ic_music).setStyle(
-                Notification.MediaStyle().setMediaSession(mediaSession.sessionToken)
+            NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.ic_music).setStyle(
+                androidx.media.app.NotificationCompat.MediaStyle().setMediaSession(mediaSession.sessionToken)
             ).setPriority(Notification.PRIORITY_HIGH).setOnlyAlertOnce(true).setOngoing(true)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .addAction(R.drawable.ic_previous, "Previous", prevPendingIntent).addAction(
                     if (playerManager?.isPlaying()!!) {
                         R.drawable.ic_pause
@@ -125,15 +129,15 @@ class MusicService : Service() {
                 ) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         mediaSession.setMetadata(
-                            MediaMetadata.Builder().putLong(
-                                MediaMetadata.METADATA_KEY_DURATION,
+                            MediaMetadataCompat.Builder().putLong(
+                                MediaMetadataCompat.METADATA_KEY_DURATION,
                                 playerManager.currentStatus?.duration?.toLong() ?: 0L
                             ).putString(
-                                MediaMetadata.METADATA_KEY_TITLE, playerManager.currentAudio?.name
+                                MediaMetadataCompat.METADATA_KEY_TITLE, playerManager.currentAudio?.name
                             ).putString(
-                                MediaMetadata.METADATA_KEY_ARTIST,
+                                MediaMetadataCompat.METADATA_KEY_ARTIST,
                                 playerManager.currentAudio?.author
-                            ).putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, resource).build()
+                            ).putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, resource).build()
                         )
                     } else {
                         notification.setLargeIcon(resource)
