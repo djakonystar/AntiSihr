@@ -128,9 +128,13 @@ class ArticleDetailBottomFragment : BottomSheetDialogFragment() {
                 bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             parentLayout?.let { it ->
                 val behaviour = BottomSheetBehavior.from(it)
+                if (args.description.isEmpty()){
+                    behaviour.setPeekHeight(400, true)
+                }else{
+                    behaviour.setPeekHeight(730, true)
+                }
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-                behaviour.skipCollapsed = true
             }
         }
         return dialog

@@ -90,6 +90,10 @@
         <argument
             android:name="isBookmarked"
             app:argType="boolean" />
+
+        <argument
+            android:name="description"
+            app:argType="string" />
     </dialog>
     <dialog
         android:id="@+id/productsBookmarkedBottomSheet"

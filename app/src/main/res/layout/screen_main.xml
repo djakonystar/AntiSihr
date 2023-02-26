@@ -19,8 +19,8 @@
     <net.cachapa.expandablelayout.ExpandableLayout
         android:id="@+id/layout_music_player"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rect_top_corner_10"
+        android:layout_height="96dp"
+        android:background="@drawable/ic_player_bg"
         android:clickable="true"
         app:el_expanded="false"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"

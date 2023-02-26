@@ -128,24 +128,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icForward.clicks().debounce(200).onEach {
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
-                binding.icForward.isEnabled = false
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                resetPlayerInfo()
-                try {
-                    mediaPlayerManager.nextAudio(false)
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    e.printStackTrace()
-                }
-                binding.icForward.isEnabled = true
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
+            resetPlayerInfo()
+            try {
+                mediaPlayerManager.nextAudio(false)
+            } catch (e: Exception) {
+                binding.icPause.show()
+                binding.icPlay.hide()
+                e.printStackTrace()
             }
         }.launchIn(lifecycleScope)
 
@@ -306,18 +295,6 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             } else {
                 binding.icPrevious.isEnabled = true
                 binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
-            }
-
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
-                binding.icForward.isEnabled = false
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                binding.icForward.isEnabled = true
-                binding.icForward.setColorFilter(
                     ContextCompat.getColor(requireContext(), R.color.black)
                 )
             }

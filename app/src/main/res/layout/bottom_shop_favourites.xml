@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/bg_rect_top_corner_20"
+    android:backgroundTint="@color/white"
     tools:context=".ui.shop.dialog.ProductsBookmarkedBottomSheet">
 
     <View

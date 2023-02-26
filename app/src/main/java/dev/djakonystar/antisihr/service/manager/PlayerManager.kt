@@ -193,7 +193,8 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
                 shuffleModeList.add(playlist[currentPositionList.inc()])
                 playlist[currentPositionList.inc()]
             } catch (e: IndexOutOfBoundsException) {
-                null
+                currentPositionList = 0
+                playlist[currentPositionList]
             }
         }
     }

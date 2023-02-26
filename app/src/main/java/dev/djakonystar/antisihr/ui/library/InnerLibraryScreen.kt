@@ -103,7 +103,7 @@ class InnerLibraryScreen : Fragment(R.layout.screen_inner_library) {
         adapter.setOnItemClickListener {
             findNavController().navigate(
                 InnerLibraryScreenDirections.actionInnerLibraryScreenToArticleDetailBottomFragment(
-                    it.id, it.isBookmarked
+                    it.id, it.isBookmarked,it.lead
                 )
             )
         }
