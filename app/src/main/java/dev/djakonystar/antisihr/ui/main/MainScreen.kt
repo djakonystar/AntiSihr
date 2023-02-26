@@ -14,7 +14,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.models.AudioStatus
+import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.databinding.ScreenMainBinding
+import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.service.notification.MusicService
 import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
@@ -22,10 +25,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
 
-class MainScreen : Fragment(R.layout.screen_main) {
+class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
     private val binding by viewBinding(ScreenMainBinding::bind)
     private lateinit var navController: NavController
     private lateinit var childNavController: NavController
+    private val mediaPlayerManager: PlayerManager
+        get() = (requireActivity() as MainActivity).audioPlayerManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = findNavController()
@@ -38,9 +43,11 @@ class MainScreen : Fragment(R.layout.screen_main) {
     }
 
     private fun initListeners() {
+        mediaPlayerManager.jcPlayerManagerListener = this
+
         binding.btnPause.clicks().debounce(200).onEach {
             val activity = requireActivity() as MainActivity
-            if (activity.audioPlayerManager.isPlaying()) {
+            if (mediaPlayerManager.isPlaying()) {
                 activity.pause()
                 binding.icSkipForward.hide()
                 binding.icClose.show()
@@ -59,6 +66,10 @@ class MainScreen : Fragment(R.layout.screen_main) {
             binding.layoutMusicPlayer.collapse()
             val intent = Intent(requireContext(), MusicService::class.java)
             (requireActivity() as MainActivity).stopService(intent)
+        }.launchIn(lifecycleScope)
+
+        binding.icPlay.clicks().debounce(200).onEach {
+//            mediaPlayerManager.playAudio(mediaPlayerManager.currentAudio)
         }.launchIn(lifecycleScope)
 
         binding.layoutMusicPlayer.clicks().debounce(200).onEach {
@@ -110,149 +121,149 @@ class MainScreen : Fragment(R.layout.screen_main) {
             }
         }.launchIn(lifecycleScope)
 
-        playAudioFlow.onEach {
-            (requireActivity() as MainActivity).playAudio(it.id)
-        }.launchIn(lifecycleScope)
+//        playAudioFlow.onEach {
+//            (requireActivity() as MainActivity).playAudio(it.id)
+//        }.launchIn(lifecycleScope)
 
-        preparingAudioFlow.onEach {
-            if (this.view != null) {
-                val audioPlayerManager = it.first
-                val status = it.second
+//        preparingAudioFlow.onEach {
+//            if (this.view != null) {
+//                val audioPlayerManager = it.first
+//                val status = it.second
+//
+//                binding.icPause.show()
+//                binding.icPlay.hide()
+//                resetPlayerInfo()
+//                onUpdateTitle(status.audio)
+//
+//                if (audioPlayerManager.onShuffleMode.not() && audioPlayerManager.currentPositionList == audioPlayerManager.playlist.lastIndex) {
+//                    binding.icSkipForward.isEnabled = false
+//                    binding.icSkipForward.setColorFilter(
+//                        ContextCompat.getColor(requireContext(), R.color.grey)
+//                    )
+//                } else {
+//                    binding.icSkipForward.isEnabled = true
+//                    binding.icSkipForward.setColorFilter(
+//                        ContextCompat.getColor(requireContext(), R.color.black)
+//                    )
+//                }
+//            }
+//        }.launchIn(lifecycleScope)
 
-                binding.icPause.show()
-                binding.icPlay.hide()
-                resetPlayerInfo()
-                onUpdateTitle(status.audio)
+//        completeAudioFlow.onEach {
+//            resetPlayerInfo()
+//            try {
+//                it.nextAudio(true)
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }.launchIn(lifecycleScope)
+//
+//        pausedAudioFlow.onEach {
+//            if (this.view != null) {
+//                binding.icPause.hide()
+//                binding.icPlay.show()
+//                binding.icSkipForward.hide()
+//                binding.icClose.show()
+//            }
+//        }.launchIn(lifecycleScope)
 
-                if (audioPlayerManager.onShuffleMode.not() && audioPlayerManager.currentPositionList == audioPlayerManager.playlist.lastIndex) {
-                    binding.icSkipForward.isEnabled = false
-                    binding.icSkipForward.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.grey)
-                    )
-                } else {
-                    binding.icSkipForward.isEnabled = true
-                    binding.icSkipForward.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.black)
-                    )
-                }
-            }
-        }.launchIn(lifecycleScope)
+//        continueAudioFlow.onEach {
+//            if (this.view != null) {
+//                binding.icPause.show()
+//                binding.icPlay.hide()
+//                binding.icSkipForward.show()
+//                binding.icClose.hide()
+//            }
+//        }.launchIn(lifecycleScope)
 
-        completeAudioFlow.onEach {
-            resetPlayerInfo()
-            try {
-                it.nextAudio(true)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.launchIn(lifecycleScope)
+//        playingAudioFlow.onEach {
+//            if (this.view != null) {
+//                binding.icPlay.hide()
+//                binding.icPause.show()
+//                binding.icSkipForward.show()
+//                binding.icClose.hide()
+//            }
+//        }.launchIn(lifecycleScope)
 
-        pausedAudioFlow.onEach {
-            if (this.view != null) {
-                binding.icPause.hide()
-                binding.icPlay.show()
-                binding.icSkipForward.hide()
-                binding.icClose.show()
-            }
-        }.launchIn(lifecycleScope)
+//        showBottomPlayerFlow.onEach {
+//            if (it && (requireActivity() as MainActivity).audioPlayerManager.isPlaying()) {
+//                (requireActivity() as MainActivity).audioPlayerManager.currentAudio?.let {
+//                    binding.tvName.text = it.name
+//                    binding.tvAuthor.text = it.author
+//                    binding.icImage.setImageWithGlide(requireContext(), it.image)
+//                    binding.icSkipForward.show()
+//                    binding.icClose.hide()
+//                    binding.btnPause.show()
+//                    binding.pbLoadingBar.hide()
+//                    binding.icImage.show()
+//                    binding.layoutMusicPlayer.expand()
+//                }
+//            } else {
+//                binding.layoutMusicPlayer.collapse()
+//            }
+//        }.launchIn(lifecycleScope)
 
-        continueAudioFlow.onEach {
-            if (this.view != null) {
-                binding.icPause.show()
-                binding.icPlay.hide()
-                binding.icSkipForward.show()
-                binding.icClose.hide()
-            }
-        }.launchIn(lifecycleScope)
+//        audioPlayClickFlow.onEach {
+//            resetPlayerInfo()
+//        }.launchIn(lifecycleScope)
 
-        playingAudioFlow.onEach {
-            if (this.view != null) {
-                binding.icPlay.hide()
-                binding.icPause.show()
-                binding.icSkipForward.show()
-                binding.icClose.hide()
-            }
-        }.launchIn(lifecycleScope)
+//        audioNextClickFlow.onEach {
+//            if (this.view != null) {
+//                it.let { player ->
+//                    player.currentAudio?.let {
+//                        resetPlayerInfo()
+//                        try {
+//                            player.nextAudio(false)
+//                        } catch (e: Exception) {
+//                            binding.icPause.show()
+//                            binding.icPlay.hide()
+//                            binding.icSkipForward.hide()
+//                            binding.icClose.hide()
+//                            e.printStackTrace()
+//                        }
+//                    }
+//                }
+//            }
+//        }.launchIn(lifecycleScope)
 
-        showBottomPlayerFlow.onEach {
-            if (it && (requireActivity() as MainActivity).audioPlayerManager.isPlaying()) {
-                (requireActivity() as MainActivity).audioPlayerManager.currentAudio?.let {
-                    binding.tvName.text = it.name
-                    binding.tvAuthor.text = it.author
-                    binding.icImage.setImageWithGlide(requireContext(), it.image)
-                    binding.icSkipForward.show()
-                    binding.icClose.hide()
-                    binding.btnPause.show()
-                    binding.pbLoadingBar.hide()
-                    binding.icImage.show()
-                    binding.layoutMusicPlayer.expand()
-                }
-            } else {
-                binding.layoutMusicPlayer.collapse()
-            }
-        }.launchIn(lifecycleScope)
+//        audioContinueClickFlow.onEach {
+//            if (this.view != null) {
+//                try {
+//                    it.continueAudio()
+//                } catch (e: Exception) {
+//                    binding.icPause.show()
+//                    binding.icPlay.hide()
+//                    binding.icSkipForward.hide()
+//                    binding.icClose.hide()
+//                    e.printStackTrace()
+//                }
+//            }
+//        }.launchIn(lifecycleScope)
 
-        audioPlayClickFlow.onEach {
-            resetPlayerInfo()
-        }.launchIn(lifecycleScope)
+//        audioPauseClickFlow.onEach {
+//            if (this.view != null) {
+//                it.pauseAudio()
+//                binding.icPause.hide()
+//                binding.icPlay.show()
+//                binding.icSkipForward.show()
+//                binding.icClose.hide()
+//            }
+//        }.launchIn(lifecycleScope)
 
-        audioNextClickFlow.onEach {
-            if (this.view != null) {
-                it.let { player ->
-                    player.currentAudio?.let {
-                        resetPlayerInfo()
-                        try {
-                            player.nextAudio(false)
-                        } catch (e: Exception) {
-                            binding.icPause.show()
-                            binding.icPlay.hide()
-                            binding.icSkipForward.hide()
-                            binding.icClose.hide()
-                            e.printStackTrace()
-                        }
-                    }
-                }
-            }
-        }.launchIn(lifecycleScope)
-
-        audioContinueClickFlow.onEach {
-            if (this.view != null) {
-                try {
-                    it.continueAudio()
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    binding.icSkipForward.hide()
-                    binding.icClose.hide()
-                    e.printStackTrace()
-                }
-            }
-        }.launchIn(lifecycleScope)
-
-        audioPauseClickFlow.onEach {
-            if (this.view != null) {
-                it.pauseAudio()
-                binding.icPause.hide()
-                binding.icPlay.show()
-                binding.icSkipForward.show()
-                binding.icClose.hide()
-            }
-        }.launchIn(lifecycleScope)
-
-        audioPreviousClickFlow.onEach {
-            if (this.view != null) {
-                resetPlayerInfo()
-                try {
-                    it.previousAudio()
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    binding.icSkipForward.hide()
-                    binding.icClose.hide()
-                    e.printStackTrace()
-                }
-            }
-        }.launchIn(lifecycleScope)
+//        audioPreviousClickFlow.onEach {
+//            if (this.view != null) {
+//                resetPlayerInfo()
+//                try {
+//                    it.previousAudio()
+//                } catch (e: Exception) {
+//                    binding.icPause.show()
+//                    binding.icPlay.hide()
+//                    binding.icSkipForward.hide()
+//                    binding.icClose.hide()
+//                    e.printStackTrace()
+//                }
+//            }
+//        }.launchIn(lifecycleScope)
     }
 
     private fun onUpdateTitle(audio: AudioResultData?) {
@@ -283,5 +294,65 @@ class MainScreen : Fragment(R.layout.screen_main) {
             binding.icImage.invisible()
             binding.btnPause.hide()
         }
+    }
+
+    override fun onPreparedAudio(status: AudioStatus) {
+        resetPlayerInfo()
+        if (this.view != null) {
+            status.audio?.let {
+                onUpdateTitle(it)
+//                binding.tvName.text = it.name
+//                binding.tvAuthor.text = it.author
+//                binding.icImage.setImageWithGlide(requireContext(), it.url)
+//                binding.icPause.show()
+//                binding.icPlay.hide()
+//                binding.icSkipForward.show()
+//                binding.icClose.hide()
+            }
+        }
+    }
+
+    override fun onCompletedAudio() {
+        mediaPlayerManager.nextAudio(true)
+    }
+
+    override fun onPaused(status: AudioStatus) {
+        binding.icPause.hide()
+        binding.icPlay.show()
+        binding.icSkipForward.hide()
+        binding.icClose.show()
+    }
+
+    override fun onContinueAudio(status: AudioStatus) {
+        if (this.view != null) {
+            binding.icPause.show()
+            binding.icPlay.hide()
+            binding.icSkipForward.show()
+            binding.icClose.hide()
+        }
+    }
+
+    override fun onPlaying(status: AudioStatus) {
+        if (this.view != null) {
+            binding.icPause.show()
+            binding.icPlay.hide()
+            binding.icSkipForward.show()
+            binding.icClose.hide()
+        }
+    }
+
+    override fun onTimeChanged(status: AudioStatus) {
+
+    }
+
+    override fun onStopped(status: AudioStatus) {
+
+    }
+
+    override fun onJcpError(throwable: Throwable) {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mediaPlayerManager.removeFromPlayerManagerListener(this)
     }
 }

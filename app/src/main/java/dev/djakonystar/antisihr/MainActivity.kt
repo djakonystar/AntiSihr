@@ -187,13 +187,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         }
     }
 
-
-    fun previous() {
-        lifecycleScope.launchWhenCreated {
-            audioPreviousClickFlow.emit(audioPlayerManager)
-        }
-    }
-
     fun setStatusBarColor(@ColorRes color: Int) {
         window.statusBarColor = ContextCompat.getColor(this, color)
     }
