@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
         playAudioFlow.onEach {
             playAudio(it.id)
-            isFirstTime = false
         }.launchIn(lifecycleScope)
     }
 
@@ -157,8 +156,8 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
             resetBottomPlayerInfoFlow.emit(Unit)
         }
         audioPlayerManager.playlist.let {
-            isFirstTime = false
             val audio = it.find { it.id == id }
+            isFirstTime = false
             audioPlayerManager.playAudio(audio!!, isContinue)
         }
     }
