@@ -46,8 +46,6 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
 
         lifecycleScope.launchWhenResumed {
             viewModel.getListOfAudios()
-//            visibilityOfLoadingAnimationView.emit(true)
-            showBottomNavigationView.emit(Unit)
         }
 
         initListeners()

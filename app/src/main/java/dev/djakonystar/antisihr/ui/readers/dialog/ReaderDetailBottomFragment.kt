@@ -72,7 +72,9 @@ class ReaderDetailBottomFragment : BottomSheetDialogFragment() {
             binding.apply {
                 icPhoto.setImageWithGlide(requireContext(), reader.image)
                 tvAuthor.text = "${reader.surname} ${reader.name}"
-                tvCityName.text = reader.city.name
+                if (reader.city != null) {
+                    tvCityName.text = reader.city.name
+                }
                 adapter.submitList(reader.socialNetworks)
                 tvAddressTitle.isVisible = reader.address != null
                 tvAddress.isVisible = reader.address != null

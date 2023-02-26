@@ -12,13 +12,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.reader.City
+import dev.djakonystar.antisihr.data.models.reader.CityData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.databinding.ScreenReadersBinding
 import dev.djakonystar.antisihr.presentation.readers.ReadersScreenViewModel
 import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.ReadersAdapter
-import dev.djakonystar.antisihr.utils.showBottomNavigationView
 import dev.djakonystar.antisihr.utils.toast
 import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
 import kotlinx.coroutines.flow.launchIn
@@ -37,9 +36,8 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         lifecycleScope.launchWhenResumed {
-//            visibilityOfLoadingAnimationView.emit(true)
-            showBottomNavigationView.emit(Unit)
             viewModel.getReaders()
+            viewModel.getAllCities()
         }
 
         initListeners()
@@ -57,10 +55,11 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
                     adapter.models = allReaders
                 } else {
                     val newList = allReaders.filter { r ->
-                        r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true) ||
-                                r.name.contains(etSearch.text.toString(), true) ||
-                                r.surname.contains(etSearch.text.toString(), true) ||
-                                r.description.contains(etSearch.text.toString(), true)
+                        r.city!!.name.startsWith(
+                            etSearch.text.toString(), ignoreCase = true
+                        ) || r.name.contains(etSearch.text.toString(), true) || r.surname.contains(
+                            etSearch.text.toString(), true
+                        ) || r.description.contains(etSearch.text.toString(), true)
                     }
                     adapter.models = newList
                 }
@@ -83,9 +82,6 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             binding.chipGroupCity.clearCheck()
             allReaders.addAll(it)
             adapter.models = it
-            it.forEach { reader ->
-                addNewChip(reader.city)
-            }
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -98,36 +94,40 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             visibilityOfLoadingAnimationView.emit(false)
             it.localizedMessage?.let { message -> toast(message) }
         }.launchIn(lifecycleScope)
+
+        viewModel.getAllCitiesFlow.onEach {
+            it.forEach {
+                addNewChip(it)
+            }
+        }.launchIn(lifecycleScope)
     }
 
-    private fun addNewChip(city: City?) {
-        if (city != null) {
-            try {
-                binding.apply {
-                    val inflater = LayoutInflater.from(requireContext())
+    private fun addNewChip(city: CityData) {
+        try {
+            binding.apply {
+                val inflater = LayoutInflater.from(requireContext())
 
-                    val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
-                    newChip.text = city.name
+                val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
+                newChip.text = city.name
 
-                    chipGroupCity.addView(newChip)
+                chipGroupCity.addView(newChip)
 
-                    newChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                        if (isChecked) {
-                            chipGroupCity.check((buttonView as Chip).id)
-                            if (!selectedCities.contains(city.name)) {
-                                selectedCities.add(city.name)
-                            }
-                        } else {
-                            if (selectedCities.contains(city.name)) {
-                                selectedCities.remove(city.name)
-                            }
+                newChip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        chipGroupCity.check((buttonView as Chip).id)
+                        if (!selectedCities.contains(city.name)) {
+                            selectedCities.add(city.name)
                         }
-                        filterReaders()
+                    } else {
+                        if (selectedCities.contains(city.name)) {
+                            selectedCities.remove(city.name)
+                        }
                     }
+                    filterReaders()
                 }
-            } catch (e: Exception) {
-                e.localizedMessage?.let { toast(it) }
             }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { toast(it) }
         }
     }
 

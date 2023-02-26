@@ -40,7 +40,6 @@ class TestScreen : Fragment(R.layout.screen_home) {
 
         lifecycleScope.launchWhenCreated {
 //            visibilityOfLoadingAnimationView.emit(true)
-            showBottomNavigationView.emit(Unit)
             viewModel.getListOfTests()
         }
     }

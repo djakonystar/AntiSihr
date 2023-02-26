@@ -7,6 +7,7 @@ import dev.djakonystar.antisihr.data.models.drawerlayout.LanguageData
 import dev.djakonystar.antisihr.data.models.library.ArticleResultData
 import dev.djakonystar.antisihr.data.models.library.InnerLibraryResultData
 import dev.djakonystar.antisihr.data.models.library.LibraryResultData
+import dev.djakonystar.antisihr.data.models.reader.CityData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.data.models.reader.ReaderDetailData
 import dev.djakonystar.antisihr.data.models.shop.SellerData
@@ -78,5 +79,9 @@ interface AntiSihrApi {
 
     @GET("/sellers")
     suspend fun getAllSellers(): Response<GenericResponse<List<SellerData>>>
+
+
+    @GET("/cities")
+    suspend fun getAllCities(): Response<GenericResponse<List<CityData>>>
 
 }
