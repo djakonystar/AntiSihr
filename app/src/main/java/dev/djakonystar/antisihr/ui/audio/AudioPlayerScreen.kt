@@ -94,12 +94,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         binding.btnPlay.clicks().debounce(200).onEach {
             if (binding.icPlay.isVisible) {
-                if ((requireActivity() as MainActivity).isFirstTime) {
-                    (requireActivity() as MainActivity).playAudio(args.id)
-                    (requireActivity() as MainActivity).isFirstTime = false
-                } else {
-                    mediaPlayerManager.continueAudio()
-                }
+                mediaPlayerManager.continueAudio()
             } else {
                 mediaPlayerManager.pauseAudio()
             }
@@ -382,7 +377,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                     binding.musicController.progress = currentPosition.toInt()
                 }
                 binding.currentTime.post {
-                    binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                    try {
+                        if (currentPosition.toInt() != status.duration) {
+                            binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 binding.currentTime.show()
                 binding.endTime.show()
@@ -402,5 +403,9 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         requireActivity().stopService(intent)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mediaPlayerManager.removeFromPlayerManagerListener(this)
+    }
 
 }

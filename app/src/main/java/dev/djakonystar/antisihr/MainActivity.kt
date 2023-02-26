@@ -65,6 +65,10 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 //                binding.loadingAnimation.hide()
 //            }
 //        }.launchIn(lifecycleScope)
+
+        playAudioFlow.onEach {
+            playAudio(it.id)
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {
@@ -124,33 +128,25 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            preparingAudioFlow.emit(Pair(audioPlayerManager, status))
-        }
     }
 
     override fun onCompletedAudio() {
-        lifecycleScope.launchWhenCreated {
-            completeAudioFlow.emit(audioPlayerManager)
+        try {
+            audioPlayerManager.nextAudio(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     override fun onPaused(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            pausedAudioFlow.emit(audioPlayerManager)
-        }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            continueAudioFlow.emit(audioPlayerManager)
-        }
+
     }
 
     override fun onPlaying(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            playingAudioFlow.emit(audioPlayerManager)
-        }
+
     }
 
     override fun onTimeChanged(status: AudioStatus) {}
@@ -161,7 +157,7 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
     fun playAudio(id: Int, isContinue: Boolean = true) {
         lifecycleScope.launchWhenCreated {
-            audioPlayClickFlow.emit(audioPlayerManager)
+            resetBottomPlayerInfoFlow.emit(Unit)
         }
         audioPlayerManager.playlist.let {
             val audio = it.find { it.id == id }
@@ -170,21 +166,36 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
     }
 
     fun next() {
-        lifecycleScope.launchWhenCreated {
-            audioNextClickFlow.emit(audioPlayerManager)
+        audioPlayerManager.let { player ->
+            player.currentAudio?.let {
+                lifecycleScope.launchWhenResumed {
+                    resetBottomPlayerInfoFlow.emit(Unit)
+                }
+                try {
+                    player.nextAudio(false)
+                } catch (e: Exception) {
+                    lifecycleScope.launchWhenResumed {
+                        errorBottomPlayerInfoFlow.emit(Unit)
+                    }
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
     fun continueAudio() {
-        lifecycleScope.launchWhenCreated {
-            audioContinueClickFlow.emit(audioPlayerManager)
+        try {
+            audioPlayerManager.continueAudio()
+        } catch (e: Exception) {
+            lifecycleScope.launchWhenResumed {
+                errorBottomPlayerInfoFlow.emit(Unit)
+            }
+            e.printStackTrace()
         }
     }
 
     fun pause() {
-        lifecycleScope.launchWhenCreated {
-            audioPauseClickFlow.emit(audioPlayerManager)
-        }
+        audioPlayerManager.pauseAudio()
     }
 
     fun setStatusBarColor(@ColorRes color: Int) {
