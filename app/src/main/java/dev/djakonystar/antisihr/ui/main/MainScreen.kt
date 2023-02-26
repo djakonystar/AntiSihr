@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.djakonystar.antisihr.MainActivity
@@ -23,9 +24,11 @@ import ru.ldralighieri.corbind.view.clicks
 
 class MainScreen : Fragment(R.layout.screen_main) {
     private val binding by viewBinding(ScreenMainBinding::bind)
+    private lateinit var navController: NavController
     private lateinit var childNavController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        navController = findNavController()
         childNavController =
             (childFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment).navController
         binding.bottomNavigationBar.setupWithNavController(childNavController)
@@ -56,6 +59,20 @@ class MainScreen : Fragment(R.layout.screen_main) {
             binding.layoutMusicPlayer.collapse()
             val intent = Intent(requireContext(), MusicService::class.java)
             (requireActivity() as MainActivity).stopService(intent)
+        }.launchIn(lifecycleScope)
+
+        binding.layoutMusicPlayer.clicks().debounce(200).onEach {
+            val audio = (requireActivity() as MainActivity).audioPlayerManager.currentAudio!!
+            navController.navigate(
+                MainScreenDirections.actionMainScreenToAudioPlayerScreen(
+                    audio.id,
+                    audio.name,
+                    audio.author,
+                    audio.url,
+                    audio.image,
+                    (requireActivity() as MainActivity).audioPlayerManager.isPlaying()
+                )
+            )
         }.launchIn(lifecycleScope)
 
 
