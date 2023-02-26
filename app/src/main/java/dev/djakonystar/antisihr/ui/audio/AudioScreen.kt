@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.audio
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -26,6 +27,8 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
+import net.cachapa.expandablelayout.ExpandableLayout.OnExpansionUpdateListener
 import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 
@@ -44,20 +47,18 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
 
-        lifecycleScope.launchWhenResumed {
-            viewModel.getListOfAudios()
-        }
-
         initListeners()
         initObservers()
-
-
     }
 
     private fun initListeners() {
         _adapter = AudioAdapter()
         binding.rcAudios.adapter = adapter
         binding.expandableLayout.duration = 300
+
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.expandableLayout.isExpanded)
+        }
 
         binding.swipeRefreshLayout.refreshes().onEach {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -82,24 +83,23 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             }
         }
 
+        binding.expandableLayout.setOnExpansionUpdateListener { expansionFraction, state ->
+            when (state) {
+                ExpandableLayout.State.EXPANDING -> {
+                    showSearchBar(true)
+                }
+                ExpandableLayout.State.COLLAPSING -> {
+                    showSearchBar(false)
+                }
+            }
+        }
+
         binding.icSearch.clicks().debounce(200).onEach {
-            binding.tvAudio.text = getString(R.string.search)
-            binding.icFavourites.hide()
-            binding.icSearch.hide()
-            binding.icClose.show()
-            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
         binding.icClose.clicks().debounce(200).onEach {
-            binding.tvAudio.text = getString(R.string.audio)
-            binding.icClose.hide()
-            binding.icFavourites.show()
-            binding.icSearch.show()
-            binding.tvBody.show()
             binding.expandableLayout.collapse()
-            binding.etAudio.setText("")
-            hideKeyboard()
         }.launchIn(lifecycleScope)
 
         binding.icFavourites.clicks().debounce(200).onEach {
@@ -199,7 +199,15 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         viewModel.getListOfAudiosSuccessFlow.onEach {
             allAudio.clear()
             allAudio.addAll(it)
-            adapter.audios = it
+            val searchValue = binding.etAudio.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.audios = allAudio
+            } else {
+                adapter.audios = allAudio.filter { audio ->
+                    audio.name.contains(searchValue, true) ||
+                            audio.author.contains(searchValue, true)
+                }
+            }
             val audioList = mutableListOf<AudioResultData>()
             it.forEach {
                 audioList.add(
@@ -217,6 +225,24 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             (requireActivity() as MainActivity).setAudioList(audioList)
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
+    }
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvAudio.text = getString(R.string.search)
+            binding.icFavourites.hide()
+            binding.icSearch.hide()
+            binding.icClose.show()
+            binding.tvBody.hide()
+        } else {
+            binding.tvAudio.text = getString(R.string.audio)
+            binding.icClose.hide()
+            binding.icFavourites.show()
+            binding.icSearch.show()
+            binding.tvBody.show()
+            binding.etAudio.setText("")
+            hideKeyboard()
+        }
     }
 
 

@@ -55,14 +55,13 @@
         android:id="@+id/ic_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_close"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/ic_search"
-        app:layout_constraintEnd_toEndOf="@id/ic_search"
-        app:layout_constraintStart_toStartOf="@id/ic_search"
-        app:layout_constraintTop_toTopOf="@id/ic_search" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <net.cachapa.expandablelayout.ExpandableLayout
         android:id="@+id/expandable_layout"

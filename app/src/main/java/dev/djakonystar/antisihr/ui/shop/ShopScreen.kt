@@ -74,7 +74,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                 selectedCategoryId = it.id
             } ?: let {
                 viewModel.getAllProducts()
-                selectedCategoryId = -1
             }
         }
 
