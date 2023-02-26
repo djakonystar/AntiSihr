@@ -18,10 +18,10 @@ import dev.djakonystar.antisihr.databinding.ScreenReadersBinding
 import dev.djakonystar.antisihr.presentation.readers.ReadersScreenViewModel
 import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.ReadersAdapter
-import dev.djakonystar.antisihr.utils.toast
-import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
+import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
 
 @AndroidEntryPoint
 class ReadersScreen : Fragment(R.layout.screen_readers) {
@@ -46,6 +46,11 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private fun initListeners() {
         _adapter = ReadersAdapter()
+
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.etSearch.text.toString().isNotEmpty())
+        }
+
         binding.apply {
             rcReaders.adapter = adapter
 
@@ -81,7 +86,16 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             selectedCities.clear()
             binding.chipGroupCity.clearCheck()
             allReaders.addAll(it)
-            adapter.models = it
+            val searchValue = binding.etSearch.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.models = allReaders
+            } else {
+                adapter.models = allReaders.filter { reader ->
+                    reader.name.contains(searchValue, true) || reader.description.contains(
+                        searchValue, true
+                    )
+                }
+            }
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -128,6 +142,19 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             }
         } catch (e: Exception) {
             e.localizedMessage?.let { toast(it) }
+        }
+    }
+
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvAudio.text = getString(R.string.search)
+            binding.tvBody.hide()
+        } else {
+            binding.tvAudio.text = getString(R.string.readers)
+            binding.tvBody.show()
+            binding.etSearch.setText("")
+            hideKeyboard()
         }
     }
 

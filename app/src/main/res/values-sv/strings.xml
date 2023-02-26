@@ -73,17 +73,5 @@
     <string name="about_app">om app</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">Rysk</string>
-    <string name="text_en">Engelsk</string>
-    <string name="text_ja">Japansk</string>
-    <string name="text_sv">Svenska</string>
-    <string name="text_fr">Fransk</string>
-    <string name="text_tr">Turk</string>
-    <string name="text_de">Nederlands</string>
-    <string name="text_ko">Koreansk</string>
-    <string name="text_zh">Kinesisk</string>
-    <string name="text_it">Italiensk</string>
-    <string name="text_es">Spansk</string>
-    <string name="text_ar">Arabiska</string>
     <string name="text_of_your_question">Texten i ditt meddelande</string>
 </resources>

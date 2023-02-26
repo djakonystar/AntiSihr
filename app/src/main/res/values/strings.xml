@@ -73,17 +73,17 @@
     <string name="about_app">О приложении</string>
     <string name="name_anti" translatable="false">Anti</string>
     <string name="name_sihr" translatable="false">Sihr</string>
-    <string name="text_ru">Русский</string>
-    <string name="text_en">Английский</string>
-    <string name="text_ja">Японский</string>
-    <string name="text_sv">Швецкий</string>
-    <string name="text_fr">Французский</string>
-    <string name="text_tr">Турецкий</string>
-    <string name="text_de">Немецкий</string>
-    <string name="text_ko">Корейский</string>
-    <string name="text_zh">Китайский</string>
-    <string name="text_it">Итальянский</string>
-    <string name="text_es">Испанский</string>
-    <string name="text_ar">Арабский</string>
+    <string name="text_ru" translatable="false">Русский</string>
+    <string name="text_en" translatable="false">English</string>
+    <string name="text_ja" translatable="false">日本語</string>
+    <string name="text_sv" translatable="false">Svenska</string>
+    <string name="text_fr" translatable="false">Français</string>
+    <string name="text_tr" translatable="false">Türk</string>
+    <string name="text_de" translatable="false">Dutch</string>
+    <string name="text_ko" translatable="false">한국어</string>
+    <string name="text_zh" translatable="false">中文</string>
+    <string name="text_it" translatable="false">Italiano</string>
+    <string name="text_es" translatable="false">Español</string>
+    <string name="text_ar" translatable="false">العربية</string>
     <string name="text_of_your_question">Текст вашего сообщения</string>
 </resources>

@@ -73,17 +73,5 @@
     <string name="about_app">über die App</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">Russisch</string>
-    <string name="text_en">Engels</string>
-    <string name="text_ja">Japans</string>
-    <string name="text_sv">Zweeds</string>
-    <string name="text_fr">Frans</string>
-    <string name="text_tr">Turks</string>
-    <string name="text_de">Dutch</string>
-    <string name="text_ko">Koreaanse</string>
-    <string name="text_zh">Chinees</string>
-    <string name="text_it">Italiaans</string>
-    <string name="text_es">Spaans</string>
-    <string name="text_ar">Arabisch</string>
     <string name="text_of_your_question">De tekst van uw bericht</string>
 </resources>

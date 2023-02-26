@@ -73,17 +73,5 @@
     <string name="about_app">uygulama hakkında</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">Rus</string>
-    <string name="text_en">İngiliz</string>
-    <string name="text_ja">Japonca</string>
-    <string name="text_sv">İsveççe</string>
-    <string name="text_fr">Fransız</string>
-    <string name="text_tr">Türk</string>
-    <string name="text_de">Nederlands\'ın</string>
-    <string name="text_ko">Koreli</string>
-    <string name="text_zh">Çince</string>
-    <string name="text_it">İtalyan</string>
-    <string name="text_es">İspanyolca</string>
-    <string name="text_ar">Arapça</string>
     <string name="text_of_your_question">Mesajınızın metni</string>
 </resources>

@@ -32,6 +32,7 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
 import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 
@@ -64,6 +65,21 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         _adapter = ShopsAdapter()
         binding.recyclerView.adapter = adapter
         binding.expandableLayout.duration = 300
+
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.expandableLayout.isExpanded)
+        }
+
+        binding.expandableLayout.setOnExpansionUpdateListener { expansionFraction, state ->
+            when (state) {
+                ExpandableLayout.State.EXPANDING -> {
+                    showSearchBar(true)
+                }
+                ExpandableLayout.State.COLLAPSING -> {
+                    showSearchBar(false)
+                }
+            }
+        }
 
         lifecycleScope.launchWhenResumed {
             val sellerData = sellersList.find {
@@ -245,6 +261,24 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             Log.d("TTTT", "Error in ShopScreen, cause: ${it.message}")
             it.printStackTrace()
         }.launchIn(lifecycleScope)
+    }
+
+
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvTitle.text = getString(R.string.search)
+            binding.icFavorites.hide()
+            binding.icSearch.hide()
+            binding.icClose.show()
+        } else {
+            binding.tvTitle.text = getString(R.string.shop)
+            binding.icClose.hide()
+            binding.icFavorites.show()
+            binding.icSearch.show()
+            binding.etSearch.setText("")
+            hideKeyboard()
+        }
     }
 
     private fun initVariables() {

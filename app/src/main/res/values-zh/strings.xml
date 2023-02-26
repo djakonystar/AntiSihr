@@ -73,17 +73,5 @@
     <string name="about_app">关于应用程序</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">俄语</string>
-    <string name="text_en">英语</string>
-    <string name="text_ja">日本语</string>
-    <string name="text_sv">瑞典语</string>
-    <string name="text_fr">法语</string>
-    <string name="text_tr">土耳其人</string>
-    <string name="text_de">尼德兰斯</string>
-    <string name="text_ko">韩国人</string>
-    <string name="text_zh">中文</string>
-    <string name="text_it">意大利文</string>
-    <string name="text_es">西班牙语</string>
-    <string name="text_ar">荷兰语</string>
     <string name="text_of_your_question">您的消息文本</string>
 </resources>

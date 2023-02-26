@@ -73,17 +73,5 @@
     <string name="about_app">앱 정보</string>
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">러시아어</string>
-    <string name="text_en">영어</string>
-    <string name="text_ja">일본어</string>
-    <string name="text_sv">스웨덴어</string>
-    <string name="text_fr">프랑스어</string>
-    <string name="text_tr">터크</string>
-    <string name="text_de">네덜란드</string>
-    <string name="text_ko">한국어</string>
-    <string name="text_zh">중국어</string>
-    <string name="text_it">이탈리아어</string>
-    <string name="text_es">스페인어</string>
-    <string name="text_ar">아랍어</string>
     <string name="text_of_your_question">메시지의 텍스트</string>
 </resources>

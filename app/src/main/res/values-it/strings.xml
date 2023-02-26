@@ -73,17 +73,5 @@
     <string name="about_app">アプリについて</string> <!--Not used -->
     <string name="name_anti">Anti</string>
     <string name="name_sihr">Sihr</string>
-    <string name="text_ru">Russo</string>
-    <string name="text_en">Inglese</string>
-    <string name="text_ja">Giapponese</string>
-    <string name="text_sv">Svedese</string>
-    <string name="text_fr">Francese</string>
-    <string name="text_tr">Turco</string>
-    <string name="text_de">Olandese</string>
-    <string name="text_ko">Coreano</string>
-    <string name="text_zh">Cinese</string>
-    <string name="text_it">Italiano</string>
-    <string name="text_es">Spagnolo</string>
-    <string name="text_ar">Arabo</string>
     <string name="text_of_your_question">Il testo del tuo messaggio</string>
 </resources>

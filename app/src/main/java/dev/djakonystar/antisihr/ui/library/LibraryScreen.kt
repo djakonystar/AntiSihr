@@ -20,6 +20,7 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
 import ru.ldralighieri.corbind.view.clicks
 
 
@@ -49,7 +50,16 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         viewModel.getListOfSectionsLibraryFlow.onEach {
             allLibrary.clear()
             allLibrary.addAll(it.result!!)
-            adapter.librarySections = allLibrary
+            val searchValue = binding.etSearch.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.librarySections = allLibrary
+            } else {
+                adapter.librarySections = allLibrary.filter { audio ->
+                    audio.name.contains(searchValue, true) || audio.description.contains(
+                        searchValue, true
+                    )
+                }
+            }
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
 
@@ -69,6 +79,21 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         binding.expandableLayout.duration = 300
 
 
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.expandableLayout.isExpanded)
+        }
+
+        binding.expandableLayout.setOnExpansionUpdateListener { expansionFraction, state ->
+            when (state) {
+                ExpandableLayout.State.EXPANDING -> {
+                    showSearchBar(true)
+                }
+                ExpandableLayout.State.COLLAPSING -> {
+                    showSearchBar(false)
+                }
+            }
+        }
+
         binding.etSearch.doAfterTextChanged {
             if (binding.etSearch.text.toString().isEmpty()) {
                 hideKeyboard()
@@ -86,7 +111,10 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
         binding.icFavourites.clicks().debounce(200).onEach {
             findNavController().navigate(
                 LibraryScreenDirections.actionLibraryScreenToInnerLibraryScreen(
-                    -1, getString(R.string.favourites), getString(R.string.only_selected_articles_are_displayed_here), true
+                    -1,
+                    getString(R.string.favourites),
+                    getString(R.string.only_selected_articles_are_displayed_here),
+                    true
                 )
             )
         }.launchIn(lifecycleScope)
@@ -118,6 +146,25 @@ class LibraryScreen : Fragment(R.layout.screen_library) {
                     it.id, it.name, it.description, false
                 )
             )
+        }
+    }
+
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvSearch.text = getString(R.string.search)
+            binding.icFavourites.hide()
+            binding.icSearch.hide()
+            binding.icClose.show()
+            binding.tvBody.hide()
+        } else {
+            binding.tvSearch.text = getString(R.string.library)
+            binding.icClose.hide()
+            binding.icFavourites.show()
+            binding.icSearch.show()
+            binding.tvBody.show()
+            binding.etSearch.setText("")
+            hideKeyboard()
         }
     }
 }
