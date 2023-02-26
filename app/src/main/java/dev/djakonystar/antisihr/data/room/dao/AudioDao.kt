@@ -1,9 +1,7 @@
 package dev.djakonystar.antisihr.data.room.dao
 
 import androidx.room.*
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
-import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 
 
 @Dao

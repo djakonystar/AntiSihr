@@ -18,7 +18,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
@@ -296,7 +295,7 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }
     }
 
-    private fun onUpdateTitle(audio: AudioResultData?) {
+    private fun onUpdateTitle(audio: AudioBookmarked?) {
         if (this.view != null) {
             audio?.let {
                 binding.tvTitle.text = it.name

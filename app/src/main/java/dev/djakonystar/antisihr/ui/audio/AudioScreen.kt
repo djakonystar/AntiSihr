@@ -15,7 +15,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
@@ -73,6 +72,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             if (binding.etAudio.text.toString().isEmpty()) {
                 hideKeyboard()
                 adapter.audios = allAudio
+                (requireActivity() as MainActivity).setAudioList(allAudio)
             } else {
                 val newList = allAudio.filter { r ->
                     r.name.contains(
@@ -80,6 +80,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                     ) || r.author.contains(binding.etAudio.text.toString(), ignoreCase = true)
                 }
                 adapter.audios = newList
+                (requireActivity() as MainActivity).setAudioList(newList)
             }
         }
 
@@ -125,16 +126,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             val navController =
                 Navigation.findNavController(requireActivity(), R.id.activity_fragment_container)
 
-            val audio = AudioResultData(
-                it.author,
-                it.date_create ?: "",
-                it.date_update ?: "",
-                it.id,
-                it.image,
-                it.name,
-                it.url
-            )
-            if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == audio) {
+            if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == it) {
                 navController.navigate(
                     MainScreenDirections.actionMainScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, true
@@ -156,17 +148,8 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         }
 
         adapter.setOnPlayClickListener {
-            val audio = AudioResultData(
-                it.author,
-                it.date_create ?: "",
-                it.date_update ?: "",
-                it.id,
-                it.image,
-                it.name,
-                it.url
-            )
             lifecycleScope.launchWhenResumed {
-                playAudioFlow.emit(audio)
+                playAudioFlow.emit(it)
                 showBottomPlayerFlow.emit(true)
             }
             (requireActivity() as MainActivity).isFirstTime = false
@@ -204,25 +187,12 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                 adapter.audios = allAudio
             } else {
                 adapter.audios = allAudio.filter { audio ->
-                    audio.name.contains(searchValue, true) ||
-                            audio.author.contains(searchValue, true)
+                    audio.name.contains(searchValue, true) || audio.author.contains(
+                        searchValue, true
+                    )
                 }
             }
-            val audioList = mutableListOf<AudioResultData>()
-            it.forEach {
-                audioList.add(
-                    AudioResultData(
-                        it.author,
-                        it.date_create ?: "",
-                        it.date_update ?: "",
-                        it.id,
-                        it.image,
-                        it.name,
-                        it.url
-                    )
-                )
-            }
-            (requireActivity() as MainActivity).setAudioList(audioList)
+            (requireActivity() as MainActivity).setAudioList(adapter.audios)
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
     }

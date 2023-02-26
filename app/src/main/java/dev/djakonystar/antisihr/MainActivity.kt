@@ -5,8 +5,6 @@ import android.media.session.MediaSession
 import android.media.session.MediaSessionManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,14 +16,12 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.app.App
 import dev.djakonystar.antisihr.data.local.LocalStorage
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
-import dev.djakonystar.antisihr.service.notification.MusicService
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.utils.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -124,8 +120,8 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         startActivity(refresh)
     }
 
-    fun setAudioList(list: List<AudioResultData>) {
-        audioPlayerManager.playlist = list as ArrayList<AudioResultData>
+    fun setAudioList(list: List<AudioBookmarked>) {
+        audioPlayerManager.playlist = list as ArrayList<AudioBookmarked>
     }
 
     override fun onPreparedAudio(status: AudioStatus) {

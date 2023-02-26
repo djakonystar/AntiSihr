@@ -1,15 +1,12 @@
 package dev.djakonystar.antisihr.utils
 
-import android.provider.MediaStore.Audio
-import dev.djakonystar.antisihr.data.models.AudioResultData
-import dev.djakonystar.antisihr.data.models.AudioStatus
-import dev.djakonystar.antisihr.service.manager.PlayerManager
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 val visibilityOfBottomNavigationView = MutableSharedFlow<Boolean>()
 val visibilityOfLoadingAnimationView = MutableSharedFlow<Boolean>()
 
-val playAudioFlow = MutableSharedFlow<AudioResultData>()
+val playAudioFlow = MutableSharedFlow<AudioBookmarked>()
 
 
 val closeOfShopBottomSheetFlow = MutableSharedFlow<Unit>()

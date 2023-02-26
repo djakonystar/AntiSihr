@@ -1,4 +1,4 @@
-package uz.texnopos.elektrolife.core
+package dev.djakonystar.antisihr.utils
 
 import android.text.Editable
 import android.text.TextWatcher

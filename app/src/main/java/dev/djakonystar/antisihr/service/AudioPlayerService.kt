@@ -6,11 +6,9 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
-import androidx.core.content.ContextCompat
-import dev.djakonystar.antisihr.app.App
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerServiceListener
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.service.notification.MusicService
 import java.io.IOException
 
@@ -30,7 +28,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     var isPaused: Boolean = true
         private set
 
-    var currentAudio: AudioResultData? = null
+    var currentAudio: AudioBookmarked? = null
         private set
 
     var serviceListener: PlayerServiceListener? = null
@@ -51,7 +49,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
         updateTime()
     }
 
-    fun play(audio: AudioResultData, isContinue: Boolean = true): AudioStatus {
+    fun play(audio: AudioBookmarked, isContinue: Boolean = true): AudioStatus {
         val tempJcAudio = currentAudio
         currentAudio = audio
         var status = AudioStatus()
@@ -101,7 +99,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
         return status
     }
 
-    fun pause(auduo: AudioResultData): AudioStatus {
+    fun pause(auduo: AudioBookmarked): AudioStatus {
         val status = updateStatus(auduo, AudioStatus.PlayState.PAUSE)
         val intent = Intent(this, MusicService::class.java)
         startService(intent)
@@ -122,7 +120,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener,
     }
 
     private fun updateStatus(
-        jcAudio: AudioResultData? = null, status: AudioStatus.PlayState, duration: Int? = null
+        jcAudio: AudioBookmarked? = null, status: AudioStatus.PlayState, duration: Int? = null
     ): AudioStatus {
 
         currentAudio = jcAudio

@@ -1,33 +1,12 @@
 package dev.djakonystar.antisihr.service.manager
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
-import android.content.Intent
-import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.media.session.MediaSession
-import android.os.Build
-import android.support.v4.media.session.MediaSessionCompat
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.service.notification.MusicBroadcast
-import dev.djakonystar.antisihr.data.models.AudioResultData
-import dev.djakonystar.antisihr.data.models.MusicState
 import dev.djakonystar.antisihr.service.AudioPlayerService
 import dev.djakonystar.antisihr.service.PlayerServiceConnection
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.data.models.PlayerServiceListener
-import dev.djakonystar.antisihr.service.notification.MusicService
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
@@ -40,8 +19,8 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     lateinit var context: Context
     private var jcPlayerService: AudioPlayerService? = null
     private var serviceBound = false
-    var playlist: ArrayList<AudioResultData> = ArrayList()
-    var shuffleModeList: ArrayList<AudioResultData> = ArrayList()
+    var playlist: ArrayList<AudioBookmarked> = ArrayList()
+    var shuffleModeList: ArrayList<AudioBookmarked> = ArrayList()
     var currentPositionList: Int = 0
     private val managerListeners: CopyOnWriteArrayList<PlayerManagerListener> =
         CopyOnWriteArrayList()
@@ -56,7 +35,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             field = value
         }
 
-    val currentAudio: AudioResultData?
+    val currentAudio: AudioBookmarked?
         get() = jcPlayerService?.currentAudio
 
     var currentStatus: AudioStatus? = null
@@ -74,7 +53,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         @JvmStatic
         fun getInstance(
             context: Context,
-            playlist: ArrayList<AudioResultData>? = null,
+            playlist: ArrayList<AudioBookmarked>? = null,
             listener: PlayerManagerListener? = null
         ): WeakReference<PlayerManager> = INSTANCE ?: let {
             INSTANCE = WeakReference(PlayerManager(PlayerServiceConnection(context)).also {
@@ -108,7 +87,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
      * Plays the given [JcAudio].
      * @param jcAudio The audio to be played.
      */
-    fun playAudio(jcAudio: AudioResultData, isContinue: Boolean = true) {
+    fun playAudio(jcAudio: AudioBookmarked, isContinue: Boolean = true) {
         if (playlist.isEmpty()) {
             throw Exception("EMPTY LIST")
         } else {
@@ -185,7 +164,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
     }
 
 
-    private fun getNextAudio(): AudioResultData? {
+    private fun getNextAudio(): AudioBookmarked {
         return if (onShuffleMode) {
             val randomNumber = Random().nextInt(playlist.size)
             playlist[randomNumber]
@@ -200,7 +179,7 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
         }
     }
 
-    private fun getPreviousAudio(): AudioResultData {
+    private fun getPreviousAudio(): AudioBookmarked {
         return if (onShuffleMode) {
             try {
                 shuffleModeList[shuffleModeList.lastIndex - 1]

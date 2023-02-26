@@ -14,9 +14,9 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.service.notification.MusicService
@@ -278,7 +278,7 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
         }.launchIn(lifecycleScope)
     }
 
-    private fun onUpdateTitle(audio: AudioResultData) {
+    private fun onUpdateTitle(audio: AudioBookmarked) {
         if (this.view != null) {
             audio.let {
                 binding.tvName.text = it.name
