@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -70,7 +71,6 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
 
         binding.icPlay.clicks().debounce(200).onEach {
             mediaPlayerManager.continueAudio()
-//            mediaPlayerManager.playAudio(mediaPlayerManager.currentAudio)
         }.launchIn(lifecycleScope)
 
         binding.layoutMusicPlayer.clicks().debounce(200).onEach {
@@ -313,8 +313,8 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-        resetPlayerInfo()
         if (this.view != null) {
+            resetPlayerInfo()
             status.audio?.let {
                 onUpdateTitle(it)
             }
@@ -322,14 +322,18 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
     }
 
     override fun onCompletedAudio() {
-        resetPlayerInfo()
+        if (this.view != null) {
+            resetPlayerInfo()
+        }
     }
 
     override fun onPaused(status: AudioStatus) {
-        binding.icPause.hide()
-        binding.icPlay.show()
-        binding.icSkipForward.hide()
-        binding.icClose.show()
+        if (this.view != null) {
+            binding.icPause.hide()
+            binding.icPlay.show()
+            binding.icSkipForward.hide()
+            binding.icClose.show()
+        }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
@@ -360,11 +364,6 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
 
     override fun onJcpError(throwable: Throwable) {}
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mediaPlayerManager.removeFromPlayerManagerListener(this)
-    }
-
     override fun onResume() {
         super.onResume()
         if (mediaPlayerManager.isPlaying()) {
@@ -379,10 +378,24 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
                 binding.pbLoadingBar.hide()
                 binding.icImage.show()
                 binding.btnPause.show()
-
+                binding.layoutMusicPlayer.expand()
             }
-        }else{
-            binding.layoutMusicPlayer.collapse()
+        } else {
+            if ((requireActivity() as MainActivity).isFirstTime.not()) {
+                mediaPlayerManager.currentAudio?.let {
+                    binding.tvName.text = it.name
+                    binding.tvAuthor.text = it.author
+                    binding.icImage.setImageWithGlide(requireContext(), it.image)
+                    binding.icPlay.show()
+                    binding.icPause.hide()
+                    binding.icClose.show()
+                    binding.icSkipForward.hide()
+                    binding.pbLoadingBar.hide()
+                    binding.icImage.show()
+                    binding.btnPause.show()
+                    binding.layoutMusicPlayer.expand()
+                }
+            }
         }
     }
 }

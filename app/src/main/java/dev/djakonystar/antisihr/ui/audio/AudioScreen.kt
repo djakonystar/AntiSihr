@@ -152,6 +152,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             lifecycleScope.launchWhenCreated {
                 showBottomPlayerFlow.emit(false)
             }
+            (requireActivity() as MainActivity).isFirstTime = false
         }
 
         adapter.setOnPlayClickListener {
@@ -168,6 +169,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                 playAudioFlow.emit(audio)
                 showBottomPlayerFlow.emit(true)
             }
+            (requireActivity() as MainActivity).isFirstTime = false
         }
 
         lifecycleScope.launchWhenCreated {
