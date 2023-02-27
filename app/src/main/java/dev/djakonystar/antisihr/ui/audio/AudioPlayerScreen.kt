@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
@@ -100,24 +99,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         }.launchIn(lifecycleScope)
 
         binding.icPrevious.clicks().debounce(200).onEach {
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
-                binding.icPrevious.isEnabled = false
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                resetPlayerInfo()
-                try {
-                    mediaPlayerManager.previousAudio()
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    e.printStackTrace()
-                }
-                binding.icPrevious.isEnabled = true
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
+            resetPlayerInfo()
+            try {
+                mediaPlayerManager.previousAudio()
+            } catch (e: Exception) {
+                binding.icPause.show()
+                binding.icPlay.hide()
+                e.printStackTrace()
             }
         }.launchIn(lifecycleScope)
 
@@ -281,17 +269,6 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.icForward.isEnabled = true
             binding.btnPlay.isEnabled = true
             binding.icFavourite.show()
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
-                binding.icPrevious.isEnabled = false
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                binding.icPrevious.isEnabled = true
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
-            }
         }
     }
 

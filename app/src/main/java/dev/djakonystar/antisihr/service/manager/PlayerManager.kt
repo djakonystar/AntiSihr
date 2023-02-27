@@ -190,7 +190,8 @@ private constructor(private val serviceConnection: PlayerServiceConnection) :
             try {
                 playlist[currentPositionList.dec()]
             } catch (e: IndexOutOfBoundsException) {
-                playlist.first()
+                currentPositionList = playlist.lastIndex
+                playlist[currentPositionList]
             }
         }
     }

@@ -22,12 +22,12 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_favorites"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="12dp"
+        android:padding="10dp"
         android:src="@drawable/ic_favourites"
         android:foreground="@drawable/bg_ripple_effect_round"
         android:visibility="visible"
@@ -38,32 +38,31 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_search"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_circle"
         android:elevation="4dp"
-        android:padding="12dp"
+        android:padding="10dp"
         android:foreground="@drawable/bg_ripple_effect_round"
         android:src="@drawable/ic_search"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/black" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
+        android:layout_margin="16dp"
         android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_close"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <net.cachapa.expandablelayout.ExpandableLayout
         android:id="@+id/expandable_layout"

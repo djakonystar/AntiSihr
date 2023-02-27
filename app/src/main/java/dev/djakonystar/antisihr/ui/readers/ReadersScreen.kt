@@ -148,10 +148,10 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private fun showSearchBar(show: Boolean) {
         if (show) {
-            binding.tvAudio.text = getString(R.string.search)
+            binding.tvTitle.text = getString(R.string.search)
             binding.tvBody.hide()
         } else {
-            binding.tvAudio.text = getString(R.string.readers)
+            binding.tvTitle.text = getString(R.string.readers)
             binding.tvBody.show()
             binding.etSearch.setText("")
             hideKeyboard()

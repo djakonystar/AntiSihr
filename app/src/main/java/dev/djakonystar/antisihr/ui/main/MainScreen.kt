@@ -2,15 +2,14 @@ package dev.djakonystar.antisihr.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUiSaveStateControl
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
 
+@OptIn(NavigationUiSaveStateControl::class)
 class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
     private val binding by viewBinding(ScreenMainBinding::bind)
     private lateinit var navController: NavController
@@ -37,7 +37,7 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
         navController = findNavController()
         childNavController =
             (childFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment).navController
-        binding.bottomNavigationBar.setupWithNavController(childNavController)
+        NavigationUI.setupWithNavController(binding.bottomNavigationBar, childNavController, false)
 
         initListeners()
         initObservers()
@@ -122,7 +122,7 @@ class MainScreen : Fragment(R.layout.screen_main), PlayerManagerListener {
                         binding.btnPause.show()
                         binding.layoutMusicPlayer.expand()
                     }
-                }else{
+                } else {
                     binding.layoutMusicPlayer.collapse()
                 }
             }

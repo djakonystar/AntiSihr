@@ -75,11 +75,11 @@
     <string name="name_sihr" translatable="false">Sihr</string>
     <string name="text_ru" translatable="false">Русский</string>
     <string name="text_en" translatable="false">English</string>
-    <string name="text_ja" translatable="false">日本語</string>
+    <string name="text_ja" translatable="false">日本</string>
     <string name="text_sv" translatable="false">Svenska</string>
     <string name="text_fr" translatable="false">Français</string>
     <string name="text_tr" translatable="false">Türk</string>
-    <string name="text_de" translatable="false">Dutch</string>
+    <string name="text_de" translatable="false">Deutsch</string>
     <string name="text_ko" translatable="false">한국어</string>
     <string name="text_zh" translatable="false">中文</string>
     <string name="text_it" translatable="false">Italiano</string>
