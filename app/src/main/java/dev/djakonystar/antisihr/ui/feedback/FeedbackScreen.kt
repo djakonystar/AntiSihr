@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -15,7 +14,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.data.models.drawerlayout.AddFeedbackData
-import dev.djakonystar.antisihr.databinding.ScreenAboutBinding
 import dev.djakonystar.antisihr.databinding.ScreenFeedbackBinding
 import dev.djakonystar.antisihr.presentation.drawer.MainViewModel
 import dev.djakonystar.antisihr.presentation.drawer.impl.MainViewModelImpl
@@ -27,7 +25,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
-import uz.texnopos.elektrolife.core.MaskWatcher
+import dev.djakonystar.antisihr.utils.MaskWatcher
 
 
 @AndroidEntryPoint

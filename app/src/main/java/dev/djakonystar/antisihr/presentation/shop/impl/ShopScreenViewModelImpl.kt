@@ -10,9 +10,6 @@ import dev.djakonystar.antisihr.data.models.shop.ShopItemData
 import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.domain.usecase.ShopUseCase
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
-import dev.djakonystar.antisihr.utils.showBottomNavigationView
-import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

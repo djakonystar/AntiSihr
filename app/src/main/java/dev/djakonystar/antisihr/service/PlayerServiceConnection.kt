@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import dev.djakonystar.antisihr.data.models.AudioResultData
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 
 
 class PlayerServiceConnection(private val context: Context) : ServiceConnection {
@@ -25,10 +25,10 @@ class PlayerServiceConnection(private val context: Context) : ServiceConnection 
     }
 
     fun connect(
-            playlist: ArrayList<AudioResultData>? = null,
-            currentAudio: AudioResultData? = null,
-            onConnected: ((AudioPlayerService.PlayerServiceBinder?) -> Unit)? = null,
-            onDisconnected: ((Unit) -> Unit)? = null
+        playlist: ArrayList<AudioBookmarked>? = null,
+        currentAudio: AudioBookmarked? = null,
+        onConnected: ((AudioPlayerService.PlayerServiceBinder?) -> Unit)? = null,
+        onDisconnected: ((Unit) -> Unit)? = null
     ) {
         this.onConnected = onConnected
         this.onDisconnected = onDisconnected

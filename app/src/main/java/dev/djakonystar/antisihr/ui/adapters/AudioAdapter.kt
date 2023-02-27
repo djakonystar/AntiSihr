@@ -2,16 +2,10 @@ package dev.djakonystar.antisihr.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioModel
-import dev.djakonystar.antisihr.data.models.AudioResultData
-import dev.djakonystar.antisihr.data.models.library.LibraryResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ItemAudioBinding
-import dev.djakonystar.antisihr.databinding.ItemLibraryBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
 
 class AudioAdapter : RecyclerView.Adapter<AudioAdapter.ViewHolder>() {

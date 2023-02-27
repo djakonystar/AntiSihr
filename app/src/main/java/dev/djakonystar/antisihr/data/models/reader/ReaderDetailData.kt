@@ -10,6 +10,6 @@ data class ReaderDetailData(
     val image: String,
     val address: String?,
     val phone: String,
-    val city: City,
+    val city: CityData?,
     @SerializedName("social_networks") val socialNetworks: List<SocialNetwork>
 )

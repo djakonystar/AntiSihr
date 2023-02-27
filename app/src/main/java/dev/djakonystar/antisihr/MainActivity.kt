@@ -5,8 +5,6 @@ import android.media.session.MediaSession
 import android.media.session.MediaSessionManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,14 +16,12 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.app.App
 import dev.djakonystar.antisihr.data.local.LocalStorage
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.databinding.ActivityMainBinding
 import dev.djakonystar.antisihr.service.manager.PlayerManager
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
-import dev.djakonystar.antisihr.service.notification.MusicService
+import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.utils.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -65,6 +61,10 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 //                binding.loadingAnimation.hide()
 //            }
 //        }.launchIn(lifecycleScope)
+
+        playAudioFlow.onEach {
+            playAudio(it.id)
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {
@@ -119,38 +119,30 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
         startActivity(refresh)
     }
 
-    fun setAudioList(list: List<AudioResultData>) {
-        audioPlayerManager.playlist = list as ArrayList<AudioResultData>
+    fun setAudioList(list: List<AudioBookmarked>) {
+        audioPlayerManager.playlist = list as ArrayList<AudioBookmarked>
     }
 
     override fun onPreparedAudio(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            preparingAudioFlow.emit(Pair(audioPlayerManager, status))
-        }
     }
 
     override fun onCompletedAudio() {
-        lifecycleScope.launchWhenCreated {
-            completeAudioFlow.emit(audioPlayerManager)
+        try {
+            audioPlayerManager.nextAudio(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     override fun onPaused(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            pausedAudioFlow.emit(audioPlayerManager)
-        }
     }
 
     override fun onContinueAudio(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            continueAudioFlow.emit(audioPlayerManager)
-        }
+
     }
 
     override fun onPlaying(status: AudioStatus) {
-        lifecycleScope.launchWhenCreated {
-            playingAudioFlow.emit(audioPlayerManager)
-        }
+
     }
 
     override fun onTimeChanged(status: AudioStatus) {}
@@ -161,37 +153,46 @@ class MainActivity : AppCompatActivity(), PlayerManagerListener {
 
     fun playAudio(id: Int, isContinue: Boolean = true) {
         lifecycleScope.launchWhenCreated {
-            audioPlayClickFlow.emit(audioPlayerManager)
+            resetBottomPlayerInfoFlow.emit(Unit)
         }
         audioPlayerManager.playlist.let {
             val audio = it.find { it.id == id }
+            isFirstTime = false
             audioPlayerManager.playAudio(audio!!, isContinue)
         }
     }
 
     fun next() {
-        lifecycleScope.launchWhenCreated {
-            audioNextClickFlow.emit(audioPlayerManager)
+        audioPlayerManager.let { player ->
+            player.currentAudio?.let {
+                lifecycleScope.launchWhenResumed {
+                    resetBottomPlayerInfoFlow.emit(Unit)
+                }
+                try {
+                    player.nextAudio(false)
+                } catch (e: Exception) {
+                    lifecycleScope.launchWhenResumed {
+                        errorBottomPlayerInfoFlow.emit(Unit)
+                    }
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
     fun continueAudio() {
-        lifecycleScope.launchWhenCreated {
-            audioContinueClickFlow.emit(audioPlayerManager)
+        try {
+            audioPlayerManager.continueAudio()
+        } catch (e: Exception) {
+            lifecycleScope.launchWhenResumed {
+                errorBottomPlayerInfoFlow.emit(Unit)
+            }
+            e.printStackTrace()
         }
     }
 
     fun pause() {
-        lifecycleScope.launchWhenCreated {
-            audioPauseClickFlow.emit(audioPlayerManager)
-        }
-    }
-
-
-    fun previous() {
-        lifecycleScope.launchWhenCreated {
-            audioPreviousClickFlow.emit(audioPlayerManager)
-        }
+        audioPlayerManager.pauseAudio()
     }
 
     fun setStatusBarColor(@ColorRes color: Int) {

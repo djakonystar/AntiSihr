@@ -12,17 +12,16 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.reader.City
+import dev.djakonystar.antisihr.data.models.reader.CityData
 import dev.djakonystar.antisihr.data.models.reader.ReaderData
 import dev.djakonystar.antisihr.databinding.ScreenReadersBinding
 import dev.djakonystar.antisihr.presentation.readers.ReadersScreenViewModel
 import dev.djakonystar.antisihr.presentation.readers.impl.ReadersScreenViewModelImpl
 import dev.djakonystar.antisihr.ui.adapters.ReadersAdapter
-import dev.djakonystar.antisihr.utils.showBottomNavigationView
-import dev.djakonystar.antisihr.utils.toast
-import dev.djakonystar.antisihr.utils.visibilityOfLoadingAnimationView
+import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
 
 @AndroidEntryPoint
 class ReadersScreen : Fragment(R.layout.screen_readers) {
@@ -37,9 +36,8 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         lifecycleScope.launchWhenResumed {
-//            visibilityOfLoadingAnimationView.emit(true)
-            showBottomNavigationView.emit(Unit)
             viewModel.getReaders()
+            viewModel.getAllCities()
         }
 
         initListeners()
@@ -48,21 +46,27 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private fun initListeners() {
         _adapter = ReadersAdapter()
+
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.etSearch.text.toString().isNotEmpty())
+        }
+
         binding.apply {
             rcReaders.adapter = adapter
 
             etSearch.doAfterTextChanged {
                 chipGroupCity.clearCheck()
                 if (etSearch.text.toString().isEmpty()) {
-                    adapter.submitList(allReaders)
+                    adapter.models = allReaders
                 } else {
                     val newList = allReaders.filter { r ->
-                        r.city!!.name.startsWith(etSearch.text.toString(), ignoreCase = true) ||
-                                r.name.contains(etSearch.text.toString(), true) ||
-                                r.surname.contains(etSearch.text.toString(), true) ||
-                                r.description.contains(etSearch.text.toString(), true)
+                        r.city!!.name.startsWith(
+                            etSearch.text.toString(), ignoreCase = true
+                        ) || r.name.contains(etSearch.text.toString(), true) || r.surname.contains(
+                            etSearch.text.toString(), true
+                        ) || r.description.contains(etSearch.text.toString(), true)
                     }
-                    adapter.submitList(newList)
+                    adapter.models = newList
                 }
             }
         }
@@ -78,13 +82,19 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
 
     private fun initObservers() {
         viewModel.getReadersSuccessFlow.onEach {
-            adapter.submitList(it)
             allReaders.clear()
-            allReaders.addAll(it)
             selectedCities.clear()
             binding.chipGroupCity.clearCheck()
-            it.forEach { reader ->
-                addNewChip(reader.city)
+            allReaders.addAll(it)
+            val searchValue = binding.etSearch.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.models = allReaders
+            } else {
+                adapter.models = allReaders.filter { reader ->
+                    reader.name.contains(searchValue, true) || reader.description.contains(
+                        searchValue, true
+                    )
+                }
             }
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
@@ -98,36 +108,53 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
             visibilityOfLoadingAnimationView.emit(false)
             it.localizedMessage?.let { message -> toast(message) }
         }.launchIn(lifecycleScope)
+
+        viewModel.getAllCitiesFlow.onEach {
+            it.forEach {
+                addNewChip(it)
+            }
+        }.launchIn(lifecycleScope)
     }
 
-    private fun addNewChip(city: City?) {
-        if (city != null) {
-            try {
-                binding.apply {
-                    val inflater = LayoutInflater.from(requireContext())
+    private fun addNewChip(city: CityData) {
+        try {
+            binding.apply {
+                val inflater = LayoutInflater.from(requireContext())
 
-                    val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
-                    newChip.text = city.name
+                val newChip = inflater.inflate(R.layout.item_chip, chipGroupCity, false) as Chip
+                newChip.text = city.name
 
-                    chipGroupCity.addView(newChip)
+                chipGroupCity.addView(newChip)
 
-                    newChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                        if (isChecked) {
-                            chipGroupCity.check((buttonView as Chip).id)
-                            if (!selectedCities.contains(city.name)) {
-                                selectedCities.add(city.name)
-                            }
-                        } else {
-                            if (selectedCities.contains(city.name)) {
-                                selectedCities.remove(city.name)
-                            }
+                newChip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        chipGroupCity.check((buttonView as Chip).id)
+                        if (!selectedCities.contains(city.name)) {
+                            selectedCities.add(city.name)
                         }
-                        filterReaders()
+                    } else {
+                        if (selectedCities.contains(city.name)) {
+                            selectedCities.remove(city.name)
+                        }
                     }
+                    filterReaders()
                 }
-            } catch (e: Exception) {
-                e.localizedMessage?.let { toast(it) }
             }
+        } catch (e: Exception) {
+            e.localizedMessage?.let { toast(it) }
+        }
+    }
+
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvTitle.text = getString(R.string.search)
+            binding.tvBody.hide()
+        } else {
+            binding.tvTitle.text = getString(R.string.readers)
+            binding.tvBody.show()
+            binding.etSearch.setText("")
+            hideKeyboard()
         }
     }
 
@@ -135,7 +162,7 @@ class ReadersScreen : Fragment(R.layout.screen_readers) {
         val newList = if (selectedCities.isNotEmpty()) {
             allReaders.filter { selectedCities.contains(it.city!!.name) }
         } else allReaders
-        adapter.submitList(newList)
+        adapter.models = newList
     }
 
     override fun onDetach() {

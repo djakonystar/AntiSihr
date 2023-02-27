@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
@@ -18,7 +17,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.models.AudioStatus
 import dev.djakonystar.antisihr.data.models.PlayerManagerListener
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
@@ -94,58 +92,31 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
 
         binding.btnPlay.clicks().debounce(200).onEach {
             if (binding.icPlay.isVisible) {
-                if ((requireActivity() as MainActivity).isFirstTime) {
-                    (requireActivity() as MainActivity).playAudio(args.id)
-                    (requireActivity() as MainActivity).isFirstTime = false
-                } else {
-                    mediaPlayerManager.continueAudio()
-                }
+                mediaPlayerManager.continueAudio()
             } else {
                 mediaPlayerManager.pauseAudio()
             }
         }.launchIn(lifecycleScope)
 
         binding.icPrevious.clicks().debounce(200).onEach {
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
-                binding.icPrevious.isEnabled = false
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                resetPlayerInfo()
-                try {
-                    mediaPlayerManager.previousAudio()
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    e.printStackTrace()
-                }
-                binding.icPrevious.isEnabled = true
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
+            resetPlayerInfo()
+            try {
+                mediaPlayerManager.previousAudio()
+            } catch (e: Exception) {
+                binding.icPause.show()
+                binding.icPlay.hide()
+                e.printStackTrace()
             }
         }.launchIn(lifecycleScope)
 
         binding.icForward.clicks().debounce(200).onEach {
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
-                binding.icForward.isEnabled = false
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                resetPlayerInfo()
-                try {
-                    mediaPlayerManager.nextAudio(false)
-                } catch (e: Exception) {
-                    binding.icPause.show()
-                    binding.icPlay.hide()
-                    e.printStackTrace()
-                }
-                binding.icForward.isEnabled = true
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
+            resetPlayerInfo()
+            try {
+                mediaPlayerManager.nextAudio(false)
+            } catch (e: Exception) {
+                binding.icPause.show()
+                binding.icPlay.hide()
+                e.printStackTrace()
             }
         }.launchIn(lifecycleScope)
 
@@ -298,33 +269,10 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
             binding.icForward.isEnabled = true
             binding.btnPlay.isEnabled = true
             binding.icFavourite.show()
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == 0) {
-                binding.icPrevious.isEnabled = false
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                binding.icPrevious.isEnabled = true
-                binding.icPrevious.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
-            }
-
-            if (mediaPlayerManager.onShuffleMode.not() && mediaPlayerManager.currentPositionList == mediaPlayerManager.playlist.lastIndex) {
-                binding.icForward.isEnabled = false
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.disabled_button_color)
-                )
-            } else {
-                binding.icForward.isEnabled = true
-                binding.icForward.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.black)
-                )
-            }
         }
     }
 
-    private fun onUpdateTitle(audio: AudioResultData?) {
+    private fun onUpdateTitle(audio: AudioBookmarked?) {
         if (this.view != null) {
             audio?.let {
                 binding.tvTitle.text = it.name
@@ -405,7 +353,13 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
                     binding.musicController.progress = currentPosition.toInt()
                 }
                 binding.currentTime.post {
-                    binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                    try {
+                        if (currentPosition.toInt() != status.duration) {
+                            binding.currentTime.text = currentPosition.milliSecondsToTimer()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 binding.currentTime.show()
                 binding.endTime.show()
@@ -425,5 +379,9 @@ class AudioPlayerScreen : Fragment(R.layout.screen_audio_player), SeekBar.OnSeek
         requireActivity().stopService(intent)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mediaPlayerManager.removeFromPlayerManagerListener(this)
+    }
 
 }

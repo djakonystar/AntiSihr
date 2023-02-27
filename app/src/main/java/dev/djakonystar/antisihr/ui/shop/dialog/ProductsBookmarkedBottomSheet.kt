@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -19,6 +20,7 @@ import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.databinding.BottomShopFavouritesBinding
 import dev.djakonystar.antisihr.presentation.shop.ShopScreenViewModel
 import dev.djakonystar.antisihr.presentation.shop.impl.ShopScreenViewModelImpl
+import dev.djakonystar.antisihr.ui.main.MainScreenDirections
 import dev.djakonystar.antisihr.ui.shop.adapter.BookmarkedProductsAdapter
 import dev.djakonystar.antisihr.utils.closeOfShopBottomSheetFlow
 import dev.djakonystar.antisihr.utils.showSnackBar
@@ -62,7 +64,14 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
 
 
         adapter.setOnClickListener {
-            showSnackBar(requireView(), "Basildi: ${it.name} and ${it.price}")
+            val navController =
+                Navigation.findNavController(requireActivity(), R.id.activity_fragment_container)
+            navController.navigate(
+                MainScreenDirections.actionMainScreenToGoodInfoScreen(
+                    it.id,
+                    true
+                )
+            )
         }
 
         binding.swipeRefreshLayout.refreshes().debounce(200).onEach {
@@ -74,7 +83,6 @@ class ProductsBookmarkedBottomSheet : BottomSheetDialogFragment() {
                 viewModel.deleteFromBookmarked(item)
                 adapter.notifyItemRemoved(pos)
                 adapter.models.remove(item)
-
             }
         }
     }

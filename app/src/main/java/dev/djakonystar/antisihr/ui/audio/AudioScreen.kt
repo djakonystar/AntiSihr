@@ -2,6 +2,7 @@ package dev.djakonystar.antisihr.ui.audio
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -10,12 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.djakonystar.antisihr.MainActivity
 import dev.djakonystar.antisihr.R
-import dev.djakonystar.antisihr.data.models.AudioResultData
 import dev.djakonystar.antisihr.data.room.entity.AudioBookmarked
 import dev.djakonystar.antisihr.databinding.ScreenAudioBinding
 import dev.djakonystar.antisihr.presentation.audio.AudioScreenViewModel
@@ -27,6 +26,8 @@ import dev.djakonystar.antisihr.utils.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import net.cachapa.expandablelayout.ExpandableLayout
+import net.cachapa.expandablelayout.ExpandableLayout.OnExpansionUpdateListener
 import ru.ldralighieri.corbind.swiperefreshlayout.refreshes
 import ru.ldralighieri.corbind.view.clicks
 
@@ -45,22 +46,18 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).setStatusBarColor(R.color.white)
 
-        lifecycleScope.launchWhenResumed {
-            viewModel.getListOfAudios()
-//            visibilityOfLoadingAnimationView.emit(true)
-            showBottomNavigationView.emit(Unit)
-        }
-
         initListeners()
         initObservers()
-
-
     }
 
     private fun initListeners() {
         _adapter = AudioAdapter()
         binding.rcAudios.adapter = adapter
         binding.expandableLayout.duration = 300
+
+        lifecycleScope.launchWhenResumed {
+            showSearchBar(binding.expandableLayout.isExpanded)
+        }
 
         binding.swipeRefreshLayout.refreshes().onEach {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -75,6 +72,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             if (binding.etAudio.text.toString().isEmpty()) {
                 hideKeyboard()
                 adapter.audios = allAudio
+                (requireActivity() as MainActivity).setAudioList(allAudio)
             } else {
                 val newList = allAudio.filter { r ->
                     r.name.contains(
@@ -82,27 +80,27 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                     ) || r.author.contains(binding.etAudio.text.toString(), ignoreCase = true)
                 }
                 adapter.audios = newList
+                (requireActivity() as MainActivity).setAudioList(newList)
+            }
+        }
+
+        binding.expandableLayout.setOnExpansionUpdateListener { expansionFraction, state ->
+            when (state) {
+                ExpandableLayout.State.EXPANDING -> {
+                    showSearchBar(true)
+                }
+                ExpandableLayout.State.COLLAPSING -> {
+                    showSearchBar(false)
+                }
             }
         }
 
         binding.icSearch.clicks().debounce(200).onEach {
-            binding.tvAudio.text = getString(R.string.search)
-            binding.icFavourites.hide()
-            binding.icSearch.hide()
-            binding.icClose.show()
-            binding.tvBody.hide()
             binding.expandableLayout.expand()
         }.launchIn(lifecycleScope)
 
         binding.icClose.clicks().debounce(200).onEach {
-            binding.tvAudio.text = getString(R.string.audio)
-            binding.icClose.hide()
-            binding.icFavourites.show()
-            binding.icSearch.show()
-            binding.tvBody.show()
             binding.expandableLayout.collapse()
-            binding.etAudio.setText("")
-            hideKeyboard()
         }.launchIn(lifecycleScope)
 
         binding.icFavourites.clicks().debounce(200).onEach {
@@ -128,16 +126,7 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             val navController =
                 Navigation.findNavController(requireActivity(), R.id.activity_fragment_container)
 
-            val audio = AudioResultData(
-                it.author,
-                it.date_create ?: "",
-                it.date_update ?: "",
-                it.id,
-                it.image,
-                it.name,
-                it.url
-            )
-            if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == audio) {
+            if (mediaPlayerManager.isPlaying() && mediaPlayerManager.currentAudio == it) {
                 navController.navigate(
                     MainScreenDirections.actionMainScreenToAudioPlayerScreen(
                         it.id, it.name, it.author, it.url, it.image, true
@@ -155,22 +144,15 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
             lifecycleScope.launchWhenCreated {
                 showBottomPlayerFlow.emit(false)
             }
+            (requireActivity() as MainActivity).isFirstTime = false
         }
 
         adapter.setOnPlayClickListener {
-            val audio = AudioResultData(
-                it.author,
-                it.date_create ?: "",
-                it.date_update ?: "",
-                it.id,
-                it.image,
-                it.name,
-                it.url
-            )
             lifecycleScope.launchWhenResumed {
-                playAudioFlow.emit(audio)
+                playAudioFlow.emit(it)
                 showBottomPlayerFlow.emit(true)
             }
+            (requireActivity() as MainActivity).isFirstTime = false
         }
 
         lifecycleScope.launchWhenCreated {
@@ -200,24 +182,37 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
         viewModel.getListOfAudiosSuccessFlow.onEach {
             allAudio.clear()
             allAudio.addAll(it)
-            adapter.audios = it
-            val audioList = mutableListOf<AudioResultData>()
-            it.forEach {
-                audioList.add(
-                    AudioResultData(
-                        it.author,
-                        it.date_create ?: "",
-                        it.date_update ?: "",
-                        it.id,
-                        it.image,
-                        it.name,
-                        it.url
+            val searchValue = binding.etAudio.text.toString()
+            if (searchValue.isEmpty() || searchValue.isBlank()) {
+                adapter.audios = allAudio
+            } else {
+                adapter.audios = allAudio.filter { audio ->
+                    audio.name.contains(searchValue, true) || audio.author.contains(
+                        searchValue, true
                     )
-                )
+                }
             }
-            (requireActivity() as MainActivity).setAudioList(audioList)
+            (requireActivity() as MainActivity).setAudioList(adapter.audios)
             visibilityOfLoadingAnimationView.emit(false)
         }.launchIn(lifecycleScope)
+    }
+
+    private fun showSearchBar(show: Boolean) {
+        if (show) {
+            binding.tvAudio.text = getString(R.string.search)
+            binding.icFavourites.hide()
+            binding.icSearch.hide()
+            binding.icClose.show()
+            binding.tvBody.hide()
+        } else {
+            binding.tvAudio.text = getString(R.string.audio)
+            binding.icClose.hide()
+            binding.icFavourites.show()
+            binding.icSearch.show()
+            binding.tvBody.show()
+            binding.etAudio.setText("")
+            hideKeyboard()
+        }
     }
 
 
@@ -228,5 +223,10 @@ class AudioScreen : Fragment(R.layout.screen_audio) {
                 showBottomPlayerFlow.emit(true)
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        (requireActivity() as MainActivity).isClickedFavourite = false
     }
 }

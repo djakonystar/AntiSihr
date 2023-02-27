@@ -1,6 +1,6 @@
 package dev.djakonystar.antisihr.data.models.reader
 
-data class City(
+data class CityData(
     val id: Int,
     val name: String
 )

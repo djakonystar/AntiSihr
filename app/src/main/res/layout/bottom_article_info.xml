@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="@drawable/bg_rect_top_corner_20"
+    android:backgroundTint="@color/background_color"
     tools:context=".ui.library.dialog.ArticleDetailBottomFragment">
 
     <View
@@ -45,11 +46,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:alpha="0.4"
         android:fontFamily="@font/nunito_ttf"
         android:text="@string/to_favourites"
         android:textColor="@color/main_text_color"
         android:textSize="16dp"
-        android:alpha="0.4"
         app:layout_constraintBottom_toBottomOf="@id/ic_favourites"
         app:layout_constraintStart_toEndOf="@id/ic_favourites"
         app:layout_constraintTop_toTopOf="@id/ic_favourites" />
