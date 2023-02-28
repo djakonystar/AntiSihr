@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883815930525",
+    "project_id": "antisihr-18bb3",
+    "storage_bucket": "antisihr-18bb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883815930525:android:6c9cce188e34c3459ad274",
+        "android_client_info": {
+          "package_name": "dev.djakonystar.antisihr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883815930525-e30ne5r772to95h2r720ei0etp043iqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBftrsJe2u6jeJhRWmni0HXWps9CBFkFdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883815930525-e30ne5r772to95h2r720ei0etp043iqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

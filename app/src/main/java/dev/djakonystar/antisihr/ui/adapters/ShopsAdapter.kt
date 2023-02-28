@@ -29,7 +29,11 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
                 val price = if (item.price % 1.0 == 0.0) item.price.toInt().toString()
                 else item.price.toString()
                 tvPrice.text = "$price ${binding.root.context.getString(R.string.rub)}"
-                ivProduct.setImageWithGlide(binding.root.context, item.image)
+                if (item.image.isNotEmpty()) {
+                    ivProduct.setImageWithGlide(binding.root.context, item.image)
+                } else {
+                    ivProduct.setImageResource(R.drawable.placeholder)
+                }
                 if (item.isFavourite) {
                     ivFavorite.setImageResource(R.drawable.ic_favourites_filled)
                     ivFavorite.imageTintList = ColorStateList.valueOf(
