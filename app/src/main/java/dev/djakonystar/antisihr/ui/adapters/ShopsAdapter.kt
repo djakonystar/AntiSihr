@@ -24,7 +24,7 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ShopViewHolder>() {
         fun bind(item: ShopItemBookmarked) {
             binding.apply {
                 tvName.text = item.name
-                tvPeace.isVisible = item.weight != 0.0
+                tvPeace.isVisible = item.weight != ""
                 tvPeace.text = (item.weight ?: 0).toString()
                 val price = if (item.price % 1.0 == 0.0) item.price.toInt().toString()
                 else item.price.toString()
