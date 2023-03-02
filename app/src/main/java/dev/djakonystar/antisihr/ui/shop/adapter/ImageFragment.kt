@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bumptech.glide.Glide
 import dev.djakonystar.antisihr.R
 import dev.djakonystar.antisihr.databinding.ItemViewpagerImageBinding
 import dev.djakonystar.antisihr.utils.setImageWithGlide
@@ -16,6 +15,10 @@ class ImageFragment : Fragment(R.layout.item_viewpager_image) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.icImage.setImageWithGlide(requireContext(),imageUri)
+        if (imageUri.isNotEmpty()) {
+            binding.icImage.setImageWithGlide(requireContext(), imageUri)
+        } else {
+            binding.icImage.setImageResource(R.drawable.placeholder)
+        }
     }
 }
