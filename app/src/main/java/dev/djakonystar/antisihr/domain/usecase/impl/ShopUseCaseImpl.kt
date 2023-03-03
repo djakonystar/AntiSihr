@@ -8,6 +8,7 @@ import dev.djakonystar.antisihr.data.room.entity.ShopItemBookmarked
 import dev.djakonystar.antisihr.domain.repository.ShopRepository
 import dev.djakonystar.antisihr.domain.usecase.ShopUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,7 +29,7 @@ class ShopUseCaseImpl @Inject constructor(
                             it.description,
                             it.price,
                             it.image,
-                            it.weight ?: 0.0,
+                            it.weight?:"",
                             db.goodsDao().isExistsInBookmarkeds(
                                 it.id, it.name, it.image
                             ),
@@ -56,7 +57,7 @@ class ShopUseCaseImpl @Inject constructor(
                             it.description,
                             it.price,
                             it.image,
-                            it.weight ?: 0.0,
+                            it.weight ?: "",
                             db.goodsDao().isExistsInBookmarkeds(
                                 it.id, it.name, it.image
                             ),

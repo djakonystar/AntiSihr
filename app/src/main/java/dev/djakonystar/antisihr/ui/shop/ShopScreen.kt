@@ -57,7 +57,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         lifecycleScope.launchWhenResumed {
             viewModel.getAllSellers()
             viewModel.getAllProducts()
-//            visibilityOfLoadingAnimationView.emit(true)
         }
     }
 
@@ -193,6 +192,7 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
 
     private fun initObservers() {
         viewModel.getGoodsSuccessFlow.onEach {
+            Log.d("TTTT","It is data from flow $it")
             allProducts.clear()
             allProducts.addAll(it)
             val searchValue = binding.etSearch.text.toString()
@@ -227,7 +227,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
             val typeface = ResourcesCompat.getFont(requireContext(), R.font.nunito_extrabold_ttf)
             tvTab.typeface = typeface
             tvTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
-            Log.d("SelectedCategory", selectedCategoryId.toString())
             binding.tabLayout.addTab(tab)
             if (selectedCategoryId == -1) tab.select()
 
@@ -246,8 +245,6 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
                         requireContext(), R.color.second_text_color
                     )
                 )
-                Log.d("SelectedCategory", selectedCategoryId.toString())
-                Log.d("SelectedCategoryTabId", tabb.id.toString())
                 binding.tabLayout.addTab(tabb)
                 if (sellerData.id == selectedCategoryId) tabb.select()
             }
@@ -258,12 +255,9 @@ class ShopScreen : Fragment(R.layout.screen_shop) {
         }.launchIn(lifecycleScope)
 
         viewModel.errorFlow.onEach {
-            Log.d("TTTT", "Error in ShopScreen, cause: ${it.message}")
             it.printStackTrace()
         }.launchIn(lifecycleScope)
     }
-
-
 
     private fun showSearchBar(show: Boolean) {
         if (show) {

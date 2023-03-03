@@ -104,6 +104,7 @@ class GoodInfoScreen : Fragment(R.layout.screen_good_info) {
             shopItemData = item
             setFavouriteDrawable()
             binding.tvTitle.text = item.name
+            binding.tvTitle.isSelected = true
             binding.tvCapacityTitle.isVisible = item.weight != null
             binding.tvCapacity.isVisible = item.weight != null
             binding.tvCapacity.text = (item.weight ?: 0).toString()
